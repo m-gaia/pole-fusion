@@ -4,7 +4,7 @@ import MembershipSystem from '../components/MembershipSystem'
 
 const Bookings = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-12 pt-32">
       <div className="container mx-auto px-4">
         {/* Hero Section */}
         <motion.div
