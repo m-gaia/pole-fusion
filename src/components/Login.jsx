@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { auth } from '../utils/auth'
-import { initializeDemoData } from '../utils/auth'
+import { auth, initializeDemoData } from '../utils/auth'
 
 const Login = ({ onLogin, onSwitchToRegister }) => {
   const [email, setEmail] = useState('')
@@ -9,15 +8,17 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
+  // Inicializar datos de demo al cargar el componente
+  useEffect(() => {
+    initializeDemoData()
+  }, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     setIsLoading(true)
 
     try {
-      // Inicializar datos de demo si es la primera vez
-      initializeDemoData()
-      
       const user = auth.login(email, password)
       onLogin(user)
     } catch (err) {

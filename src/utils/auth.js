@@ -57,56 +57,62 @@ export const auth = {
   isAdmin: () => {
     const user = auth.getCurrentUser()
     return user && user.role === 'admin'
+  },
+
+  // Limpiar datos de demo (para testing)
+  clearDemoData: () => {
+    localStorage.removeItem('users')
+    localStorage.removeItem('currentUser')
+    localStorage.removeItem('bookings')
+    localStorage.removeItem('memberships')
   }
 }
 
 // Datos iniciales para demo
 export const initializeDemoData = () => {
-  // Crear admin por defecto si no existe
-  const users = JSON.parse(localStorage.getItem('users') || '[]')
+  // Limpiar datos existentes para asegurar datos frescos
+  const users = []
   
-  if (!users.find(u => u.role === 'admin')) {
-    const adminUser = {
-      id: 'admin-1',
-      name: 'Administrador',
-      email: 'admin@polefusion.com',
-      password: 'admin123',
-      phone: '+54 11 1234-5678',
-      role: 'admin',
+  // Crear admin por defecto
+  const adminUser = {
+    id: 'admin-1',
+    name: 'Administrador',
+    email: 'admin@polefusion.com',
+    password: 'admin123',
+    phone: '+54 11 1234-5678',
+    role: 'admin',
+    createdAt: new Date().toISOString(),
+    isActive: true
+  }
+  
+  users.push(adminUser)
+
+  // Crear usuarios de ejemplo
+  const demoUsers = [
+    {
+      id: 'user-1',
+      name: 'María González',
+      email: 'maria@example.com',
+      password: '123456',
+      phone: '+54 9 11 1234-5678',
+      role: 'client',
+      createdAt: new Date().toISOString(),
+      isActive: true
+    },
+    {
+      id: 'user-2',
+      name: 'Carlos Rodríguez',
+      email: 'carlos@example.com',
+      password: '123456',
+      phone: '+54 9 11 2345-6789',
+      role: 'client',
       createdAt: new Date().toISOString(),
       isActive: true
     }
-    
-    users.push(adminUser)
-    localStorage.setItem('users', JSON.stringify(users))
-  }
-
-  // Crear algunos usuarios de ejemplo
-  if (users.length === 1) { // Solo admin existe
-    const demoUsers = [
-      {
-        id: 'user-1',
-        name: 'María González',
-        email: 'maria@example.com',
-        password: '123456',
-        phone: '+54 9 11 1234-5678',
-        role: 'client',
-        createdAt: new Date().toISOString(),
-        isActive: true
-      },
-      {
-        id: 'user-2',
-        name: 'Carlos Rodríguez',
-        email: 'carlos@example.com',
-        password: '123456',
-        phone: '+54 9 11 2345-6789',
-        role: 'client',
-        createdAt: new Date().toISOString(),
-        isActive: true
-      }
-    ]
-    
-    users.push(...demoUsers)
-    localStorage.setItem('users', JSON.stringify(users))
-  }
+  ]
+  
+  users.push(...demoUsers)
+  localStorage.setItem('users', JSON.stringify(users))
+  
+  console.log('Datos de demo inicializados:', users)
 } 

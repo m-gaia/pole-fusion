@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Calendar, Clock, Users, CheckCircle } from 'lucide-react'
 import { auth } from '../utils/auth'
 import { bookingManager } from '../utils/bookings'
@@ -15,7 +15,7 @@ const BookingSystem = () => {
   const currentUser = auth.getCurrentUser()
 
   // Si el usuario está logueado, usar sus datos
-  useState(() => {
+  useEffect(() => {
     if (currentUser) {
       setName(currentUser.name)
       setEmail(currentUser.email)
