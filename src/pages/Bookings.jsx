@@ -21,34 +21,32 @@ const Bookings = () => {
           </p>
         </motion.div>
 
-        {/* Tabs */}
+        {/* Sistema de Reservas */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto mb-12"
         >
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Sistema de Reservas */}
-              <div>
-                <BookingSystem />
-              </div>
+          <BookingSystem />
+        </motion.div>
 
-              {/* Sistema de Membresías */}
-              <div>
-                <MembershipSystem />
-              </div>
-            </div>
-          </div>
+        {/* Sistema de Membresías */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="max-w-4xl mx-auto mb-12"
+        >
+          <MembershipSystem />
         </motion.div>
 
         {/* Información Adicional */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="max-w-4xl mx-auto mt-12"
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="max-w-4xl mx-auto"
         >
           <div className="bg-white rounded-lg shadow-lg p-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
