@@ -2,12 +2,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import AdminPanel from './components/AdminPanel'
 import Home from './pages/Home'
 import Classes from './pages/Classes'
 import Instructors from './pages/Instructors'
 import Gallery from './pages/Gallery'
 import Testimonials from './pages/Testimonials'
 import Contact from './pages/Contact'
+import Bookings from './pages/Bookings'
 
 function App() {
   return (
@@ -76,9 +78,20 @@ function App() {
                 <Contact />
               </motion.div>
             } />
+            <Route path="/reservas" element={
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Bookings />
+              </motion.div>
+            } />
           </Routes>
         </AnimatePresence>
         <Footer />
+        <AdminPanel />
       </div>
     </Router>
   )
