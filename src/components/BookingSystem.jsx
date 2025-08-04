@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Calendar, Clock, Users, CheckCircle } from 'lucide-react'
+import { auth } from '../utils/auth'
+import { bookingManager } from '../utils/bookings'
 
 const BookingSystem = () => {
   const [selectedClass, setSelectedClass] = useState('')
@@ -9,6 +11,17 @@ const BookingSystem = () => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const currentUser = auth.getCurrentUser()
+
+  // Si el usuario está logueado, usar sus datos
+  useState(() => {
+    if (currentUser) {
+      setName(currentUser.name)
+      setEmail(currentUser.email)
+      setPhone(currentUser.phone)
+    }
+  }, [currentUser])
 
   const classes = [
     { id: 1, name: "Pole Dance Básico", duration: "1 hora", instructor: "María González" },
@@ -24,8 +37,23 @@ const BookingSystem = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     
-    // Aquí podrías enviar a un servicio como Formspree, Netlify Forms, o WhatsApp
-    const message = `Nueva reserva:
+    const bookingData = {
+      userId: currentUser?.id || null,
+      name: name,
+      email: email,
+      phone: phone,
+      selectedClass: selectedClass,
+      selectedDate: selectedDate,
+      selectedTime: selectedTime
+    }
+
+    try {
+      // Crear la reserva en el sistema
+      bookingManager.createBooking(bookingData)
+      
+      // Si no está logueado, también enviar por WhatsApp como respaldo
+      if (!currentUser) {
+        const message = `Nueva reserva:
 Clase: ${selectedClass}
 Fecha: ${selectedDate}
 Hora: ${selectedTime}
@@ -33,22 +61,27 @@ Nombre: ${name}
 Email: ${email}
 Teléfono: ${phone}`
 
-    // Enviar por WhatsApp
-    const whatsappUrl = `https://wa.me/5491112345678?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, '_blank')
-    
-    setIsSubmitted(true)
-    
-    // Reset form
-    setTimeout(() => {
-      setSelectedClass('')
-      setSelectedDate('')
-      setSelectedTime('')
-      setName('')
-      setEmail('')
-      setPhone('')
-      setIsSubmitted(false)
-    }, 3000)
+        const whatsappUrl = `https://wa.me/5491112345678?text=${encodeURIComponent(message)}`
+        window.open(whatsappUrl, '_blank')
+      }
+      
+      setIsSubmitted(true)
+      
+      // Reset form
+      setTimeout(() => {
+        setSelectedClass('')
+        setSelectedDate('')
+        setSelectedTime('')
+        if (!currentUser) {
+          setName('')
+          setEmail('')
+          setPhone('')
+        }
+        setIsSubmitted(false)
+      }, 3000)
+    } catch (error) {
+      alert('Error al crear la reserva: ' + error.message)
+    }
   }
 
   const getMinDate = () => {
@@ -66,9 +99,12 @@ Teléfono: ${phone}`
     return (
       <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
         <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-green-800 mb-2">¡Reserva Enviada!</h3>
+        <h3 className="text-xl font-semibold text-green-800 mb-2">¡Reserva Creada!</h3>
         <p className="text-green-600">
-          Te hemos enviado un mensaje por WhatsApp para confirmar tu reserva.
+          {currentUser 
+            ? 'Tu reserva ha sido creada y está pendiente de confirmación.'
+            : 'Te hemos enviado un mensaje por WhatsApp para confirmar tu reserva.'
+          }
         </p>
       </div>
     )
@@ -78,7 +114,12 @@ Teléfono: ${phone}`
     <div className="bg-white rounded-lg shadow-lg p-6">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Reserva tu Clase</h2>
-        <p className="text-gray-600">Selecciona tu clase preferida y completa tus datos</p>
+        <p className="text-gray-600">
+          {currentUser 
+            ? `Bienvenido ${currentUser.name}, selecciona tu clase preferida`
+            : 'Selecciona tu clase preferida y completa tus datos'
+          }
+        </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -141,61 +182,75 @@ Teléfono: ${phone}`
           </div>
         </div>
 
-        {/* Datos Personales */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Nombre completo
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              required
-            />
-          </div>
-        </div>
+        {/* Datos Personales - Solo si no está logueado */}
+        {!currentUser && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Nombre completo
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  required
+                />
+              </div>
+            </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Teléfono
-          </label>
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            required
-          />
-        </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Teléfono
+              </label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                required
+              />
+            </div>
+          </>
+        )}
 
         {/* Botón de Envío */}
         <button
           type="submit"
           className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors font-medium"
         >
-          Reservar Clase
+          {currentUser ? 'Crear Reserva' : 'Reservar Clase'}
         </button>
       </form>
 
-      <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-        <p className="text-sm text-blue-800">
-          <strong>Nota:</strong> Al hacer clic en "Reservar Clase" se abrirá WhatsApp para confirmar tu reserva.
-        </p>
-      </div>
+      {!currentUser && (
+        <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+          <p className="text-sm text-blue-800">
+            <strong>Nota:</strong> Al hacer clic en "Reservar Clase" se abrirá WhatsApp para confirmar tu reserva.
+          </p>
+        </div>
+      )}
+
+      {currentUser && (
+        <div className="mt-6 p-4 bg-green-50 rounded-lg">
+          <p className="text-sm text-green-800">
+            <strong>Ventaja:</strong> Al estar logueado, tu reserva se guarda automáticamente en el sistema.
+          </p>
+        </div>
+      )}
     </div>
   )
 }

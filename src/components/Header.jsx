@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Menu, X, Instagram, Facebook } from 'lucide-react'
+import { Menu, X, Instagram, Facebook, User, LogOut } from 'lucide-react'
 
-const Header = () => {
+const Header = ({ currentUser, onLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const location = useLocation()
 
   const navItems = [
@@ -64,8 +65,9 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Social Icons */}
+          {/* User Menu & Social Icons */}
           <div className="hidden lg:flex items-center space-x-4">
+            {/* Social Icons */}
             <motion.a
               href="https://instagram.com" 
               target="_blank" 
@@ -84,6 +86,54 @@ const Header = () => {
             >
               <Facebook size={20} />
             </motion.a>
+
+            {/* User Menu */}
+            {currentUser ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center space-x-2 text-gray-700 hover:text-primary-500 transition-colors"
+                >
+                  <User size={20} />
+                  <span className="text-sm font-medium">{currentUser.name}</span>
+                </button>
+
+                {isUserMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2"
+                  >
+                    {currentUser.role === 'admin' && (
+                      <Link
+                        to="/admin"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        Panel de Admin
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        onLogout()
+                        setIsUserMenuOpen(false)
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                    >
+                      <LogOut size={16} className="inline mr-2" />
+                      Cerrar Sesión
+                    </button>
+                  </motion.div>
+                )}
+              </div>
+            ) : (
+              <Link
+                to="/auth"
+                className="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors font-medium"
+              >
+                Iniciar Sesión
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -121,6 +171,47 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            
+            {/* Mobile User Section */}
+            <div className="border-t border-gray-100 pt-4 px-4">
+              {currentUser ? (
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2 text-gray-700">
+                    <User size={20} />
+                    <span className="font-medium">{currentUser.name}</span>
+                  </div>
+                  {currentUser.role === 'admin' && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block py-2 text-sm text-gray-700 hover:text-primary-500"
+                    >
+                      Panel de Admin
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      onLogout()
+                      setIsMenuOpen(false)
+                    }}
+                    className="flex items-center space-x-2 text-red-600 hover:text-red-700"
+                  >
+                    <LogOut size={16} />
+                    <span>Cerrar Sesión</span>
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/auth"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block bg-primary-500 text-white px-4 py-2 rounded-lg text-center font-medium"
+                >
+                  Iniciar Sesión
+                </Link>
+              )}
+            </div>
+
+            {/* Mobile Social Icons */}
             <div className="flex items-center space-x-4 px-4 pt-4 border-t border-gray-100">
               <a
                 href="https://instagram.com" 
