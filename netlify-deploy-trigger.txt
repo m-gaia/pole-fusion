@@ -1,7 +1,6 @@
-Netlify Deploy Configuration
-- Configuración de build optimizada
-- Script de build personalizado
-- Headers de seguridad
-- Redirects para SPA routing
-- Node.js 18 especificado
+Simplificación del componente Auth para diagnosticar problemas de renderizado
+- Versión simplificada sin dependencias complejas
+- Componente de prueba básico
+- Eliminación de componentes Login/Register temporalmente
+- Debug de routing y renderizado
 Timestamp: $(date) 

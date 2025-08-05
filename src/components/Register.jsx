@@ -11,52 +11,43 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
   })
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
-    // Limpiar error cuando el usuario empiece a escribir
     if (error) setError('')
   }
 
   const validateForm = () => {
-    // Validar campos requeridos
     if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim() || !formData.password || !formData.confirmPassword) {
       setError('Todos los campos son requeridos')
       return false
     }
 
-    // Validar nombre (solo letras y espacios)
     const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/
     if (!nameRegex.test(formData.name.trim())) {
       setError('El nombre solo puede contener letras y espacios')
       return false
     }
 
-    // Validar email
     if (!auth.validateEmail(formData.email)) {
       setError('Formato de email inválido')
       return false
     }
 
-    // Validar teléfono (formato básico)
     const phoneRegex = /^[\+]?[0-9\s\-\(\)]+$/
     if (!phoneRegex.test(formData.phone)) {
       setError('Formato de teléfono inválido')
       return false
     }
 
-    // Validar contraseña
     if (!auth.validatePassword(formData.password)) {
       setError('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo')
       return false
     }
 
-    // Validar confirmación de contraseña
     if (formData.password !== formData.confirmPassword) {
       setError('Las contraseñas no coinciden')
       return false
@@ -93,28 +84,6 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
       setIsLoading(false)
     }
   }
-
-  const getPasswordStrength = (password) => {
-    if (!password) return { strength: 0, color: 'gray', text: '' }
-    
-    let strength = 0
-    if (password.length >= 8) strength++
-    if (/[a-z]/.test(password)) strength++
-    if (/[A-Z]/.test(password)) strength++
-    if (/[0-9]/.test(password)) strength++
-    if (/[^A-Za-z0-9]/.test(password)) strength++
-    
-    const colors = ['red', 'orange', 'yellow', 'lightgreen', 'green']
-    const texts = ['Muy débil', 'Débil', 'Media', 'Fuerte', 'Muy fuerte']
-    
-    return {
-      strength: Math.min(strength, 5),
-      color: colors[Math.min(strength - 1, 4)],
-      text: texts[Math.min(strength - 1, 4)]
-    }
-  }
-
-  const passwordStrength = getPasswordStrength(formData.password)
 
   return (
     <div className="w-full">
@@ -176,69 +145,28 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Contraseña
           </label>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent pr-10"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-            >
-              {showPassword ? "Ocultar" : "Mostrar"}
-            </button>
-          </div>
-          
-          {/* Indicador de fortaleza de contraseña */}
-          {formData.password && (
-            <div className="mt-2">
-              <div className="flex items-center space-x-2">
-                <div className="flex space-x-1">
-                  {[1, 2, 3, 4, 5].map((level) => (
-                    <div
-                      key={level}
-                      className={`h-1 w-8 rounded ${
-                        level <= passwordStrength.strength
-                          ? `bg-${passwordStrength.color}-500`
-                          : 'bg-gray-200'
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className={`text-xs text-${passwordStrength.color}-600`}>
-                  {passwordStrength.text}
-                </span>
-              </div>
-            </div>
-          )}
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            required
+          />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Confirmar Contraseña
           </label>
-          <div className="relative">
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent pr-10"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-            >
-              {showConfirmPassword ? "Ocultar" : "Mostrar"}
-            </button>
-          </div>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            required
+          />
         </div>
 
         <button

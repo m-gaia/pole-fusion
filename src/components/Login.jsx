@@ -6,7 +6,6 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
 
   // Inicializar datos de demo al cargar el componente
   useEffect(() => {
@@ -28,15 +27,6 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
     } finally {
       setIsLoading(false)
     }
-  }
-
-  const handleDemoLogin = (demoEmail, demoPassword) => {
-    setEmail(demoEmail)
-    setPassword(demoPassword)
-    // Simular el submit después de un breve delay
-    setTimeout(() => {
-      handleSubmit({ preventDefault: () => {} })
-    }, 100)
   }
 
   return (
@@ -70,22 +60,13 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Contraseña
           </label>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent pr-10"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-            >
-              {showPassword ? "Ocultar" : "Mostrar"}
-            </button>
-          </div>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            required
+          />
         </div>
 
         <button
@@ -114,19 +95,28 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
         <h4 className="font-semibold text-blue-800 mb-3">Acceso Rápido (Demo):</h4>
         <div className="space-y-2">
           <button
-            onClick={() => handleDemoLogin('admin@polefusion.com', 'Admin2024!')}
+            onClick={() => {
+              setEmail('admin@polefusion.com')
+              setPassword('Admin2024!')
+            }}
             className="w-full text-left p-2 bg-blue-100 hover:bg-blue-200 rounded text-sm text-blue-800 transition-colors"
           >
             <strong>Admin:</strong> admin@polefusion.com
           </button>
           <button
-            onClick={() => handleDemoLogin('maria@example.com', 'Maria2024!')}
+            onClick={() => {
+              setEmail('maria@example.com')
+              setPassword('Maria2024!')
+            }}
             className="w-full text-left p-2 bg-green-100 hover:bg-green-200 rounded text-sm text-green-800 transition-colors"
           >
             <strong>Cliente:</strong> maria@example.com
           </button>
           <button
-            onClick={() => handleDemoLogin('ana@example.com', 'Ana2024!')}
+            onClick={() => {
+              setEmail('ana@example.com')
+              setPassword('Ana2024!')
+            }}
             className="w-full text-left p-2 bg-purple-100 hover:bg-purple-200 rounded text-sm text-purple-800 transition-colors"
           >
             <strong>Estudiante:</strong> ana@example.com
