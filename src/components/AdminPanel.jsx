@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { auth } from '../utils/auth'
+import { auth, resetDemoData } from '../utils/auth'
 import { bookingManager, membershipManager, freeBookingManager } from '../utils/bookings'
 import { courseManager, lessonManager, materialManager, commentManager } from '../utils/courses'
 import { siteConfig, updateSiteConfig } from '../config/siteConfig'
@@ -22,7 +22,8 @@ import {
   Edit,
   Trash2,
   Download,
-  Upload
+  Upload,
+  RefreshCw
 } from 'lucide-react'
 
 const AdminPanel = () => {
@@ -128,6 +129,26 @@ const AdminPanel = () => {
     }
   }
 
+  const handleResetDemoData = () => {
+    if (confirm('¿Estás seguro de que quieres reinicializar todos los datos de demo? Esto eliminará todos los datos actuales.')) {
+      try {
+        resetDemoData()
+        // Recargar todos los datos
+        setBookings(bookingManager.getAllBookings())
+        setMemberships(membershipManager.getAllMemberships())
+        setFreeBookings(freeBookingManager.getAllFreeBookings())
+        setCourses(courseManager.getAllCourses())
+        setLessons(JSON.parse(localStorage.getItem('lessons') || '[]'))
+        setMaterials(JSON.parse(localStorage.getItem('materials') || '[]'))
+        setUsers(JSON.parse(localStorage.getItem('users') || '[]'))
+        alert('Datos de demo reinicializados correctamente')
+      } catch (error) {
+        console.error('Error al reinicializar datos:', error)
+        alert('Error al reinicializar datos')
+      }
+    }
+  }
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'pending': return 'bg-yellow-100 text-yellow-800'
@@ -168,6 +189,14 @@ const AdminPanel = () => {
       <div className="flex justify-between items-center p-6 border-b">
         <h2 className="text-2xl font-bold">Panel de Administración</h2>
         <div className="flex items-center space-x-4">
+          <button
+            onClick={handleResetDemoData}
+            className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors flex items-center text-sm"
+            title="Reinicializar datos de demo"
+          >
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Reset Demo
+          </button>
           <span className="text-sm text-gray-600">
             Bienvenido, {auth.getCurrentUser()?.name}
           </span>

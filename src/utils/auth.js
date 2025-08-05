@@ -123,15 +123,6 @@ export const auth = {
     }
   },
 
-  // Limpiar datos de demo (para testing)
-  clearDemoData: () => {
-    localStorage.removeItem('users')
-    localStorage.removeItem('currentSession')
-    localStorage.removeItem('bookings')
-    localStorage.removeItem('memberships')
-    localStorage.removeItem('freeBookings')
-  },
-
   // Validar contraseña
   validatePassword: (password) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
@@ -204,4 +195,30 @@ export const initializeDemoData = () => {
 
   // Inicializar datos de cursos
   initializeCourseDemoData()
+}
+
+// Limpiar todos los datos de demo
+export const clearDemoData = () => {
+  localStorage.removeItem('users')
+  localStorage.removeItem('bookings')
+  localStorage.removeItem('memberships')
+  localStorage.removeItem('freeBookings')
+  localStorage.removeItem('courses')
+  localStorage.removeItem('lessons')
+  localStorage.removeItem('materials')
+  localStorage.removeItem('comments')
+  localStorage.removeItem('currentSession')
+  console.log('Todos los datos de demo han sido eliminados')
+}
+
+// Reinicializar datos de demo
+export const resetDemoData = () => {
+  clearDemoData()
+  initializeDemoData()
+  console.log('Datos de demo reinicializados')
+}
+
+// Inicializar datos de demo automáticamente si no existen
+if (!localStorage.getItem('users')) {
+  initializeDemoData()
 } 
