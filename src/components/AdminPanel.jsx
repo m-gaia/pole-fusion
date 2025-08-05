@@ -42,16 +42,13 @@ const AdminPanel = () => {
     console.log('🔍 AdminPanel: Cargando datos...')
     
     try {
-      // Verificar estado de datos
       const dataStatus = checkDataStatus()
       console.log('📊 Estado inicial de datos:', dataStatus)
       
-      // Si no hay cursos, forzar inicialización
       if (dataStatus.courses === 0) {
         console.log('⚠️ No hay cursos, forzando inicialización...')
         forceInitializeAllData()
         
-        // Esperar un poco y recargar datos
         setTimeout(() => {
           console.log('🔄 Recargando datos después de inicialización...')
           loadAllData()
@@ -66,12 +63,10 @@ const AdminPanel = () => {
 
   const loadAllData = () => {
     try {
-      // Cargar todos los datos
       setBookings(bookingManager.getAllBookings())
       setMemberships(membershipManager.getAllMemberships())
       setFreeBookings(freeBookingManager.getAllFreeBookings())
       
-      // Cargar datos de cursos con logs
       const coursesData = courseManager.getAllCourses()
       console.log('📚 AdminPanel: Cursos cargados:', coursesData)
       setCourses(coursesData)
@@ -191,10 +186,8 @@ const AdminPanel = () => {
 
   const handleForceInit = () => {
     try {
-      // Forzar inicialización de datos de cursos
       forceInitializeAllData()
       
-      // Recargar datos
       setCourses(courseManager.getAllCourses())
       setLessons(JSON.parse(localStorage.getItem('lessons') || '[]'))
       setMaterials(JSON.parse(localStorage.getItem('materials') || '[]'))
@@ -242,7 +235,6 @@ const AdminPanel = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg max-w-6xl w-full max-h-[90vh] overflow-hidden">
-      {/* Header */}
       <div className="flex justify-between items-center p-6 border-b">
         <h2 className="text-2xl font-bold">Panel de Administración</h2>
         <div className="flex items-center space-x-4">
@@ -268,7 +260,6 @@ const AdminPanel = () => {
         </div>
       </div>
 
-      {/* Tabs */}
       <div className="flex border-b overflow-x-auto">
         <button
           onClick={() => setActiveTab('dashboard')}
@@ -342,13 +333,11 @@ const AdminPanel = () => {
         </button>
       </div>
 
-      {/* Content */}
       <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
         {activeTab === 'dashboard' && (
           <div className="space-y-6">
             <h3 className="text-2xl font-bold text-gray-800">Dashboard</h3>
             
-            {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-white p-6 rounded-lg shadow border">
                 <div className="flex items-center">
@@ -403,7 +392,6 @@ const AdminPanel = () => {
               </div>
             </div>
 
-            {/* Recent Activity */}
             <div className="bg-white p-6 rounded-lg shadow border">
               <h4 className="text-lg font-semibold text-gray-800 mb-4">Actividad Reciente</h4>
               <div className="space-y-3">
@@ -501,7 +489,6 @@ const AdminPanel = () => {
           </div>
         )}
 
-        {/* Placeholder para otras pestañas */}
         {activeTab !== 'dashboard' && activeTab !== 'courses' && (
           <div className="text-center py-8">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">Pestaña {activeTab}</h3>
