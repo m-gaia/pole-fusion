@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import AdminPanel from './components/AdminPanel'
+import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
 import Classes from './pages/Classes'
 import Instructors from './pages/Instructors'
@@ -11,6 +12,7 @@ import Gallery from './pages/Gallery'
 import Testimonials from './pages/Testimonials'
 import Contact from './pages/Contact'
 import Bookings from './pages/Bookings'
+import FreeBookings from './pages/FreeBookings'
 import Auth from './pages/Auth'
 import { auth } from './utils/auth'
 
@@ -23,11 +25,26 @@ function App() {
     const user = auth.getCurrentUser()
     setCurrentUser(user)
     setIsLoading(false)
+
+    // Renovar sesión si está activa
+    if (user) {
+      auth.refreshSession()
+    }
   }, [])
 
   const handleLogout = () => {
     auth.logout()
     setCurrentUser(null)
+  }
+
+  const handleLogin = (user) => {
+    setCurrentUser(user)
+    // Redirigir según el rol
+    if (user.role === 'admin') {
+      window.location.href = '/admin'
+    } else {
+      window.location.href = '/reservas'
+    }
   }
 
   if (isLoading) {
@@ -47,6 +64,7 @@ function App() {
         <Header currentUser={currentUser} onLogout={handleLogout} />
         <AnimatePresence mode="wait">
           <Routes>
+            {/* Rutas públicas */}
             <Route path="/" element={
               <motion.div
                 initial={{ opacity: 0 }}
@@ -107,16 +125,8 @@ function App() {
                 <Contact />
               </motion.div>
             } />
-            <Route path="/reservas" element={
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Bookings />
-              </motion.div>
-            } />
+
+            {/* Ruta de autenticación */}
             <Route path="/auth" element={
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -124,11 +134,40 @@ function App() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
               >
-                <Auth />
+                <Auth onLogin={handleLogin} />
               </motion.div>
             } />
+
+            {/* Ruta de reservas gratuitas para usuarios no autenticados */}
+            <Route path="/reservas" element={
+              currentUser ? (
+                // Si está autenticado, mostrar reservas completas
+                <ProtectedRoute requiredRole="client" redirectTo="/auth">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Bookings />
+                  </motion.div>
+                </ProtectedRoute>
+              ) : (
+                // Si no está autenticado, mostrar reservas gratuitas
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <FreeBookings />
+                </motion.div>
+              )
+            } />
+
+            {/* Ruta protegida para administración (solo admins) */}
             <Route path="/admin" element={
-              currentUser && auth.isAdmin() ? (
+              <ProtectedRoute requiredRole="admin" redirectTo="/auth">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -142,17 +181,18 @@ function App() {
                           Panel de Administración
                         </h1>
                         <p className="text-xl text-gray-600">
-                          Bienvenido, {currentUser.name}
+                          Bienvenido, {currentUser?.name}
                         </p>
                       </div>
                       <AdminPanel />
                     </div>
                   </div>
                 </motion.div>
-              ) : (
-                <Navigate to="/auth" replace />
-              )
+              </ProtectedRoute>
             } />
+
+            {/* Redirigir rutas no encontradas */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AnimatePresence>
         <Footer />

@@ -12,26 +12,64 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
   })
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
+    // Limpiar error cuando el usuario empiece a escribir
+    if (error) setError('')
+  }
+
+  const validateForm = () => {
+    // Validar campos requeridos
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim() || !formData.password || !formData.confirmPassword) {
+      setError('Todos los campos son requeridos')
+      return false
+    }
+
+    // Validar nombre (solo letras y espacios)
+    const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/
+    if (!nameRegex.test(formData.name.trim())) {
+      setError('El nombre solo puede contener letras y espacios')
+      return false
+    }
+
+    // Validar email
+    if (!auth.validateEmail(formData.email)) {
+      setError('Formato de email inválido')
+      return false
+    }
+
+    // Validar teléfono (formato básico)
+    const phoneRegex = /^[\+]?[0-9\s\-\(\)]+$/
+    if (!phoneRegex.test(formData.phone)) {
+      setError('Formato de teléfono inválido')
+      return false
+    }
+
+    // Validar contraseña
+    if (!auth.validatePassword(formData.password)) {
+      setError('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo')
+      return false
+    }
+
+    // Validar confirmación de contraseña
+    if (formData.password !== formData.confirmPassword) {
+      setError('Las contraseñas no coinciden')
+      return false
+    }
+
+    return true
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
 
-    // Validaciones
-    if (formData.password !== formData.confirmPassword) {
-      setError('Las contraseñas no coinciden')
-      return
-    }
-
-    if (formData.password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres')
+    if (!validateForm()) {
       return
     }
 
@@ -39,9 +77,9 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
 
     try {
       const userData = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        phone: formData.phone.trim(),
         password: formData.password
       }
 
@@ -53,6 +91,28 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
       setIsLoading(false)
     }
   }
+
+  const getPasswordStrength = (password) => {
+    if (!password) return { strength: 0, color: 'gray', text: '' }
+    
+    let strength = 0
+    if (password.length >= 8) strength++
+    if (/[a-z]/.test(password)) strength++
+    if (/[A-Z]/.test(password)) strength++
+    if (/\d/.test(password)) strength++
+    if (/[@$!%*?&]/.test(password)) strength++
+
+    const colors = ['red', 'orange', 'yellow', 'lightgreen', 'green']
+    const texts = ['Muy débil', 'Débil', 'Media', 'Fuerte', 'Muy fuerte']
+    
+    return {
+      strength,
+      color: colors[strength - 1] || 'gray',
+      text: texts[strength - 1] || ''
+    }
+  }
+
+  const passwordStrength = getPasswordStrength(formData.password)
 
   return (
     <motion.div
@@ -82,6 +142,7 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
             value={formData.name}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="Tu nombre completo"
             required
           />
         </div>
@@ -96,6 +157,7 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
             value={formData.email}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="tu@email.com"
             required
           />
         </div>
@@ -110,6 +172,7 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
             value={formData.phone}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="+54 9 11 1234-5678"
             required
           />
         </div>
@@ -118,14 +181,43 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Contraseña
           </label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            required
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent pr-10"
+              placeholder="Mínimo 8 caracteres"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            >
+              {showPassword ? "👁️" : "👁️‍🗨️"}
+            </button>
+          </div>
+          {formData.password && (
+            <div className="mt-2">
+              <div className="flex space-x-1">
+                {[1, 2, 3, 4, 5].map((level) => (
+                  <div
+                    key={level}
+                    className={`h-2 flex-1 rounded ${
+                      level <= passwordStrength.strength
+                        ? `bg-${passwordStrength.color}-500`
+                        : 'bg-gray-200'
+                    }`}
+                  />
+                ))}
+              </div>
+              <p className={`text-xs mt-1 text-${passwordStrength.color}-600`}>
+                {passwordStrength.text}
+              </p>
+            </div>
+          )}
         </div>
 
         <div>
@@ -138,6 +230,7 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
             value={formData.confirmPassword}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="Repite tu contraseña"
             required
           />
         </div>
@@ -161,6 +254,16 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
             Inicia sesión aquí
           </button>
         </p>
+      </div>
+
+      <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+        <h4 className="font-semibold text-blue-800 mb-2">Requisitos de Seguridad:</h4>
+        <ul className="text-sm text-blue-700 space-y-1">
+          <li>• Contraseña mínimo 8 caracteres</li>
+          <li>• Al menos una mayúscula y una minúscula</li>
+          <li>• Al menos un número y un símbolo</li>
+          <li>• Solo se pueden registrar usuarios tipo Cliente</li>
+        </ul>
       </div>
     </motion.div>
   )

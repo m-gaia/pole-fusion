@@ -2,26 +2,13 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Login from '../components/Login'
 import Register from '../components/Register'
-import { auth } from '../utils/auth'
-import { useNavigate } from 'react-router-dom'
 
-const Auth = () => {
+const Auth = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true)
-  const navigate = useNavigate()
-
-  const handleLogin = (user) => {
-    // Redirigir según el rol
-    if (user.role === 'admin') {
-      navigate('/admin')
-    } else {
-      navigate('/reservas')
-    }
-  }
 
   const handleRegister = (user) => {
     // Loguear automáticamente después del registro
-    auth.login(user.email, user.password)
-    navigate('/reservas')
+    onLogin(user)
   }
 
   return (
@@ -35,7 +22,7 @@ const Auth = () => {
         >
           {isLogin ? (
             <Login 
-              onLogin={handleLogin}
+              onLogin={onLogin}
               onSwitchToRegister={() => setIsLogin(false)}
             />
           ) : (

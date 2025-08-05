@@ -1,9 +1,26 @@
-// Utilidades de autenticación
+// Utilidades de autenticación mejoradas
 export const auth = {
-  // Registrar nuevo usuario
+  // Registrar nuevo usuario (SOLO clientes)
   register: (userData) => {
     const users = JSON.parse(localStorage.getItem('users') || '[]')
     
+    // Validaciones de seguridad
+    if (!userData.email || !userData.password || !userData.name || !userData.phone) {
+      throw new Error('Todos los campos son requeridos')
+    }
+
+    // Validar formato de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(userData.email)) {
+      throw new Error('Formato de email inválido')
+    }
+
+    // Validar contraseña fuerte
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    if (!passwordRegex.test(userData.password)) {
+      throw new Error('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo')
+    }
+
     // Verificar si el email ya existe
     if (users.find(user => user.email === userData.email)) {
       throw new Error('El email ya está registrado')
@@ -12,9 +29,10 @@ export const auth = {
     const newUser = {
       id: Date.now().toString(),
       ...userData,
-      role: 'client',
+      role: 'client', // SOLO clientes pueden registrarse
       createdAt: new Date().toISOString(),
-      isActive: true
+      isActive: true,
+      lastLogin: null
     }
     
     users.push(newUser)
@@ -23,7 +41,7 @@ export const auth = {
     return newUser
   },
 
-  // Iniciar sesión
+  // Iniciar sesión con validaciones mejoradas
   login: (email, password) => {
     const users = JSON.parse(localStorage.getItem('users') || '[]')
     const user = users.find(u => u.email === email && u.password === password && u.isActive)
@@ -31,26 +49,53 @@ export const auth = {
     if (!user) {
       throw new Error('Email o contraseña incorrectos')
     }
+
+    // Actualizar último login
+    user.lastLogin = new Date().toISOString()
+    localStorage.setItem('users', JSON.stringify(users))
     
-    // Guardar sesión actual
-    localStorage.setItem('currentUser', JSON.stringify(user))
+    // Crear sesión con expiración
+    const session = {
+      user: user,
+      createdAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24 horas
+    }
+    
+    localStorage.setItem('currentSession', JSON.stringify(session))
     return user
   },
 
   // Cerrar sesión
   logout: () => {
-    localStorage.removeItem('currentUser')
+    localStorage.removeItem('currentSession')
   },
 
-  // Obtener usuario actual
+  // Obtener usuario actual con validación de sesión
   getCurrentUser: () => {
-    const user = localStorage.getItem('currentUser')
-    return user ? JSON.parse(user) : null
+    const session = localStorage.getItem('currentSession')
+    if (!session) return null
+
+    try {
+      const sessionData = JSON.parse(session)
+      const now = new Date()
+      const expiresAt = new Date(sessionData.expiresAt)
+
+      // Verificar si la sesión ha expirado
+      if (now > expiresAt) {
+        localStorage.removeItem('currentSession')
+        return null
+      }
+
+      return sessionData.user
+    } catch (error) {
+      localStorage.removeItem('currentSession')
+      return null
+    }
   },
 
   // Verificar si está autenticado
   isAuthenticated: () => {
-    return !!localStorage.getItem('currentUser')
+    return !!auth.getCurrentUser()
   },
 
   // Verificar si es admin
@@ -59,21 +104,52 @@ export const auth = {
     return user && user.role === 'admin'
   },
 
+  // Verificar si es cliente
+  isClient: () => {
+    const user = auth.getCurrentUser()
+    return user && user.role === 'client'
+  },
+
+  // Renovar sesión
+  refreshSession: () => {
+    const user = auth.getCurrentUser()
+    if (user) {
+      const session = {
+        user: user,
+        createdAt: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+      }
+      localStorage.setItem('currentSession', JSON.stringify(session))
+    }
+  },
+
   // Limpiar datos de demo (para testing)
   clearDemoData: () => {
     localStorage.removeItem('users')
-    localStorage.removeItem('currentUser')
+    localStorage.removeItem('currentSession')
     localStorage.removeItem('bookings')
     localStorage.removeItem('memberships')
+  },
+
+  // Validar contraseña
+  validatePassword: (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    return passwordRegex.test(password)
+  },
+
+  // Validar email
+  validateEmail: (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
   }
 }
 
-// Datos iniciales para demo
+// Datos iniciales para demo con contraseñas seguras
 export const initializeDemoData = () => {
   // Limpiar datos existentes para asegurar datos frescos
   const users = []
   
-  // Crear admin por defecto
+  // Crear admin por defecto (NO se puede crear desde el frontend)
   const adminUser = {
     id: 'admin-1',
     name: 'Administrador',
@@ -82,7 +158,8 @@ export const initializeDemoData = () => {
     phone: '+54 11 1234-5678',
     role: 'admin',
     createdAt: new Date().toISOString(),
-    isActive: true
+    isActive: true,
+    lastLogin: null
   }
   
   users.push(adminUser)
@@ -97,7 +174,8 @@ export const initializeDemoData = () => {
       phone: '+54 9 11 1234-5678',
       role: 'client',
       createdAt: new Date().toISOString(),
-      isActive: true
+      isActive: true,
+      lastLogin: null
     },
     {
       id: 'user-2',
@@ -107,12 +185,13 @@ export const initializeDemoData = () => {
       phone: '+54 9 11 2345-6789',
       role: 'client',
       createdAt: new Date().toISOString(),
-      isActive: true
+      isActive: true,
+      lastLogin: null
     }
   ]
   
   users.push(...demoUsers)
   localStorage.setItem('users', JSON.stringify(users))
   
-  console.log('Datos de demo inicializados:', users)
+  console.log('Datos de demo inicializados con seguridad mejorada:', users)
 } 
