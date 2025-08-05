@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { auth } from '../utils/auth'
 
 const Register = ({ onRegister, onSwitchToLogin }) => {
@@ -99,30 +98,26 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
     if (password.length >= 8) strength++
     if (/[a-z]/.test(password)) strength++
     if (/[A-Z]/.test(password)) strength++
-    if (/\d/.test(password)) strength++
-    if (/[@$!%*?&]/.test(password)) strength++
-
+    if (/[0-9]/.test(password)) strength++
+    if (/[^A-Za-z0-9]/.test(password)) strength++
+    
     const colors = ['red', 'orange', 'yellow', 'lightgreen', 'green']
     const texts = ['Muy débil', 'Débil', 'Media', 'Fuerte', 'Muy fuerte']
     
     return {
-      strength,
-      color: colors[strength - 1] || 'gray',
-      text: texts[strength - 1] || ''
+      strength: Math.min(strength, 5),
+      color: colors[Math.min(strength - 1, 4)],
+      text: texts[Math.min(strength - 1, 4)]
     }
   }
 
   const passwordStrength = getPasswordStrength(formData.password)
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full"
-    >
+    <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Crear Cuenta</h2>
-        <p className="text-gray-600">Únete a Pole Fusion</p>
+        <p className="text-gray-600">Regístrate para acceder</p>
       </div>
 
       {error && (
@@ -134,7 +129,7 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Nombre completo
+            Nombre Completo
           </label>
           <input
             type="text"
@@ -142,7 +137,6 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
             value={formData.name}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            placeholder="Tu nombre completo"
             required
           />
         </div>
@@ -157,7 +151,6 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
             value={formData.email}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            placeholder="tu@email.com"
             required
           />
         </div>
@@ -172,7 +165,6 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
             value={formData.phone}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            placeholder="+54 9 11 1234-5678"
             required
           />
         </div>
@@ -188,7 +180,6 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
               value={formData.password}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent pr-10"
-              placeholder="Mínimo 8 caracteres"
               required
             />
             <button
@@ -196,33 +187,37 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
             >
-              {showPassword ? "👁️" : "👁️‍🗨️"}
+              {showPassword ? "Ocultar" : "Mostrar"}
             </button>
           </div>
+          
+          {/* Indicador de fortaleza de contraseña */}
           {formData.password && (
             <div className="mt-2">
-              <div className="flex space-x-1">
-                {[1, 2, 3, 4, 5].map((level) => (
-                  <div
-                    key={level}
-                    className={`h-2 flex-1 rounded ${
-                      level <= passwordStrength.strength
-                        ? `bg-${passwordStrength.color}-500`
-                        : 'bg-gray-200'
-                    }`}
-                  />
-                ))}
+              <div className="flex items-center space-x-2">
+                <div className="flex space-x-1">
+                  {[1, 2, 3, 4, 5].map((level) => (
+                    <div
+                      key={level}
+                      className={`h-1 w-8 rounded ${
+                        level <= passwordStrength.strength
+                          ? `bg-${passwordStrength.color}-500`
+                          : 'bg-gray-200'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className={`text-xs text-${passwordStrength.color}-600`}>
+                  {passwordStrength.text}
+                </span>
               </div>
-              <p className={`text-xs mt-1 text-${passwordStrength.color}-600`}>
-                {passwordStrength.text}
-              </p>
             </div>
           )}
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Confirmar contraseña
+            Confirmar Contraseña
           </label>
           <input
             type="password"
@@ -230,7 +225,6 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
             value={formData.confirmPassword}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            placeholder="Repite tu contraseña"
             required
           />
         </div>
@@ -255,17 +249,7 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
           </button>
         </p>
       </div>
-
-      <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-        <h4 className="font-semibold text-blue-800 mb-2">Requisitos de Seguridad:</h4>
-        <ul className="text-sm text-blue-700 space-y-1">
-          <li>• Contraseña mínimo 8 caracteres</li>
-          <li>• Al menos una mayúscula y una minúscula</li>
-          <li>• Al menos un número y un símbolo</li>
-          <li>• Solo se pueden registrar usuarios tipo Cliente</li>
-        </ul>
-      </div>
-    </motion.div>
+    </div>
   )
 }
 
