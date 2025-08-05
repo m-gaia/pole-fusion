@@ -129,6 +129,7 @@ export const auth = {
     localStorage.removeItem('currentSession')
     localStorage.removeItem('bookings')
     localStorage.removeItem('memberships')
+    localStorage.removeItem('freeBookings')
   },
 
   // Validar contraseña
@@ -193,5 +194,36 @@ export const initializeDemoData = () => {
   users.push(...demoUsers)
   localStorage.setItem('users', JSON.stringify(users))
   
+  // Crear datos de demo para reservas gratuitas
+  const demoFreeBookings = [
+    {
+      id: 'free-1',
+      selectedClass: 'Clase Gratuita de Introducción',
+      selectedDate: '2024-01-15',
+      selectedTime: '18:00',
+      name: 'Ana Martínez',
+      email: 'ana@example.com',
+      phone: '+54 9 11 3456-7890',
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    },
+    {
+      id: 'free-2',
+      selectedClass: 'Clase Gratuita de Pole Dance',
+      selectedDate: '2024-01-16',
+      selectedTime: '19:00',
+      name: 'Laura Fernández',
+      email: 'laura@example.com',
+      phone: '+54 9 11 4567-8901',
+      status: 'confirmed',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    }
+  ]
+  
+  localStorage.setItem('freeBookings', JSON.stringify(demoFreeBookings))
+  
   console.log('Datos de demo inicializados con seguridad mejorada:', users)
+  console.log('Reservas gratuitas de demo:', demoFreeBookings)
 } 

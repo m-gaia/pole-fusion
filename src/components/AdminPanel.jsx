@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { auth } from '../utils/auth'
 import { bookingManager, membershipManager } from '../utils/bookings'
+import { freeBookingManager } from '../utils/freeBookings'
 import { siteConfig, updateSiteConfig } from '../config/siteConfig'
 import { 
   Users, 
@@ -12,7 +13,9 @@ import {
   Check, 
   X as XIcon,
   Eye,
-  EyeOff
+  EyeOff,
+  Gift,
+  MessageCircle
 } from 'lucide-react'
 
 const AdminPanel = () => {
@@ -20,38 +23,57 @@ const AdminPanel = () => {
   const [config, setConfig] = useState(siteConfig)
   const [bookings, setBookings] = useState([])
   const [memberships, setMemberships] = useState([])
+  const [freeBookings, setFreeBookings] = useState([])
   const [showPassword, setShowPassword] = useState(false)
-
-  const currentUser = auth.getCurrentUser()
 
   useEffect(() => {
     setBookings(bookingManager.getAllBookings())
     setMemberships(membershipManager.getAllMemberships())
+    setFreeBookings(freeBookingManager.getAllFreeBookings())
   }, [])
 
   const handleSave = () => {
     updateSiteConfig(config)
-    localStorage.setItem('siteConfig', JSON.stringify(config))
-    alert('Configuración guardada!')
+    alert('Configuración guardada exitosamente')
   }
 
-  const handleBookingStatus = (bookingId, status) => {
+  const handleBookingStatusChange = (bookingId, newStatus) => {
     try {
-      bookingManager.updateBookingStatus(bookingId, status)
+      bookingManager.updateBookingStatus(bookingId, newStatus)
       setBookings(bookingManager.getAllBookings())
-      alert('Estado actualizado correctamente')
     } catch (error) {
-      alert('Error al actualizar el estado')
+      alert('Error al actualizar la reserva')
     }
   }
 
-  const handleMembershipStatus = (membershipId, status) => {
+  const handleFreeBookingStatusChange = (bookingId, newStatus) => {
     try {
-      membershipManager.updateMembershipStatus(membershipId, status)
-      setMemberships(membershipManager.getAllMemberships())
-      alert('Estado actualizado correctamente')
+      freeBookingManager.updateFreeBookingStatus(bookingId, newStatus)
+      setFreeBookings(freeBookingManager.getAllFreeBookings())
     } catch (error) {
-      alert('Error al actualizar el estado')
+      alert('Error al actualizar la reserva gratuita')
+    }
+  }
+
+  const handleDeleteBooking = (bookingId) => {
+    if (confirm('¿Estás seguro de que quieres eliminar esta reserva?')) {
+      try {
+        bookingManager.deleteBooking(bookingId)
+        setBookings(bookingManager.getAllBookings())
+      } catch (error) {
+        alert('Error al eliminar la reserva')
+      }
+    }
+  }
+
+  const handleDeleteFreeBooking = (bookingId) => {
+    if (confirm('¿Estás seguro de que quieres eliminar esta reserva gratuita?')) {
+      try {
+        freeBookingManager.deleteFreeBooking(bookingId)
+        setFreeBookings(freeBookingManager.getAllFreeBookings())
+      } catch (error) {
+        alert('Error al eliminar la reserva gratuita')
+      }
     }
   }
 
@@ -60,9 +82,6 @@ const AdminPanel = () => {
       case 'pending': return 'bg-yellow-100 text-yellow-800'
       case 'confirmed': return 'bg-green-100 text-green-800'
       case 'cancelled': return 'bg-red-100 text-red-800'
-      case 'completed': return 'bg-blue-100 text-blue-800'
-      case 'active': return 'bg-green-100 text-green-800'
-      case 'expired': return 'bg-gray-100 text-gray-800'
       default: return 'bg-gray-100 text-gray-800'
     }
   }
@@ -72,11 +91,20 @@ const AdminPanel = () => {
       case 'pending': return 'Pendiente'
       case 'confirmed': return 'Confirmada'
       case 'cancelled': return 'Cancelada'
-      case 'completed': return 'Completada'
-      case 'active': return 'Activa'
-      case 'expired': return 'Expirada'
       default: return status
     }
+  }
+
+  const stats = {
+    totalBookings: bookings.length,
+    pendingBookings: bookings.filter(b => b.status === 'pending').length,
+    confirmedBookings: bookings.filter(b => b.status === 'confirmed').length,
+    totalMemberships: memberships.length,
+    pendingMemberships: memberships.filter(m => m.status === 'pending').length,
+    confirmedMemberships: memberships.filter(m => m.status === 'confirmed').length,
+    totalFreeBookings: freeBookings.length,
+    pendingFreeBookings: freeBookings.filter(b => b.status === 'pending').length,
+    confirmedFreeBookings: freeBookings.filter(b => b.status === 'confirmed').length
   }
 
   return (
@@ -86,7 +114,7 @@ const AdminPanel = () => {
         <h2 className="text-2xl font-bold">Panel de Administración</h2>
         <div className="flex items-center space-x-4">
           <span className="text-sm text-gray-600">
-            Bienvenido, {currentUser?.name}
+            Bienvenido, {auth.getCurrentUser()?.name}
           </span>
         </div>
       </div>
@@ -114,6 +142,16 @@ const AdminPanel = () => {
           Reservas
         </button>
         <button
+          onClick={() => setActiveTab('freeBookings')}
+          className={`px-6 py-3 font-medium ${
+            activeTab === 'freeBookings' 
+              ? 'text-purple-600 border-b-2 border-purple-600' 
+              : 'text-gray-600 hover:text-gray-800'
+          }`}
+        >
+          Clases Gratuitas
+        </button>
+        <button
           onClick={() => setActiveTab('memberships')}
           className={`px-6 py-3 font-medium ${
             activeTab === 'memberships' 
@@ -137,304 +175,374 @@ const AdminPanel = () => {
 
       {/* Content */}
       <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
-        {/* Dashboard */}
         {activeTab === 'dashboard' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-blue-50 p-6 rounded-lg">
-              <div className="flex items-center">
-                <Calendar className="w-8 h-8 text-blue-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-blue-600">Total Reservas</p>
-                  <p className="text-2xl font-bold text-blue-800">{bookingManager.getStats().total}</p>
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold mb-4">Dashboard</h3>
+            
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-blue-50 p-6 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-blue-600">Reservas Totales</p>
+                    <p className="text-2xl font-bold text-blue-800">{stats.totalBookings}</p>
+                  </div>
+                  <Calendar className="w-8 h-8 text-blue-600" />
+                </div>
+                <div className="mt-2 text-sm text-blue-600">
+                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded mr-2">
+                    {stats.confirmedBookings} Confirmadas
+                  </span>
+                  <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                    {stats.pendingBookings} Pendientes
+                  </span>
+                </div>
+              </div>
+
+              <div className="bg-green-50 p-6 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-green-600">Clases Gratuitas</p>
+                    <p className="text-2xl font-bold text-green-800">{stats.totalFreeBookings}</p>
+                  </div>
+                  <Gift className="w-8 h-8 text-green-600" />
+                </div>
+                <div className="mt-2 text-sm text-green-600">
+                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded mr-2">
+                    {stats.confirmedFreeBookings} Confirmadas
+                  </span>
+                  <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                    {stats.pendingFreeBookings} Pendientes
+                  </span>
+                </div>
+              </div>
+
+              <div className="bg-purple-50 p-6 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-purple-600">Membresías</p>
+                    <p className="text-2xl font-bold text-purple-800">{stats.totalMemberships}</p>
+                  </div>
+                  <CreditCard className="w-8 h-8 text-purple-600" />
+                </div>
+                <div className="mt-2 text-sm text-purple-600">
+                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded mr-2">
+                    {stats.confirmedMemberships} Confirmadas
+                  </span>
+                  <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                    {stats.pendingMemberships} Pendientes
+                  </span>
                 </div>
               </div>
             </div>
-            
-            <div className="bg-yellow-50 p-6 rounded-lg">
-              <div className="flex items-center">
-                <Calendar className="w-8 h-8 text-yellow-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-yellow-600">Pendientes</p>
-                  <p className="text-2xl font-bold text-yellow-800">{bookingManager.getStats().pending}</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-green-50 p-6 rounded-lg">
-              <div className="flex items-center">
-                <CreditCard className="w-8 h-8 text-green-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-green-600">Membresías</p>
-                  <p className="text-2xl font-bold text-green-800">{membershipManager.getStats().total}</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-purple-50 p-6 rounded-lg">
-              <div className="flex items-center">
-                <Users className="w-8 h-8 text-purple-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-purple-600">Usuarios</p>
-                  <p className="text-2xl font-bold text-purple-800">
-                    {JSON.parse(localStorage.getItem('users') || '[]').length}
-                  </p>
-                </div>
+
+            {/* Recent Activity */}
+            <div className="bg-white border rounded-lg p-6">
+              <h4 className="font-semibold mb-4">Actividad Reciente</h4>
+              <div className="space-y-3">
+                {bookings.slice(0, 5).map((booking) => (
+                  <div key={booking.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                    <div>
+                      <p className="font-medium">{booking.name}</p>
+                      <p className="text-sm text-gray-600">{booking.selectedClass} - {booking.selectedDate}</p>
+                    </div>
+                    <span className={`px-2 py-1 rounded text-xs ${getStatusColor(booking.status)}`}>
+                      {getStatusText(booking.status)}
+                    </span>
+                  </div>
+                ))}
+                {bookings.length === 0 && (
+                  <p className="text-gray-500 text-center py-4">No hay reservas recientes</p>
+                )}
               </div>
             </div>
           </div>
         )}
 
-        {/* Bookings */}
         {activeTab === 'bookings' && (
-          <div>
+          <div className="space-y-6">
             <h3 className="text-xl font-semibold mb-4">Gestión de Reservas</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-gray-50">
-                    <th className="p-3 text-left border">Cliente</th>
-                    <th className="p-3 text-left border">Clase</th>
-                    <th className="p-3 text-left border">Fecha</th>
-                    <th className="p-3 text-left border">Hora</th>
-                    <th className="p-3 text-left border">Estado</th>
-                    <th className="p-3 text-left border">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {bookings.map((booking) => (
-                    <tr key={booking.id} className="border-b">
-                      <td className="p-3 border">{booking.name}</td>
-                      <td className="p-3 border">{booking.selectedClass}</td>
-                      <td className="p-3 border">{new Date(booking.selectedDate).toLocaleDateString()}</td>
-                      <td className="p-3 border">{booking.selectedTime}</td>
-                      <td className="p-3 border">
-                        <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(booking.status)}`}>
-                          {getStatusText(booking.status)}
-                        </span>
-                      </td>
-                      <td className="p-3 border">
-                        <div className="flex space-x-2">
-                          {booking.status === 'pending' && (
-                            <>
-                              <button
-                                onClick={() => handleBookingStatus(booking.id, 'confirmed')}
-                                className="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600"
-                              >
-                                <Check size={12} />
-                              </button>
-                              <button
-                                onClick={() => handleBookingStatus(booking.id, 'cancelled')}
-                                className="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600"
-                              >
-                                <XIcon size={12} />
-                              </button>
-                            </>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            
+            {bookings.length === 0 ? (
+              <div className="text-center py-8">
+                <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-500">No hay reservas registradas</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {bookings.map((booking) => (
+                  <div key={booking.id} className="border rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <h4 className="font-semibold">{booking.name}</h4>
+                        <p className="text-sm text-gray-600">{booking.email} • {booking.phone}</p>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(booking.status)}`}>
+                        {getStatusText(booking.status)}
+                      </span>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Clase</p>
+                        <p className="text-sm">{booking.selectedClass}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Fecha</p>
+                        <p className="text-sm">{booking.selectedDate}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Hora</p>
+                        <p className="text-sm">{booking.selectedTime}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <select
+                        value={booking.status}
+                        onChange={(e) => handleBookingStatusChange(booking.id, e.target.value)}
+                        className="px-3 py-1 border rounded text-sm"
+                      >
+                        <option value="pending">Pendiente</option>
+                        <option value="confirmed">Confirmada</option>
+                        <option value="cancelled">Cancelada</option>
+                      </select>
+                      
+                      <button
+                        onClick={() => handleDeleteBooking(booking.id)}
+                        className="px-3 py-1 bg-red-100 text-red-600 rounded text-sm hover:bg-red-200"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
-        {/* Memberships */}
+        {activeTab === 'freeBookings' && (
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold mb-4">Gestión de Clases Gratuitas</h3>
+            
+            {freeBookings.length === 0 ? (
+              <div className="text-center py-8">
+                <Gift className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-500">No hay reservas de clases gratuitas</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {freeBookings.map((booking) => (
+                  <div key={booking.id} className="border rounded-lg p-4 bg-gradient-to-r from-green-50 to-blue-50">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <h4 className="font-semibold">{booking.name}</h4>
+                        <p className="text-sm text-gray-600">{booking.email} • {booking.phone}</p>
+                        <p className="text-xs text-purple-600 font-medium">ID: {booking.id}</p>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(booking.status)}`}>
+                        {getStatusText(booking.status)}
+                      </span>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Clase Gratuita</p>
+                        <p className="text-sm">{booking.selectedClass}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Fecha</p>
+                        <p className="text-sm">{booking.selectedDate}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Hora</p>
+                        <p className="text-sm">{booking.selectedTime}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <select
+                        value={booking.status}
+                        onChange={(e) => handleFreeBookingStatusChange(booking.id, e.target.value)}
+                        className="px-3 py-1 border rounded text-sm"
+                      >
+                        <option value="pending">Pendiente</option>
+                        <option value="confirmed">Confirmada</option>
+                        <option value="cancelled">Cancelada</option>
+                      </select>
+                      
+                      <button
+                        onClick={() => {
+                          const message = `Hola ${booking.name}, tu clase gratuita de ${booking.selectedClass} para el ${booking.selectedDate} a las ${booking.selectedTime} ha sido confirmada. ¡Te esperamos!`
+                          const whatsappUrl = `https://wa.me/${booking.phone.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
+                          window.open(whatsappUrl, '_blank')
+                        }}
+                        className="px-3 py-1 bg-green-100 text-green-600 rounded text-sm hover:bg-green-200 flex items-center"
+                      >
+                        <MessageCircle className="w-4 h-4 mr-1" />
+                        WhatsApp
+                      </button>
+                      
+                      <button
+                        onClick={() => handleDeleteFreeBooking(booking.id)}
+                        className="px-3 py-1 bg-red-100 text-red-600 rounded text-sm hover:bg-red-200"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {activeTab === 'memberships' && (
-          <div>
+          <div className="space-y-6">
             <h3 className="text-xl font-semibold mb-4">Gestión de Membresías</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-gray-50">
-                    <th className="p-3 text-left border">Cliente</th>
-                    <th className="p-3 text-left border">Plan</th>
-                    <th className="p-3 text-left border">Fecha</th>
-                    <th className="p-3 text-left border">Estado</th>
-                    <th className="p-3 text-left border">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {memberships.map((membership) => (
-                    <tr key={membership.id} className="border-b">
-                      <td className="p-3 border">{membership.name}</td>
-                      <td className="p-3 border">{membership.selectedPlan}</td>
-                      <td className="p-3 border">{new Date(membership.createdAt).toLocaleDateString()}</td>
-                      <td className="p-3 border">
-                        <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(membership.status)}`}>
-                          {getStatusText(membership.status)}
-                        </span>
-                      </td>
-                      <td className="p-3 border">
-                        <div className="flex space-x-2">
-                          {membership.status === 'pending' && (
-                            <>
-                              <button
-                                onClick={() => handleMembershipStatus(membership.id, 'active')}
-                                className="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600"
-                              >
-                                <Check size={12} />
-                              </button>
-                              <button
-                                onClick={() => handleMembershipStatus(membership.id, 'cancelled')}
-                                className="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600"
-                              >
-                                <XIcon size={12} />
-                              </button>
-                            </>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            
+            {memberships.length === 0 ? (
+              <div className="text-center py-8">
+                <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-500">No hay solicitudes de membresía</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {memberships.map((membership) => (
+                  <div key={membership.id} className="border rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <h4 className="font-semibold">{membership.name}</h4>
+                        <p className="text-sm text-gray-600">{membership.email} • {membership.phone}</p>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(membership.status)}`}>
+                        {getStatusText(membership.status)}
+                      </span>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Plan</p>
+                        <p className="text-sm">{membership.selectedPlan}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Mensaje</p>
+                        <p className="text-sm">{membership.message}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <select
+                        value={membership.status}
+                        onChange={(e) => {
+                          try {
+                            membershipManager.updateMembershipStatus(membership.id, e.target.value)
+                            setMemberships(membershipManager.getAllMemberships())
+                          } catch (error) {
+                            alert('Error al actualizar la membresía')
+                          }
+                        }}
+                        className="px-3 py-1 border rounded text-sm"
+                      >
+                        <option value="pending">Pendiente</option>
+                        <option value="confirmed">Confirmada</option>
+                        <option value="cancelled">Cancelada</option>
+                      </select>
+                      
+                      <button
+                        onClick={() => {
+                          try {
+                            membershipManager.deleteMembership(membership.id)
+                            setMemberships(membershipManager.getAllMemberships())
+                          } catch (error) {
+                            alert('Error al eliminar la membresía')
+                          }
+                        }}
+                        className="px-3 py-1 bg-red-100 text-red-600 rounded text-sm hover:bg-red-200"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
-        {/* Settings */}
         {activeTab === 'settings' && (
           <div className="space-y-6">
-            {/* Información del Negocio */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Información del Negocio</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Nombre</label>
-                  <input
-                    type="text"
-                    value={config.business.name}
-                    onChange={(e) => setConfig({
-                      ...config,
-                      business: { ...config.business, name: e.target.value }
-                    })}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Tagline</label>
-                  <input
-                    type="text"
-                    value={config.business.tagline}
-                    onChange={(e) => setConfig({
-                      ...config,
-                      business: { ...config.business, tagline: e.target.value }
-                    })}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Teléfono</label>
-                  <input
-                    type="text"
-                    value={config.business.phone}
-                    onChange={(e) => setConfig({
-                      ...config,
-                      business: { ...config.business, phone: e.target.value }
-                    })}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Email</label>
-                  <input
-                    type="email"
-                    value={config.business.email}
-                    onChange={(e) => setConfig({
-                      ...config,
-                      business: { ...config.business, email: e.target.value }
-                    })}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
+            <h3 className="text-xl font-semibold mb-4">Configuración del Sitio</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Nombre del Negocio
+                </label>
+                <input
+                  type="text"
+                  value={config.businessName}
+                  onChange={(e) => setConfig({...config, businessName: e.target.value})}
+                  className="w-full p-3 border border-gray-300 rounded-lg"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Teléfono
+                </label>
+                <input
+                  type="tel"
+                  value={config.phone}
+                  onChange={(e) => setConfig({...config, phone: e.target.value})}
+                  className="w-full p-3 border border-gray-300 rounded-lg"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  value={config.email}
+                  onChange={(e) => setConfig({...config, email: e.target.value})}
+                  className="w-full p-3 border border-gray-300 rounded-lg"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Dirección
+                </label>
+                <input
+                  type="text"
+                  value={config.address}
+                  onChange={(e) => setConfig({...config, address: e.target.value})}
+                  className="w-full p-3 border border-gray-300 rounded-lg"
+                />
+              </div>
+              
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Descripción
+                </label>
+                <textarea
+                  value={config.description}
+                  onChange={(e) => setConfig({...config, description: e.target.value})}
+                  rows={4}
+                  className="w-full p-3 border border-gray-300 rounded-lg"
+                />
               </div>
             </div>
-
-            {/* Colores */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Colores del Tema</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Color Principal</label>
-                  <input
-                    type="color"
-                    value={config.colors.primary}
-                    onChange={(e) => setConfig({
-                      ...config,
-                      colors: { ...config.colors, primary: e.target.value }
-                    })}
-                    className="w-full h-10 border rounded"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Color Secundario</label>
-                  <input
-                    type="color"
-                    value={config.colors.secondary}
-                    onChange={(e) => setConfig({
-                      ...config,
-                      colors: { ...config.colors, secondary: e.target.value }
-                    })}
-                    className="w-full h-10 border rounded"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Color Acento</label>
-                  <input
-                    type="color"
-                    value={config.colors.accent}
-                    onChange={(e) => setConfig({
-                      ...config,
-                      colors: { ...config.colors, accent: e.target.value }
-                    })}
-                    className="w-full h-10 border rounded"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Redes Sociales */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Redes Sociales</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Instagram</label>
-                  <input
-                    type="url"
-                    value={config.social.instagram}
-                    onChange={(e) => setConfig({
-                      ...config,
-                      social: { ...config.social, instagram: e.target.value }
-                    })}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Facebook</label>
-                  <input
-                    type="url"
-                    value={config.social.facebook}
-                    onChange={(e) => setConfig({
-                      ...config,
-                      social: { ...config.social, facebook: e.target.value }
-                    })}
-                    className="w-full p-2 border rounded"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Botones de Acción */}
-            <div className="flex gap-4 pt-4">
-              <button
-                onClick={handleSave}
-                className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
-              >
-                Guardar Cambios
-              </button>
-            </div>
+            
+            <button
+              onClick={handleSave}
+              className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+            >
+              Guardar Configuración
+            </button>
           </div>
         )}
       </div>

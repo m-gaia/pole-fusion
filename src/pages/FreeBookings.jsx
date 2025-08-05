@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, Clock, Users, CheckCircle } from 'lucide-react'
+import { freeBookingManager } from '../utils/freeBookings'
 
 const FreeBookings = () => {
   const [selectedClass, setSelectedClass] = useState('')
@@ -10,6 +11,7 @@ const FreeBookings = () => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const classes = [
     { id: 1, name: "Clase Gratuita de Introducción", duration: "1 hora", instructor: "María González" },
@@ -20,33 +22,56 @@ const FreeBookings = () => {
     "9:00", "10:00", "11:00", "12:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"
   ]
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsLoading(true)
     
-    const message = `Nueva reserva de clase gratuita:
+    try {
+      // Crear la reserva en localStorage
+      const bookingData = {
+        selectedClass,
+        selectedDate,
+        selectedTime,
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        phone: phone.trim()
+      }
+
+      // Guardar en localStorage
+      const newBooking = freeBookingManager.createFreeBooking(bookingData)
+      
+      // Enviar mensaje por WhatsApp
+      const message = `Nueva reserva de clase gratuita:
 Clase: ${selectedClass}
 Fecha: ${selectedDate}
 Hora: ${selectedTime}
 Nombre: ${name}
 Email: ${email}
-Teléfono: ${phone}`
+Teléfono: ${phone}
 
-    // Enviar por WhatsApp
-    const whatsappUrl = `https://wa.me/5491112345678?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, '_blank')
-    
-    setIsSubmitted(true)
-    
-    // Reset form
-    setTimeout(() => {
-      setSelectedClass('')
-      setSelectedDate('')
-      setSelectedTime('')
-      setName('')
-      setEmail('')
-      setPhone('')
-      setIsSubmitted(false)
-    }, 3000)
+ID de Reserva: ${newBooking.id}`
+
+      const whatsappUrl = `https://wa.me/5491112345678?text=${encodeURIComponent(message)}`
+      window.open(whatsappUrl, '_blank')
+      
+      setIsSubmitted(true)
+      
+      // Reset form
+      setTimeout(() => {
+        setSelectedClass('')
+        setSelectedDate('')
+        setSelectedTime('')
+        setName('')
+        setEmail('')
+        setPhone('')
+        setIsSubmitted(false)
+      }, 3000)
+    } catch (error) {
+      console.error('Error al crear reserva:', error)
+      alert('Error al crear la reserva. Por favor, intenta nuevamente.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const getMinDate = () => {
@@ -62,12 +87,33 @@ Teléfono: ${phone}`
 
   if (isSubmitted) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-        <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-green-800 mb-2">¡Reserva Enviada!</h3>
-        <p className="text-green-600">
-          Te hemos enviado un mensaje por WhatsApp para confirmar tu clase gratuita.
-        </p>
+      <div className="min-h-screen bg-gray-50 py-12 pt-32">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
+              <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold text-green-800 mb-4">¡Reserva Enviada!</h3>
+              <p className="text-green-600 mb-6">
+                Tu reserva de clase gratuita ha sido registrada exitosamente. 
+                Te hemos enviado un mensaje por WhatsApp para coordinar los detalles.
+              </p>
+              <div className="bg-white rounded-lg p-4 mb-6">
+                <h4 className="font-semibold text-gray-800 mb-2">Próximos pasos:</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Revisa WhatsApp para confirmar la clase</li>
+                  <li>• Llega 10 minutos antes de tu clase</li>
+                  <li>• Trae ropa cómoda y una botella de agua</li>
+                </ul>
+              </div>
+              <a
+                href="/auth"
+                className="inline-flex items-center bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium"
+              >
+                Registrarse para más funcionalidades
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
@@ -211,15 +257,16 @@ Teléfono: ${phone}`
               {/* Botón de Envío */}
               <button
                 type="submit"
-                className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors font-medium"
+                disabled={isLoading}
+                className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors font-medium disabled:opacity-50"
               >
-                Reservar Clase Gratuita
+                {isLoading ? 'Enviando reserva...' : 'Reservar Clase Gratuita'}
               </button>
             </form>
 
             <div className="mt-6 p-4 bg-blue-50 rounded-lg">
               <p className="text-sm text-blue-800">
-                <strong>Nota:</strong> Al hacer clic en "Reservar Clase Gratuita" se abrirá WhatsApp para coordinar tu clase.
+                <strong>Nota:</strong> Al hacer clic en "Reservar Clase Gratuita" se guardará tu reserva y se abrirá WhatsApp para coordinar tu clase.
               </p>
             </div>
 
