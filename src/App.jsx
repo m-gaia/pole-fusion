@@ -16,6 +16,7 @@ import FreeBookings from './pages/FreeBookings'
 import Courses from './pages/Courses'
 import StudentArea from './pages/StudentArea'
 import Auth from './pages/Auth'
+import Debug from './pages/Debug'
 import { auth } from './utils/auth'
 
 function App() {
@@ -125,6 +126,18 @@ function App() {
                 transition={{ duration: 0.5 }}
               >
                 <Contact />
+              </motion.div>
+            } />
+
+            {/* Ruta de debug */}
+            <Route path="/debug" element={
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Debug />
               </motion.div>
             } />
 
