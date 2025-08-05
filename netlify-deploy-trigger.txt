@@ -1,0 +1,7 @@
+Netlify Deploy Configuration
+- Configuración de build optimizada
+- Script de build personalizado
+- Headers de seguridad
+- Redirects para SPA routing
+- Node.js 18 especificado
+Timestamp: $(date) 

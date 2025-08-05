@@ -1,2 +1,15 @@
+# Redirects para SPA routing
 /*    /index.html   200
-/auth    /index.html   200 
+
+# Rutas específicas
+/auth    /index.html   200
+/admin    /index.html   200
+/reservas    /index.html   200
+/estudiante    /index.html   200
+/clases    /index.html   200
+/instructores    /index.html   200
+/galeria    /index.html   200
+/testimonios    /index.html   200
+/contacto    /index.html   200
+/cursos    /index.html   200
+/debug    /index.html   200 
