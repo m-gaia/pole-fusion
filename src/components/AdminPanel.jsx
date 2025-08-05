@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { auth, resetDemoData } from '../utils/auth'
 import { bookingManager, membershipManager, freeBookingManager } from '../utils/bookings'
 import { courseManager, lessonManager, materialManager, commentManager } from '../utils/courses'
+import { forceInitializeAllData } from '../utils/initDemo'
 import { siteConfig, updateSiteConfig } from '../config/siteConfig'
 import { 
   Users, 
@@ -41,13 +42,27 @@ const AdminPanel = () => {
   const [formData, setFormData] = useState({})
 
   useEffect(() => {
+    console.log('AdminPanel: Cargando datos...')
     setBookings(bookingManager.getAllBookings())
     setMemberships(membershipManager.getAllMemberships())
     setFreeBookings(freeBookingManager.getAllFreeBookings())
-    setCourses(courseManager.getAllCourses())
-    setLessons(JSON.parse(localStorage.getItem('lessons') || '[]'))
-    setMaterials(JSON.parse(localStorage.getItem('materials') || '[]'))
-    setUsers(JSON.parse(localStorage.getItem('users') || '[]'))
+    
+    // Cargar datos de cursos con logs
+    const coursesData = courseManager.getAllCourses()
+    console.log('AdminPanel: Cursos cargados:', coursesData)
+    setCourses(coursesData)
+    
+    const lessonsData = JSON.parse(localStorage.getItem('lessons') || '[]')
+    console.log('AdminPanel: Clases cargadas:', lessonsData)
+    setLessons(lessonsData)
+    
+    const materialsData = JSON.parse(localStorage.getItem('materials') || '[]')
+    console.log('AdminPanel: Materiales cargados:', materialsData)
+    setMaterials(materialsData)
+    
+    const usersData = JSON.parse(localStorage.getItem('users') || '[]')
+    console.log('AdminPanel: Usuarios cargados:', usersData)
+    setUsers(usersData)
   }, [])
 
   const handleSave = () => {
@@ -149,6 +164,23 @@ const AdminPanel = () => {
     }
   }
 
+  const handleForceInit = () => {
+    try {
+      // Forzar inicialización de datos de cursos
+      forceInitializeAllData()
+      
+      // Recargar datos
+      setCourses(courseManager.getAllCourses())
+      setLessons(JSON.parse(localStorage.getItem('lessons') || '[]'))
+      setMaterials(JSON.parse(localStorage.getItem('materials') || '[]'))
+      
+      alert('Datos de cursos inicializados correctamente')
+    } catch (error) {
+      console.error('Error al inicializar cursos:', error)
+      alert('Error al inicializar cursos')
+    }
+  }
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'pending': return 'bg-yellow-100 text-yellow-800'
@@ -196,6 +228,14 @@ const AdminPanel = () => {
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Reset Demo
+          </button>
+          <button
+            onClick={handleForceInit}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center text-sm"
+            title="Forzar inicialización de datos de cursos"
+          >
+            <Upload className="w-4 h-4 mr-2" />
+            Forzar Inicialización
           </button>
           <span className="text-sm text-gray-600">
             Bienvenido, {auth.getCurrentUser()?.name}
