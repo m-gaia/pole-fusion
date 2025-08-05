@@ -7,9 +7,12 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  // Inicializar datos de demo al cargar el componente
   useEffect(() => {
-    initializeDemoData()
+    try {
+      initializeDemoData()
+    } catch (error) {
+      console.error('Error initializing demo data:', error)
+    }
   }, [])
 
   const handleSubmit = async (e) => {
