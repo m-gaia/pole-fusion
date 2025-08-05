@@ -165,7 +165,7 @@ function App() {
             <Route path="/reservas" element={
               currentUser ? (
                 // Si está autenticado, mostrar reservas completas
-                <ProtectedRoute requiredRole="client" redirectTo="/auth">
+                <ProtectedRoute requiredRole={null} redirectTo="/auth">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

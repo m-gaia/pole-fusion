@@ -1,0 +1,7 @@
+CORRECCIÓN DE RUTA DE RESERVAS
+- Cambiado requiredRole de "client" a null
+- Ahora cualquier usuario autenticado puede acceder a reservas
+- Estudiantes pueden ver reservas sin ser redirigidos
+- Clientes pueden ver reservas normalmente
+- Admin también puede ver reservas
+Timestamp: $(date) 
