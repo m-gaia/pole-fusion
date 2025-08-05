@@ -12,6 +12,7 @@ const Header = ({ currentUser, onLogout }) => {
     { name: 'Inicio', path: '/' },
     { name: 'Clases', path: '/clases' },
     { name: 'Instructores', path: '/instructores' },
+    { name: 'Cursos', path: '/cursos' },
     { name: 'Galería', path: '/galeria' },
     { name: 'Testimonios', path: '/testimonios' },
     { name: 'Reservas', path: '/reservas' },
@@ -113,6 +114,15 @@ const Header = ({ currentUser, onLogout }) => {
                         Panel de Admin
                       </Link>
                     )}
+                    {currentUser.role === 'client' && (
+                      <Link
+                        to="/estudiante"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        Área de Estudiante
+                      </Link>
+                    )}
                     <button
                       onClick={() => {
                         onLogout()
@@ -187,6 +197,15 @@ const Header = ({ currentUser, onLogout }) => {
                       className="block py-2 text-sm text-gray-700 hover:text-primary-500"
                     >
                       Panel de Admin
+                    </Link>
+                  )}
+                  {currentUser.role === 'client' && (
+                    <Link
+                      to="/estudiante"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block py-2 text-sm text-gray-700 hover:text-primary-500"
+                    >
+                      Área de Estudiante
                     </Link>
                   )}
                   <button

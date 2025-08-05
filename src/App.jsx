@@ -13,6 +13,8 @@ import Testimonials from './pages/Testimonials'
 import Contact from './pages/Contact'
 import Bookings from './pages/Bookings'
 import FreeBookings from './pages/FreeBookings'
+import Courses from './pages/Courses'
+import StudentArea from './pages/StudentArea'
 import Auth from './pages/Auth'
 import { auth } from './utils/auth'
 
@@ -126,6 +128,18 @@ function App() {
               </motion.div>
             } />
 
+            {/* Ruta de cursos educativos */}
+            <Route path="/cursos" element={
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Courses />
+              </motion.div>
+            } />
+
             {/* Ruta de autenticación */}
             <Route path="/auth" element={
               <motion.div
@@ -163,6 +177,20 @@ function App() {
                   <FreeBookings />
                 </motion.div>
               )
+            } />
+
+            {/* Ruta protegida para área de estudiantes */}
+            <Route path="/estudiante" element={
+              <ProtectedRoute requiredRole="client" redirectTo="/auth">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <StudentArea />
+                </motion.div>
+              </ProtectedRoute>
             } />
 
             {/* Ruta protegida para administración (solo admins) */}
