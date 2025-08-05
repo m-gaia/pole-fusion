@@ -114,7 +114,7 @@ const Header = ({ currentUser, onLogout }) => {
                         Panel de Admin
                       </Link>
                     )}
-                    {currentUser.role === 'client' && (
+                    {currentUser.role === 'student' && (
                       <Link
                         to="/estudiante"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -199,7 +199,7 @@ const Header = ({ currentUser, onLogout }) => {
                       Panel de Admin
                     </Link>
                   )}
-                  {currentUser.role === 'client' && (
+                  {currentUser.role === 'student' && (
                     <Link
                       to="/estudiante"
                       onClick={() => setIsMenuOpen(false)}

@@ -87,7 +87,7 @@ ID de Reserva: ${newBooking.id}`
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 pt-32">
+      <div className="min-h-screen bg-gray-50 py-12 pt-20 lg:pt-24">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
@@ -119,7 +119,7 @@ ID de Reserva: ${newBooking.id}`
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 pt-32">
+    <div className="min-h-screen bg-gray-50 py-12 pt-20 lg:pt-24">
       <div className="container mx-auto px-4">
         {/* Hero Section */}
         <motion.div
