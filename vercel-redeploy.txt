@@ -1,3 +1,0 @@
-# Forzar redeploy en Vercel
-# Este archivo se eliminará después del deploy
-# Timestamp: $(date) 
