@@ -29,7 +29,7 @@ const Auth = ({ onLogin }) => {
   
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center pt-16 lg:pt-20">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Cargando autenticación...</p>
@@ -39,7 +39,7 @@ const Auth = ({ onLogin }) => {
   }
   
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 pt-16 lg:pt-20">
       <div className="max-w-md w-full space-y-8">
         {/* Header con tabs */}
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">

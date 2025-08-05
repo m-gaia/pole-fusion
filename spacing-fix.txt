@@ -1,0 +1,5 @@
+Ajuste de espaciado para componente Auth
+- Agregado pt-16 lg:pt-20 para evitar que el contenido quede debajo del header
+- Consistente con otros componentes de la aplicación
+- Responsive design para móvil y desktop
+Timestamp: $(date) 
