@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { auth, resetDemoData } from '../utils/auth'
 import { bookingManager, membershipManager, freeBookingManager } from '../utils/bookings'
 import { courseManager, lessonManager, materialManager, commentManager } from '../utils/courses'
-import { forceInitializeAllData } from '../utils/initDemo'
+import { forceInitializeAllData, checkDataStatus } from '../utils/initDemo'
 import { siteConfig, updateSiteConfig } from '../config/siteConfig'
 import { 
   Users, 
@@ -42,27 +42,41 @@ const AdminPanel = () => {
   const [formData, setFormData] = useState({})
 
   useEffect(() => {
-    console.log('AdminPanel: Cargando datos...')
+    console.log('🔍 AdminPanel: Cargando datos...')
+    
+    // Verificar estado de datos
+    const dataStatus = checkDataStatus()
+    console.log('📊 Estado inicial de datos:', dataStatus)
+    
+    // Si no hay cursos, forzar inicialización
+    if (dataStatus.courses === 0) {
+      console.log('⚠️ No hay cursos, forzando inicialización...')
+      forceInitializeAllData()
+    }
+    
+    // Cargar todos los datos
     setBookings(bookingManager.getAllBookings())
     setMemberships(membershipManager.getAllMemberships())
     setFreeBookings(freeBookingManager.getAllFreeBookings())
     
     // Cargar datos de cursos con logs
     const coursesData = courseManager.getAllCourses()
-    console.log('AdminPanel: Cursos cargados:', coursesData)
+    console.log('📚 AdminPanel: Cursos cargados:', coursesData)
     setCourses(coursesData)
     
     const lessonsData = JSON.parse(localStorage.getItem('lessons') || '[]')
-    console.log('AdminPanel: Clases cargadas:', lessonsData)
+    console.log('🎬 AdminPanel: Clases cargadas:', lessonsData)
     setLessons(lessonsData)
     
     const materialsData = JSON.parse(localStorage.getItem('materials') || '[]')
-    console.log('AdminPanel: Materiales cargados:', materialsData)
+    console.log('📄 AdminPanel: Materiales cargados:', materialsData)
     setMaterials(materialsData)
     
     const usersData = JSON.parse(localStorage.getItem('users') || '[]')
-    console.log('AdminPanel: Usuarios cargados:', usersData)
+    console.log('👥 AdminPanel: Usuarios cargados:', usersData)
     setUsers(usersData)
+    
+    console.log('✅ AdminPanel: Datos cargados completamente')
   }, [])
 
   const handleSave = () => {
