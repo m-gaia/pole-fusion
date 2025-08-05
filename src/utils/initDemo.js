@@ -61,7 +61,19 @@ export const checkDataStatus = () => {
 // Inicialización automática al importar este módulo
 if (typeof window !== 'undefined') {
   // Solo ejecutar en el navegador
+  console.log('🚀 Inicializando datos de demo automáticamente...')
   setTimeout(() => {
-    checkAndInitializeData()
-  }, 100)
+    console.log('📊 Verificando datos existentes...')
+    const status = checkDataStatus()
+    console.log('📈 Estado inicial:', status)
+    
+    if (status.courses === 0) {
+      console.log('⚠️ No hay cursos, inicializando datos...')
+      forceInitializeAllData()
+      const newStatus = checkDataStatus()
+      console.log('✅ Datos inicializados:', newStatus)
+    } else {
+      console.log('✅ Datos ya existen, no es necesario inicializar')
+    }
+  }, 500) // Aumentar el delay para asegurar que todo esté cargado
 } 

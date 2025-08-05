@@ -52,32 +52,46 @@ const AdminPanel = () => {
     if (dataStatus.courses === 0) {
       console.log('⚠️ No hay cursos, forzando inicialización...')
       forceInitializeAllData()
+      
+      // Esperar un poco y recargar datos
+      setTimeout(() => {
+        console.log('🔄 Recargando datos después de inicialización...')
+        loadAllData()
+      }, 1000)
+    } else {
+      loadAllData()
     }
-    
-    // Cargar todos los datos
-    setBookings(bookingManager.getAllBookings())
-    setMemberships(membershipManager.getAllMemberships())
-    setFreeBookings(freeBookingManager.getAllFreeBookings())
-    
-    // Cargar datos de cursos con logs
-    const coursesData = courseManager.getAllCourses()
-    console.log('📚 AdminPanel: Cursos cargados:', coursesData)
-    setCourses(coursesData)
-    
-    const lessonsData = JSON.parse(localStorage.getItem('lessons') || '[]')
-    console.log('🎬 AdminPanel: Clases cargadas:', lessonsData)
-    setLessons(lessonsData)
-    
-    const materialsData = JSON.parse(localStorage.getItem('materials') || '[]')
-    console.log('📄 AdminPanel: Materiales cargados:', materialsData)
-    setMaterials(materialsData)
-    
-    const usersData = JSON.parse(localStorage.getItem('users') || '[]')
-    console.log('👥 AdminPanel: Usuarios cargados:', usersData)
-    setUsers(usersData)
-    
-    console.log('✅ AdminPanel: Datos cargados completamente')
   }, [])
+
+  const loadAllData = () => {
+    try {
+      // Cargar todos los datos
+      setBookings(bookingManager.getAllBookings())
+      setMemberships(membershipManager.getAllMemberships())
+      setFreeBookings(freeBookingManager.getAllFreeBookings())
+      
+      // Cargar datos de cursos con logs
+      const coursesData = courseManager.getAllCourses()
+      console.log('📚 AdminPanel: Cursos cargados:', coursesData)
+      setCourses(coursesData)
+      
+      const lessonsData = JSON.parse(localStorage.getItem('lessons') || '[]')
+      console.log('🎬 AdminPanel: Clases cargadas:', lessonsData)
+      setLessons(lessonsData)
+      
+      const materialsData = JSON.parse(localStorage.getItem('materials') || '[]')
+      console.log('📄 AdminPanel: Materiales cargados:', materialsData)
+      setMaterials(materialsData)
+      
+      const usersData = JSON.parse(localStorage.getItem('users') || '[]')
+      console.log('👥 AdminPanel: Usuarios cargados:', usersData)
+      setUsers(usersData)
+      
+      console.log('✅ AdminPanel: Datos cargados completamente')
+    } catch (error) {
+      console.error('❌ Error al cargar datos:', error)
+    }
+  }
 
   const handleSave = () => {
     updateSiteConfig(config)

@@ -18,6 +18,7 @@ import StudentArea from './pages/StudentArea'
 import Auth from './pages/Auth'
 import Debug from './pages/Debug'
 import { auth } from './utils/auth'
+import './utils/initDemo' // Importar para inicialización automática de datos
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
