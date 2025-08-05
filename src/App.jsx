@@ -43,7 +43,7 @@ function App() {
 
   const handleLogin = (user) => {
     setCurrentUser(user)
-    // Redirigir según el rol
+    // Redirigir según el rol usando React Router
     if (user.role === 'admin') {
       window.location.href = '/admin'
     } else {
@@ -156,14 +156,7 @@ function App() {
 
             {/* Ruta de autenticación */}
             <Route path="/auth" element={
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Auth onLogin={handleLogin} />
-              </motion.div>
+              <Auth onLogin={handleLogin} />
             } />
 
             {/* Ruta de reservas gratuitas para usuarios no autenticados */}

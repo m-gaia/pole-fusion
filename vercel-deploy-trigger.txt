@@ -1,3 +1,2 @@
-# Trigger new Vercel deploy
-# This file will be deleted after deployment
-# Timestamp: $(date) 
+Deploy trigger - Updated configuration for proper routing
+Timestamp: $(date) 
