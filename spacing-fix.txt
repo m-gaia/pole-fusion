@@ -1,5 +1,6 @@
-Ajuste de espaciado para componente Auth
-- Agregado pt-16 lg:pt-20 para evitar que el contenido quede debajo del header
-- Consistente con otros componentes de la aplicación
-- Responsive design para móvil y desktop
+Aumento de espaciado para componente Auth
+- Cambiado de pt-16 lg:pt-20 a pt-20 lg:pt-24
+- Más espacio entre header y contenido para mejor visual
+- Responsive design: 80px móvil, 96px desktop
+- Mejor separación visual del contenido
 Timestamp: $(date) 
