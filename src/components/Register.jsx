@@ -21,6 +21,8 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
   }
 
   const validateForm = () => {
+    console.log('Validating form data:', formData)
+    
     if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim() || !formData.password || !formData.confirmPassword) {
       setError('Todos los campos son requeridos')
       return false
@@ -43,7 +45,11 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
       return false
     }
 
-    if (!auth.validatePassword(formData.password)) {
+    console.log('Validating password:', formData.password)
+    const isPasswordValid = auth.validatePassword(formData.password)
+    console.log('Password validation result:', isPasswordValid)
+    
+    if (!isPasswordValid) {
       setError('La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo')
       return false
     }
@@ -53,14 +59,17 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
       return false
     }
 
+    console.log('Form validation passed')
     return true
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    console.log('Starting registration process')
 
     if (!validateForm()) {
+      console.log('Form validation failed')
       return
     }
 
@@ -74,6 +83,7 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
         password: formData.password
       }
 
+      console.log('Attempting to register user:', userData)
       const newUser = auth.register(userData)
       console.log('Register successful:', newUser)
       onRegister(newUser)

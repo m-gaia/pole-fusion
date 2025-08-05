@@ -1,0 +1,6 @@
+DEBUG DE REGISTRO
+- Agregados logs de debug en componente Register
+- Validación de contraseñas con logs detallados
+- Proceso de registro con logs paso a paso
+- Identificación de problemas en validación
+Timestamp: $(date) 
