@@ -1,25 +1,17 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { auth } from '../utils/auth'
 import { bookingManager, membershipManager, freeBookingManager } from '../utils/bookings'
 import { courseManager } from '../utils/courses'
 import { forceInitializeAllData, checkDataStatus } from '../utils/initDemo'
 import { siteConfig, updateSiteConfig } from '../config/siteConfig'
 import { 
-  Users, 
   Calendar, 
   CreditCard, 
-  Settings, 
-  X, 
-  Check,
   BookOpen,
   Play,
-  FileText,
   MessageCircle,
   Plus,
-  Edit,
   Trash2,
-  Download,
   Upload,
   RefreshCw
 } from 'lucide-react'
@@ -34,30 +26,27 @@ const AdminPanel = () => {
   const [lessons, setLessons] = useState([])
   const [materials, setMaterials] = useState([])
   const [users, setUsers] = useState([])
-  const [selectedCourse, setSelectedCourse] = useState(null)
-  const [showAddForm, setShowAddForm] = useState(false)
-  const [formData, setFormData] = useState({})
 
   useEffect(() => {
-    console.log('🔍 AdminPanel: Cargando datos...')
+    console.log('AdminPanel: Cargando datos...')
     
     try {
       const dataStatus = checkDataStatus()
-      console.log('📊 Estado inicial de datos:', dataStatus)
+      console.log('Estado inicial de datos:', dataStatus)
       
       if (dataStatus.courses === 0) {
-        console.log('⚠️ No hay cursos, forzando inicialización...')
+        console.log('No hay cursos, forzando inicialización...')
         forceInitializeAllData()
         
         setTimeout(() => {
-          console.log('🔄 Recargando datos después de inicialización...')
+          console.log('Recargando datos después de inicialización...')
           loadAllData()
         }, 1000)
       } else {
         loadAllData()
       }
     } catch (error) {
-      console.error('❌ Error en useEffect:', error)
+      console.error('Error en useEffect:', error)
     }
   }, [])
 
@@ -68,24 +57,24 @@ const AdminPanel = () => {
       setFreeBookings(freeBookingManager.getAllFreeBookings())
       
       const coursesData = courseManager.getAllCourses()
-      console.log('📚 AdminPanel: Cursos cargados:', coursesData)
+      console.log('Cursos cargados:', coursesData)
       setCourses(coursesData)
       
       const lessonsData = JSON.parse(localStorage.getItem('lessons') || '[]')
-      console.log('🎬 AdminPanel: Clases cargadas:', lessonsData)
+      console.log('Clases cargadas:', lessonsData)
       setLessons(lessonsData)
       
       const materialsData = JSON.parse(localStorage.getItem('materials') || '[]')
-      console.log('📄 AdminPanel: Materiales cargados:', materialsData)
+      console.log('Materiales cargados:', materialsData)
       setMaterials(materialsData)
       
       const usersData = JSON.parse(localStorage.getItem('users') || '[]')
-      console.log('👥 AdminPanel: Usuarios cargados:', usersData)
+      console.log('Usuarios cargados:', usersData)
       setUsers(usersData)
       
-      console.log('✅ AdminPanel: Datos cargados completamente')
+      console.log('Datos cargados completamente')
     } catch (error) {
-      console.error('❌ Error al cargar datos:', error)
+      console.error('Error al cargar datos:', error)
     }
   }
 
@@ -94,84 +83,8 @@ const AdminPanel = () => {
     alert('Configuración guardada exitosamente')
   }
 
-  const handleBookingStatusChange = (bookingId, newStatus) => {
-    try {
-      bookingManager.updateBookingStatus(bookingId, newStatus)
-      setBookings(bookingManager.getAllBookings())
-    } catch (error) {
-      console.error('Error al actualizar reserva:', error)
-    }
-  }
-
-  const handleFreeBookingStatusChange = (bookingId, newStatus) => {
-    try {
-      freeBookingManager.updateFreeBookingStatus(bookingId, newStatus)
-      setFreeBookings(freeBookingManager.getAllFreeBookings())
-    } catch (error) {
-      console.error('Error al actualizar reserva gratuita:', error)
-    }
-  }
-
-  const handleDeleteBooking = (bookingId) => {
-    if (confirm('¿Estás seguro de que quieres eliminar esta reserva?')) {
-      try {
-        bookingManager.deleteBooking(bookingId)
-        setBookings(bookingManager.getAllBookings())
-      } catch (error) {
-        console.error('Error al eliminar reserva:', error)
-      }
-    }
-  }
-
-  const handleDeleteFreeBooking = (bookingId) => {
-    if (confirm('¿Estás seguro de que quieres eliminar esta reserva gratuita?')) {
-      try {
-        freeBookingManager.deleteFreeBooking(bookingId)
-        setFreeBookings(freeBookingManager.getAllFreeBookings())
-      } catch (error) {
-        console.error('Error al eliminar reserva gratuita:', error)
-      }
-    }
-  }
-
-  const handleDeleteLesson = (lessonId) => {
-    if (confirm('¿Estás seguro de que quieres eliminar esta clase?')) {
-      try {
-        const updatedLessons = lessons.filter(l => l.id !== lessonId)
-        localStorage.setItem('lessons', JSON.stringify(updatedLessons))
-        setLessons(updatedLessons)
-      } catch (error) {
-        console.error('Error al eliminar clase:', error)
-      }
-    }
-  }
-
-  const handleDeleteMaterial = (materialId) => {
-    if (confirm('¿Estás seguro de que quieres eliminar este material?')) {
-      try {
-        const updatedMaterials = materials.filter(m => m.id !== materialId)
-        localStorage.setItem('materials', JSON.stringify(updatedMaterials))
-        setMaterials(updatedMaterials)
-      } catch (error) {
-        console.error('Error al eliminar material:', error)
-      }
-    }
-  }
-
-  const handleDeleteUser = (userId) => {
-    if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
-      try {
-        const updatedUsers = users.filter(user => user.id !== userId)
-        localStorage.setItem('users', JSON.stringify(updatedUsers))
-        setUsers(updatedUsers)
-      } catch (error) {
-        console.error('Error al eliminar usuario:', error)
-      }
-    }
-  }
-
   const handleResetDemoData = () => {
-    if (confirm('¿Estás seguro de que quieres reinicializar todos los datos de demo? Esto eliminará todos los datos actuales.')) {
+    if (confirm('¿Estás seguro de que quieres reinicializar todos los datos de demo?')) {
       try {
         localStorage.clear()
         forceInitializeAllData()
@@ -416,11 +329,11 @@ const AdminPanel = () => {
             <div className="flex items-center justify-between">
               <h3 className="text-2xl font-bold text-gray-800">Gestión de Cursos</h3>
               <button
-                onClick={() => setShowAddForm('course')}
+                onClick={handleForceInit}
                 className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center"
               >
                 <Plus className="w-4 h-4 mr-2" />
-                Agregar Curso
+                Inicializar Cursos
               </button>
             </div>
 
@@ -449,7 +362,7 @@ const AdminPanel = () => {
 
                   <div className="flex items-center space-x-2">
                     <button
-                      onClick={() => setSelectedCourse(course)}
+                      onClick={() => alert('Funcionalidad de gestión en desarrollo')}
                       className="flex-1 bg-purple-600 text-white px-3 py-2 rounded text-sm hover:bg-purple-700 transition-colors"
                     >
                       Gestionar
