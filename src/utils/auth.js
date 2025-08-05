@@ -110,6 +110,12 @@ export const auth = {
     return user && user.role === 'client'
   },
 
+  // Verificar si es estudiante
+  isStudent: () => {
+    const user = auth.getCurrentUser()
+    return user && user.role === 'student'
+  },
+
   // Renovar sesión
   refreshSession: () => {
     const user = auth.getCurrentUser()
@@ -182,7 +188,7 @@ export const initializeDemoData = () => {
       email: 'ana@example.com',
       password: 'Ana2024!',
       phone: '5491112345681',
-      role: 'client',
+      role: 'student',
       isActive: true,
       lastLogin: null,
       createdAt: new Date().toISOString(),

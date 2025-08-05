@@ -153,6 +153,9 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             required
           />
+          <p className="text-xs text-gray-500 mt-1">
+            Mínimo 8 caracteres, una mayúscula, una minúscula, un número y un símbolo
+          </p>
         </div>
 
         <div>

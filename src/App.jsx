@@ -190,7 +190,7 @@ function App() {
 
             {/* Ruta protegida para área de estudiantes */}
             <Route path="/estudiante" element={
-              <ProtectedRoute requiredRole="client" redirectTo="/auth">
+              <ProtectedRoute requiredRole="student" redirectTo="/auth">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
