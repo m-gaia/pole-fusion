@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { auth } from '../utils/auth'
-import { bookingManager, membershipManager, freeBookingManager } from '../utils/bookings'
+import { bookingManager, membershipManager } from '../utils/bookings'
+import { freeBookingManager } from '../utils/freeBookings'
 import { courseManager } from '../utils/courses'
 import { forceInitializeAllData, checkDataStatus } from '../utils/initDemo'
 import { siteConfig, updateSiteConfig } from '../config/siteConfig'
