@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { auth, initializeDemoData } from '../utils/auth'
 
 const Login = ({ onLogin, onSwitchToRegister }) => {
@@ -29,11 +28,7 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full"
-    >
+    <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Iniciar Sesión</h2>
         <p className="text-gray-600">Accede a tu cuenta</p>
@@ -99,10 +94,10 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
         <div className="text-sm text-blue-700 space-y-1">
           <p><strong>Admin:</strong> admin@polefusion.com / Admin2024!</p>
           <p><strong>Cliente:</strong> maria@example.com / Maria2024!</p>
-          <p><strong>Cliente 2:</strong> carlos@example.com / Carlos2024!</p>
+          <p><strong>Estudiante:</strong> ana@example.com / Ana2024!</p>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
