@@ -86,6 +86,10 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
       console.log('Attempting to register user:', userData)
       const newUser = auth.register(userData)
       console.log('Register successful:', newUser)
+      
+      // Debug: Listar todos los usuarios después del registro
+      auth.debugListUsers()
+      
       onRegister(newUser)
     } catch (err) {
       console.error('Register error:', err)

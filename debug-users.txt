@@ -1,0 +1,6 @@
+DEBUG DE USUARIOS
+- Agregada función debugListUsers para listar todos los usuarios
+- Debug automático al cargar Login y después de Register
+- Verificación de almacenamiento correcto de usuarios
+- Identificación de problemas en el proceso de registro/login
+Timestamp: $(date) 

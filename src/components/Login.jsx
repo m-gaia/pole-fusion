@@ -10,6 +10,8 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
   useEffect(() => {
     try {
       initializeDemoData()
+      // Debug: Listar todos los usuarios
+      auth.debugListUsers()
     } catch (error) {
       console.error('Error initializing demo data:', error)
     }

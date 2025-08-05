@@ -112,6 +112,23 @@ export const auth = {
     return !!auth.getCurrentUser()
   },
 
+  // Debug: Listar todos los usuarios (solo para desarrollo)
+  debugListUsers: () => {
+    const users = JSON.parse(localStorage.getItem('users') || '[]')
+    console.log('=== DEBUG: TODOS LOS USUARIOS ===')
+    users.forEach((user, index) => {
+      console.log(`Usuario ${index + 1}:`, {
+        email: user.email,
+        password: user.password ? `${user.password.substring(0, 3)}...` : 'undefined',
+        role: user.role,
+        isActive: user.isActive,
+        name: user.name
+      })
+    })
+    console.log('=== FIN DEBUG ===')
+    return users
+  },
+
   // Verificar si es admin
   isAdmin: () => {
     const user = auth.getCurrentUser()
