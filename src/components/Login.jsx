@@ -97,8 +97,9 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
       <div className="mt-8 p-4 bg-blue-50 rounded-lg">
         <h4 className="font-semibold text-blue-800 mb-2">Datos de Demo:</h4>
         <div className="text-sm text-blue-700 space-y-1">
-          <p><strong>Admin:</strong> admin@polefusion.com / admin123</p>
-          <p><strong>Cliente:</strong> maria@example.com / 123456</p>
+          <p><strong>Admin:</strong> admin@polefusion.com / Admin2024!</p>
+          <p><strong>Cliente:</strong> maria@example.com / Maria2024!</p>
+          <p><strong>Cliente 2:</strong> carlos@example.com / Carlos2024!</p>
         </div>
       </div>
     </motion.div>
