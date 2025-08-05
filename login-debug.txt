@@ -1,0 +1,7 @@
+DEBUG DE LOGIN
+- Agregados logs de debug en función auth.login
+- Agregados logs de debug en componente Login
+- Normalización de email para comparación
+- Logs detallados de búsqueda de usuarios
+- Identificación de problemas en autenticación
+Timestamp: $(date) 

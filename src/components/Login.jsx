@@ -20,6 +20,8 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
     setError('')
     setIsLoading(true)
 
+    console.log('Login form submitted - Email:', email, 'Password length:', password.length)
+
     try {
       const user = auth.login(email, password)
       console.log('Login successful:', user)

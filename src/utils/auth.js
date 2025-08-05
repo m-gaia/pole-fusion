@@ -43,12 +43,26 @@ export const auth = {
 
   // Iniciar sesión con validaciones mejoradas
   login: (email, password) => {
+    console.log('Login attempt - Email:', email, 'Password length:', password.length)
+    
     const users = JSON.parse(localStorage.getItem('users') || '[]')
-    const user = users.find(u => u.email === email && u.password === password && u.isActive)
+    console.log('Total users in storage:', users.length)
+    
+    // Normalizar email a minúsculas para comparación
+    const normalizedEmail = email.toLowerCase().trim()
+    console.log('Normalized email:', normalizedEmail)
+    
+    const user = users.find(u => {
+      console.log('Checking user:', u.email, 'Password match:', u.password === password, 'Active:', u.isActive)
+      return u.email.toLowerCase() === normalizedEmail && u.password === password && u.isActive
+    })
     
     if (!user) {
+      console.log('No user found or invalid credentials')
       throw new Error('Email o contraseña incorrectos')
     }
+
+    console.log('Login successful for user:', user.email)
 
     // Actualizar último login
     user.lastLogin = new Date().toISOString()
