@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { auth } from '../utils/auth'
-import { bookingManager, membershipManager } from '../utils/bookings'
-import { freeBookingManager } from '../utils/freeBookings'
+import { bookingManager, membershipManager, freeBookingManager } from '../utils/bookings'
+import { courseManager, lessonManager, materialManager, commentManager } from '../utils/courses'
 import { siteConfig, updateSiteConfig } from '../config/siteConfig'
 import { 
   Users, 
@@ -14,8 +14,15 @@ import {
   X as XIcon,
   Eye,
   EyeOff,
-  Gift,
-  MessageCircle
+  BookOpen,
+  Play,
+  FileText,
+  MessageCircle,
+  Plus,
+  Edit,
+  Trash2,
+  Download,
+  Upload
 } from 'lucide-react'
 
 const AdminPanel = () => {
@@ -24,12 +31,22 @@ const AdminPanel = () => {
   const [bookings, setBookings] = useState([])
   const [memberships, setMemberships] = useState([])
   const [freeBookings, setFreeBookings] = useState([])
-  const [showPassword, setShowPassword] = useState(false)
+  const [courses, setCourses] = useState([])
+  const [lessons, setLessons] = useState([])
+  const [materials, setMaterials] = useState([])
+  const [users, setUsers] = useState([])
+  const [selectedCourse, setSelectedCourse] = useState(null)
+  const [showAddForm, setShowAddForm] = useState(false)
+  const [formData, setFormData] = useState({})
 
   useEffect(() => {
     setBookings(bookingManager.getAllBookings())
     setMemberships(membershipManager.getAllMemberships())
     setFreeBookings(freeBookingManager.getAllFreeBookings())
+    setCourses(courseManager.getAllCourses())
+    setLessons(JSON.parse(localStorage.getItem('lessons') || '[]'))
+    setMaterials(JSON.parse(localStorage.getItem('materials') || '[]'))
+    setUsers(JSON.parse(localStorage.getItem('users') || '[]'))
   }, [])
 
   const handleSave = () => {
@@ -42,7 +59,7 @@ const AdminPanel = () => {
       bookingManager.updateBookingStatus(bookingId, newStatus)
       setBookings(bookingManager.getAllBookings())
     } catch (error) {
-      alert('Error al actualizar la reserva')
+      console.error('Error al actualizar reserva:', error)
     }
   }
 
@@ -51,7 +68,7 @@ const AdminPanel = () => {
       freeBookingManager.updateFreeBookingStatus(bookingId, newStatus)
       setFreeBookings(freeBookingManager.getAllFreeBookings())
     } catch (error) {
-      alert('Error al actualizar la reserva gratuita')
+      console.error('Error al actualizar reserva gratuita:', error)
     }
   }
 
@@ -61,7 +78,7 @@ const AdminPanel = () => {
         bookingManager.deleteBooking(bookingId)
         setBookings(bookingManager.getAllBookings())
       } catch (error) {
-        alert('Error al eliminar la reserva')
+        console.error('Error al eliminar reserva:', error)
       }
     }
   }
@@ -72,7 +89,41 @@ const AdminPanel = () => {
         freeBookingManager.deleteFreeBooking(bookingId)
         setFreeBookings(freeBookingManager.getAllFreeBookings())
       } catch (error) {
-        alert('Error al eliminar la reserva gratuita')
+        console.error('Error al eliminar reserva gratuita:', error)
+      }
+    }
+  }
+
+  const handleDeleteLesson = (lessonId) => {
+    if (confirm('¿Estás seguro de que quieres eliminar esta clase?')) {
+      try {
+        lessonManager.deleteLesson(lessonId)
+        setLessons(lessonManager.getLessonsByCourse(selectedCourse?.id || ''))
+      } catch (error) {
+        console.error('Error al eliminar clase:', error)
+      }
+    }
+  }
+
+  const handleDeleteMaterial = (materialId) => {
+    if (confirm('¿Estás seguro de que quieres eliminar este material?')) {
+      try {
+        materialManager.deleteMaterial(materialId)
+        setMaterials(materialManager.getMaterialsByCourse(selectedCourse?.id || ''))
+      } catch (error) {
+        console.error('Error al eliminar material:', error)
+      }
+    }
+  }
+
+  const handleDeleteUser = (userId) => {
+    if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+      try {
+        const updatedUsers = users.filter(user => user.id !== userId)
+        localStorage.setItem('users', JSON.stringify(updatedUsers))
+        setUsers(updatedUsers)
+      } catch (error) {
+        console.error('Error al eliminar usuario:', error)
       }
     }
   }
@@ -89,8 +140,8 @@ const AdminPanel = () => {
   const getStatusText = (status) => {
     switch (status) {
       case 'pending': return 'Pendiente'
-      case 'confirmed': return 'Confirmada'
-      case 'cancelled': return 'Cancelada'
+      case 'confirmed': return 'Confirmado'
+      case 'cancelled': return 'Cancelado'
       default: return status
     }
   }
@@ -104,7 +155,11 @@ const AdminPanel = () => {
     confirmedMemberships: memberships.filter(m => m.status === 'confirmed').length,
     totalFreeBookings: freeBookings.length,
     pendingFreeBookings: freeBookings.filter(b => b.status === 'pending').length,
-    confirmedFreeBookings: freeBookings.filter(b => b.status === 'confirmed').length
+    confirmedFreeBookings: freeBookings.filter(b => b.status === 'confirmed').length,
+    totalCourses: courses.length,
+    totalLessons: lessons.length,
+    totalMaterials: materials.length,
+    totalUsers: users.filter(u => u.role === 'client').length
   }
 
   return (
@@ -120,10 +175,10 @@ const AdminPanel = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b">
+      <div className="flex border-b overflow-x-auto">
         <button
           onClick={() => setActiveTab('dashboard')}
-          className={`px-6 py-3 font-medium ${
+          className={`px-6 py-3 font-medium whitespace-nowrap ${
             activeTab === 'dashboard' 
               ? 'text-purple-600 border-b-2 border-purple-600' 
               : 'text-gray-600 hover:text-gray-800'
@@ -133,7 +188,7 @@ const AdminPanel = () => {
         </button>
         <button
           onClick={() => setActiveTab('bookings')}
-          className={`px-6 py-3 font-medium ${
+          className={`px-6 py-3 font-medium whitespace-nowrap ${
             activeTab === 'bookings' 
               ? 'text-purple-600 border-b-2 border-purple-600' 
               : 'text-gray-600 hover:text-gray-800'
@@ -142,18 +197,8 @@ const AdminPanel = () => {
           Reservas
         </button>
         <button
-          onClick={() => setActiveTab('freeBookings')}
-          className={`px-6 py-3 font-medium ${
-            activeTab === 'freeBookings' 
-              ? 'text-purple-600 border-b-2 border-purple-600' 
-              : 'text-gray-600 hover:text-gray-800'
-          }`}
-        >
-          Clases Gratuitas
-        </button>
-        <button
           onClick={() => setActiveTab('memberships')}
-          className={`px-6 py-3 font-medium ${
+          className={`px-6 py-3 font-medium whitespace-nowrap ${
             activeTab === 'memberships' 
               ? 'text-purple-600 border-b-2 border-purple-600' 
               : 'text-gray-600 hover:text-gray-800'
@@ -162,8 +207,38 @@ const AdminPanel = () => {
           Membresías
         </button>
         <button
+          onClick={() => setActiveTab('freeBookings')}
+          className={`px-6 py-3 font-medium whitespace-nowrap ${
+            activeTab === 'freeBookings' 
+              ? 'text-purple-600 border-b-2 border-purple-600' 
+              : 'text-gray-600 hover:text-gray-800'
+          }`}
+        >
+          Clases Gratuitas
+        </button>
+        <button
+          onClick={() => setActiveTab('courses')}
+          className={`px-6 py-3 font-medium whitespace-nowrap ${
+            activeTab === 'courses' 
+              ? 'text-purple-600 border-b-2 border-purple-600' 
+              : 'text-gray-600 hover:text-gray-800'
+          }`}
+        >
+          Cursos
+        </button>
+        <button
+          onClick={() => setActiveTab('users')}
+          className={`px-6 py-3 font-medium whitespace-nowrap ${
+            activeTab === 'users' 
+              ? 'text-purple-600 border-b-2 border-purple-600' 
+              : 'text-gray-600 hover:text-gray-800'
+          }`}
+        >
+          Usuarios
+        </button>
+        <button
           onClick={() => setActiveTab('settings')}
-          className={`px-6 py-3 font-medium ${
+          className={`px-6 py-3 font-medium whitespace-nowrap ${
             activeTab === 'settings' 
               ? 'text-purple-600 border-b-2 border-purple-600' 
               : 'text-gray-600 hover:text-gray-800'
@@ -177,83 +252,78 @@ const AdminPanel = () => {
       <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
         {activeTab === 'dashboard' && (
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold mb-4">Dashboard</h3>
+            <h3 className="text-2xl font-bold text-gray-800">Dashboard</h3>
             
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-blue-50 p-6 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-blue-600">Reservas Totales</p>
-                    <p className="text-2xl font-bold text-blue-800">{stats.totalBookings}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-white p-6 rounded-lg shadow border">
+                <div className="flex items-center">
+                  <Calendar className="w-8 h-8 text-purple-600" />
+                  <div className="ml-4">
+                    <p className="text-sm font-medium text-gray-600">Reservas</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats.totalBookings}</p>
                   </div>
-                  <Calendar className="w-8 h-8 text-blue-600" />
                 </div>
-                <div className="mt-2 text-sm text-blue-600">
-                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded mr-2">
-                    {stats.confirmedBookings} Confirmadas
-                  </span>
-                  <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-                    {stats.pendingBookings} Pendientes
-                  </span>
+                <div className="mt-4">
+                  <span className="text-sm text-yellow-600">{stats.pendingBookings} pendientes</span>
                 </div>
               </div>
 
-              <div className="bg-green-50 p-6 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-green-600">Clases Gratuitas</p>
-                    <p className="text-2xl font-bold text-green-800">{stats.totalFreeBookings}</p>
+              <div className="bg-white p-6 rounded-lg shadow border">
+                <div className="flex items-center">
+                  <CreditCard className="w-8 h-8 text-green-600" />
+                  <div className="ml-4">
+                    <p className="text-sm font-medium text-gray-600">Membresías</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats.totalMemberships}</p>
                   </div>
-                  <Gift className="w-8 h-8 text-green-600" />
                 </div>
-                <div className="mt-2 text-sm text-green-600">
-                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded mr-2">
-                    {stats.confirmedFreeBookings} Confirmadas
-                  </span>
-                  <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-                    {stats.pendingFreeBookings} Pendientes
-                  </span>
+                <div className="mt-4">
+                  <span className="text-sm text-yellow-600">{stats.pendingMemberships} pendientes</span>
                 </div>
               </div>
 
-              <div className="bg-purple-50 p-6 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-purple-600">Membresías</p>
-                    <p className="text-2xl font-bold text-purple-800">{stats.totalMemberships}</p>
+              <div className="bg-white p-6 rounded-lg shadow border">
+                <div className="flex items-center">
+                  <MessageCircle className="w-8 h-8 text-blue-600" />
+                  <div className="ml-4">
+                    <p className="text-sm font-medium text-gray-600">Clases Gratuitas</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats.totalFreeBookings}</p>
                   </div>
-                  <CreditCard className="w-8 h-8 text-purple-600" />
                 </div>
-                <div className="mt-2 text-sm text-purple-600">
-                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded mr-2">
-                    {stats.confirmedMemberships} Confirmadas
-                  </span>
-                  <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-                    {stats.pendingMemberships} Pendientes
-                  </span>
+                <div className="mt-4">
+                  <span className="text-sm text-yellow-600">{stats.pendingFreeBookings} pendientes</span>
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow border">
+                <div className="flex items-center">
+                  <BookOpen className="w-8 h-8 text-purple-600" />
+                  <div className="ml-4">
+                    <p className="text-sm font-medium text-gray-600">Cursos</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats.totalCourses}</p>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <span className="text-sm text-gray-600">{stats.totalLessons} clases, {stats.totalMaterials} materiales</span>
                 </div>
               </div>
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-white border rounded-lg p-6">
-              <h4 className="font-semibold mb-4">Actividad Reciente</h4>
+            <div className="bg-white p-6 rounded-lg shadow border">
+              <h4 className="text-lg font-semibold text-gray-800 mb-4">Actividad Reciente</h4>
               <div className="space-y-3">
                 {bookings.slice(0, 5).map((booking) => (
-                  <div key={booking.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                  <div key={booking.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div>
                       <p className="font-medium">{booking.name}</p>
                       <p className="text-sm text-gray-600">{booking.selectedClass} - {booking.selectedDate}</p>
                     </div>
-                    <span className={`px-2 py-1 rounded text-xs ${getStatusColor(booking.status)}`}>
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(booking.status)}`}>
                       {getStatusText(booking.status)}
                     </span>
                   </div>
                 ))}
-                {bookings.length === 0 && (
-                  <p className="text-gray-500 text-center py-4">No hay reservas recientes</p>
-                )}
               </div>
             </div>
           </div>
@@ -261,7 +331,7 @@ const AdminPanel = () => {
 
         {activeTab === 'bookings' && (
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold mb-4">Gestión de Reservas</h3>
+            <h3 className="text-2xl font-bold text-gray-800">Gestión de Reservas</h3>
             
             {bookings.length === 0 ? (
               <div className="text-center py-8">
@@ -322,13 +392,86 @@ const AdminPanel = () => {
           </div>
         )}
 
+        {activeTab === 'memberships' && (
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-gray-800">Gestión de Membresías</h3>
+            
+            {memberships.length === 0 ? (
+              <div className="text-center py-8">
+                <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-500">No hay solicitudes de membresía</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {memberships.map((membership) => (
+                  <div key={membership.id} className="border rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <h4 className="font-semibold">{membership.name}</h4>
+                        <p className="text-sm text-gray-600">{membership.email} • {membership.phone}</p>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(membership.status)}`}>
+                        {getStatusText(membership.status)}
+                      </span>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Plan</p>
+                        <p className="text-sm">{membership.selectedPlan}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Mensaje</p>
+                        <p className="text-sm">{membership.message}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <select
+                        value={membership.status}
+                        onChange={(e) => {
+                          try {
+                            membershipManager.updateMembershipStatus(membership.id, e.target.value)
+                            setMemberships(membershipManager.getAllMemberships())
+                          } catch (error) {
+                            console.error('Error al actualizar la membresía:', error)
+                          }
+                        }}
+                        className="px-3 py-1 border rounded text-sm"
+                      >
+                        <option value="pending">Pendiente</option>
+                        <option value="confirmed">Confirmada</option>
+                        <option value="cancelled">Cancelada</option>
+                      </select>
+                      
+                      <button
+                        onClick={() => {
+                          try {
+                            membershipManager.deleteMembership(membership.id)
+                            setMemberships(membershipManager.getAllMemberships())
+                          } catch (error) {
+                            console.error('Error al eliminar la membresía:', error)
+                          }
+                        }}
+                        className="px-3 py-1 bg-red-100 text-red-600 rounded text-sm hover:bg-red-200"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {activeTab === 'freeBookings' && (
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold mb-4">Gestión de Clases Gratuitas</h3>
+            <h3 className="text-2xl font-bold text-gray-800">Gestión de Clases Gratuitas</h3>
             
             {freeBookings.length === 0 ? (
               <div className="text-center py-8">
-                <Gift className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <MessageCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                 <p className="text-gray-500">No hay reservas de clases gratuitas</p>
               </div>
             ) : (
@@ -398,153 +541,309 @@ const AdminPanel = () => {
           </div>
         )}
 
-        {activeTab === 'memberships' && (
+        {activeTab === 'courses' && (
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold mb-4">Gestión de Membresías</h3>
-            
-            {memberships.length === 0 ? (
-              <div className="text-center py-8">
-                <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">No hay solicitudes de membresía</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {memberships.map((membership) => (
-                  <div key={membership.id} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <h4 className="font-semibold">{membership.name}</h4>
-                        <p className="text-sm text-gray-600">{membership.email} • {membership.phone}</p>
-                      </div>
-                      <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(membership.status)}`}>
-                        {getStatusText(membership.status)}
-                      </span>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                      <div>
-                        <p className="text-sm font-medium text-gray-700">Plan</p>
-                        <p className="text-sm">{membership.selectedPlan}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-700">Mensaje</p>
-                        <p className="text-sm">{membership.message}</p>
-                      </div>
-                    </div>
+            <div className="flex items-center justify-between">
+              <h3 className="text-2xl font-bold text-gray-800">Gestión de Cursos</h3>
+              <button
+                onClick={() => setShowAddForm('course')}
+                className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Agregar Curso
+              </button>
+            </div>
 
-                    <div className="flex items-center space-x-2">
-                      <select
-                        value={membership.status}
-                        onChange={(e) => {
-                          try {
-                            membershipManager.updateMembershipStatus(membership.id, e.target.value)
-                            setMemberships(membershipManager.getAllMemberships())
-                          } catch (error) {
-                            alert('Error al actualizar la membresía')
-                          }
-                        }}
-                        className="px-3 py-1 border rounded text-sm"
-                      >
-                        <option value="pending">Pendiente</option>
-                        <option value="confirmed">Confirmada</option>
-                        <option value="cancelled">Cancelada</option>
-                      </select>
-                      
-                      <button
-                        onClick={() => {
-                          try {
-                            membershipManager.deleteMembership(membership.id)
-                            setMemberships(membershipManager.getAllMemberships())
-                          } catch (error) {
-                            alert('Error al eliminar la membresía')
-                          }
-                        }}
-                        className="px-3 py-1 bg-red-100 text-red-600 rounded text-sm hover:bg-red-200"
-                      >
-                        Eliminar
-                      </button>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {courses.map((course) => (
+                <div key={course.id} className="border rounded-lg p-4 hover:shadow-lg transition-shadow">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold text-lg">{course.title}</h4>
+                    <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+                      {course.level}
+                    </span>
+                  </div>
+                  
+                  <p className="text-gray-600 mb-3">{course.subtitle}</p>
+                  
+                  <div className="space-y-2 mb-4">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      {course.duration}
+                    </div>
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Play className="w-4 h-4 mr-2" />
+                      {course.features[0]}
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
 
-        {activeTab === 'settings' && (
-          <div className="space-y-6">
-            <h3 className="text-xl font-semibold mb-4">Configuración del Sitio</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nombre del Negocio
-                </label>
-                <input
-                  type="text"
-                  value={config.businessName}
-                  onChange={(e) => setConfig({...config, businessName: e.target.value})}
-                  className="w-full p-3 border border-gray-300 rounded-lg"
-                />
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => setSelectedCourse(course)}
+                      className="flex-1 bg-purple-600 text-white px-3 py-2 rounded text-sm hover:bg-purple-700 transition-colors"
+                    >
+                      Gestionar
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (confirm('¿Estás seguro de que quieres eliminar este curso?')) {
+                          try {
+                            courseManager.deleteCourse(course.id)
+                            setCourses(courseManager.getAllCourses())
+                          } catch (error) {
+                            console.error('Error al eliminar curso:', error)
+                          }
+                        }
+                      }}
+                      className="px-3 py-2 bg-red-100 text-red-600 rounded text-sm hover:bg-red-200"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Course Management Modal */}
+            {selectedCourse && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+                <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-6">
+                      <div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                          {selectedCourse.title}
+                        </h2>
+                        <p className="text-gray-600">{selectedCourse.subtitle}</p>
+                      </div>
+                      <button
+                        onClick={() => setSelectedCourse(null)}
+                        className="text-gray-500 hover:text-gray-700"
+                      >
+                        <X size={24} />
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      {/* Clases */}
+                      <div>
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-lg font-semibold text-gray-800">Clases Virtuales</h3>
+                          <button
+                            onClick={() => setShowAddForm('lesson')}
+                            className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
+                          >
+                            <Plus className="w-4 h-4 mr-1" />
+                            Agregar Clase
+                          </button>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          {lessons.filter(l => l.courseId === selectedCourse.id).map((lesson) => (
+                            <div key={lesson.id} className="border rounded-lg p-3">
+                              <div className="flex items-center justify-between mb-2">
+                                <h4 className="font-medium">{lesson.title}</h4>
+                                <button
+                                  onClick={() => handleDeleteLesson(lesson.id)}
+                                  className="text-red-500 hover:text-red-700"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                              <p className="text-sm text-gray-600 mb-2">{lesson.description}</p>
+                              <div className="flex items-center text-xs text-gray-500">
+                                <Play className="w-3 h-3 mr-1" />
+                                {lesson.duration}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Materiales */}
+                      <div>
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-lg font-semibold text-gray-800">Material Teórico</h3>
+                          <button
+                            onClick={() => setShowAddForm('material')}
+                            className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                          >
+                            <Plus className="w-4 h-4 mr-1" />
+                            Agregar Material
+                          </button>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          {materials.filter(m => m.courseId === selectedCourse.id).map((material) => (
+                            <div key={material.id} className="border rounded-lg p-3">
+                              <div className="flex items-center justify-between mb-2">
+                                <h4 className="font-medium">{material.title}</h4>
+                                <button
+                                  onClick={() => handleDeleteMaterial(material.id)}
+                                  className="text-red-500 hover:text-red-700"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                              <p className="text-sm text-gray-600 mb-2">{material.description}</p>
+                              <div className="flex items-center justify-between text-xs text-gray-500">
+                                <span>{material.fileSize}</span>
+                                <button
+                                  onClick={() => window.open(material.fileUrl, '_blank')}
+                                  className="text-blue-600 hover:text-blue-700"
+                                >
+                                  <Download className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === 'users' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-bold text-gray-800">Gestión de Usuarios</h3>
+                <button
+                  onClick={() => setShowAddForm('user')}
+                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Agregar Usuario
+                </button>
               </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Teléfono
-                </label>
-                <input
-                  type="tel"
-                  value={config.phone}
-                  onChange={(e) => setConfig({...config, phone: e.target.value})}
-                  className="w-full p-3 border border-gray-300 rounded-lg"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={config.email}
-                  onChange={(e) => setConfig({...config, email: e.target.value})}
-                  className="w-full p-3 border border-gray-300 rounded-lg"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Dirección
-                </label>
-                <input
-                  type="text"
-                  value={config.address}
-                  onChange={(e) => setConfig({...config, address: e.target.value})}
-                  className="w-full p-3 border border-gray-300 rounded-lg"
-                />
-              </div>
-              
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Descripción
-                </label>
-                <textarea
-                  value={config.description}
-                  onChange={(e) => setConfig({...config, description: e.target.value})}
-                  rows={4}
-                  className="w-full p-3 border border-gray-300 rounded-lg"
-                />
+
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="text-left p-3 border-b">Nombre</th>
+                      <th className="text-left p-3 border-b">Email</th>
+                      <th className="text-left p-3 border-b">Rol</th>
+                      <th className="text-left p-3 border-b">Estado</th>
+                      <th className="text-left p-3 border-b">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((user) => (
+                      <tr key={user.id} className="border-b hover:bg-gray-50">
+                        <td className="p-3">{user.name}</td>
+                        <td className="p-3">{user.email}</td>
+                        <td className="p-3">
+                          <span className={`px-2 py-1 rounded-full text-xs ${
+                            user.role === 'admin' 
+                              ? 'bg-red-100 text-red-800' 
+                              : 'bg-green-100 text-green-800'
+                          }`}>
+                            {user.role === 'admin' ? 'Administrador' : 'Cliente'}
+                          </span>
+                        </td>
+                        <td className="p-3">
+                          <span className={`px-2 py-1 rounded-full text-xs ${
+                            user.isActive 
+                              ? 'bg-green-100 text-green-800' 
+                              : 'bg-red-100 text-red-800'
+                          }`}>
+                            {user.isActive ? 'Activo' : 'Inactivo'}
+                          </span>
+                        </td>
+                        <td className="p-3">
+                          <button
+                            onClick={() => handleDeleteUser(user.id)}
+                            className="text-red-500 hover:text-red-700"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
-            
-            <button
-              onClick={handleSave}
-              className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              Guardar Configuración
-            </button>
-          </div>
-        )}
+          )}
+
+          {activeTab === 'settings' && (
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-gray-800">Configuración del Sitio</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Nombre del Negocio
+                  </label>
+                  <input
+                    type="text"
+                    value={config.businessName}
+                    onChange={(e) => setConfig({...config, businessName: e.target.value})}
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Teléfono
+                  </label>
+                  <input
+                    type="tel"
+                    value={config.phone}
+                    onChange={(e) => setConfig({...config, phone: e.target.value})}
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    value={config.email}
+                    onChange={(e) => setConfig({...config, email: e.target.value})}
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Dirección
+                  </label>
+                  <input
+                    type="text"
+                    value={config.address}
+                    onChange={(e) => setConfig({...config, address: e.target.value})}
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                  />
+                </div>
+                
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Descripción
+                  </label>
+                  <textarea
+                    value={config.description}
+                    onChange={(e) => setConfig({...config, description: e.target.value})}
+                    rows={4}
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                  />
+                </div>
+              </div>
+              
+              <button
+                onClick={handleSave}
+                className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+              >
+                Guardar Configuración
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

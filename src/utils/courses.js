@@ -371,6 +371,140 @@ export const initializeCourseDemoData = () => {
     }
   ]
 
+  // Crear clases de demo
+  const demoLessons = [
+    {
+      id: 'lesson-1',
+      courseId: 'course-1',
+      title: 'Introducción a Pole Dance',
+      description: 'Primera clase del curso básico donde aprenderás los fundamentos y técnicas básicas de pole dance.',
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      duration: '60 min',
+      order: 1,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    },
+    {
+      id: 'lesson-2',
+      courseId: 'course-1',
+      title: 'Técnicas de Enseñanza',
+      description: 'Aprende cómo enseñar pole dance de manera efectiva y segura.',
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      duration: '75 min',
+      order: 2,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    },
+    {
+      id: 'lesson-3',
+      courseId: 'course-2',
+      title: 'Técnicas Avanzadas',
+      description: 'Clase intermedia con técnicas más complejas y desafiantes.',
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      duration: '90 min',
+      order: 1,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    },
+    {
+      id: 'lesson-4',
+      courseId: 'course-3',
+      title: 'Maestría en Pole Dance',
+      description: 'Clase avanzada con técnicas de nivel experto.',
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      duration: '120 min',
+      order: 1,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    }
+  ]
+
+  // Crear materiales de demo
+  const demoMaterials = [
+    {
+      id: 'material-1',
+      courseId: 'course-1',
+      title: 'Manual de Fundamentos',
+      description: 'Guía completa de fundamentos de pole dance para instructores principiantes.',
+      fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+      fileSize: '2.5 MB',
+      type: 'pdf',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    },
+    {
+      id: 'material-2',
+      courseId: 'course-1',
+      title: 'Guía de Seguridad',
+      description: 'Protocolos de seguridad y prevención de lesiones en pole dance.',
+      fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+      fileSize: '1.8 MB',
+      type: 'pdf',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    },
+    {
+      id: 'material-3',
+      courseId: 'course-2',
+      title: 'Manual de Técnicas Avanzadas',
+      description: 'Documentación completa de técnicas avanzadas de pole dance.',
+      fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+      fileSize: '3.2 MB',
+      type: 'pdf',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    },
+    {
+      id: 'material-4',
+      courseId: 'course-3',
+      title: 'Guía de Maestría',
+      description: 'Manual completo para alcanzar el nivel de maestría en pole dance.',
+      fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+      fileSize: '4.1 MB',
+      type: 'pdf',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    }
+  ]
+
+  // Crear comentarios de demo
+  const demoComments = [
+    {
+      id: 'comment-1',
+      lessonId: 'lesson-1',
+      courseId: 'course-1',
+      userId: 'student-1',
+      userName: 'Ana Martínez',
+      content: 'Excelente clase! Me ayudó mucho a entender los fundamentos.',
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: 'comment-2',
+      lessonId: 'lesson-1',
+      courseId: 'course-1',
+      userId: 'client-1',
+      userName: 'María González',
+      content: '¿Podrías explicar más sobre la técnica de agarre?',
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: 'comment-3',
+      lessonId: 'lesson-2',
+      courseId: 'course-1',
+      userId: 'student-1',
+      userName: 'Ana Martínez',
+      content: 'Muy útil para aprender a enseñar de manera efectiva.',
+      createdAt: new Date().toISOString()
+    }
+  ]
+
   localStorage.setItem('courses', JSON.stringify(demoCourses))
+  localStorage.setItem('lessons', JSON.stringify(demoLessons))
+  localStorage.setItem('materials', JSON.stringify(demoMaterials))
+  localStorage.setItem('comments', JSON.stringify(demoComments))
+  
   console.log('Cursos de demo inicializados:', demoCourses)
+  console.log('Clases de demo inicializadas:', demoLessons)
+  console.log('Materiales de demo inicializados:', demoMaterials)
+  console.log('Comentarios de demo inicializados:', demoComments)
 } 

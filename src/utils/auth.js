@@ -145,85 +145,63 @@ export const auth = {
   }
 }
 
-// Datos iniciales para demo con contraseñas seguras
+// Inicializar datos de demo
 export const initializeDemoData = () => {
-  // Limpiar datos existentes para asegurar datos frescos
-  const users = []
-  
-  // Crear admin por defecto (NO se puede crear desde el frontend)
-  const adminUser = {
-    id: 'admin-1',
-    name: 'Administrador',
-    email: 'admin@polefusion.com',
-    password: 'Admin2024!',
-    phone: '+54 11 1234-5678',
-    role: 'admin',
-    createdAt: new Date().toISOString(),
-    isActive: true,
-    lastLogin: null
-  }
-  
-  users.push(adminUser)
-
-  // Crear usuarios de ejemplo
+  // Usuarios de demo
   const demoUsers = [
     {
-      id: 'user-1',
+      id: 'admin-1',
+      name: 'Administrador',
+      email: 'admin@polefusion.com',
+      password: 'Admin2024!',
+      phone: '5491112345678',
+      role: 'admin',
+      isActive: true,
+      lastLogin: null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    },
+    {
+      id: 'client-1',
       name: 'María González',
       email: 'maria@example.com',
       password: 'Maria2024!',
-      phone: '+54 9 11 1234-5678',
+      phone: '5491112345679',
       role: 'client',
-      createdAt: new Date().toISOString(),
       isActive: true,
-      lastLogin: null
+      lastLogin: null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     },
     {
-      id: 'user-2',
+      id: 'client-2',
       name: 'Carlos Rodríguez',
       email: 'carlos@example.com',
       password: 'Carlos2024!',
-      phone: '+54 9 11 2345-6789',
+      phone: '5491112345680',
       role: 'client',
-      createdAt: new Date().toISOString(),
       isActive: true,
-      lastLogin: null
-    }
-  ]
-  
-  users.push(...demoUsers)
-  localStorage.setItem('users', JSON.stringify(users))
-  
-  // Crear datos de demo para reservas gratuitas
-  const demoFreeBookings = [
-    {
-      id: 'free-1',
-      selectedClass: 'Clase Gratuita de Introducción',
-      selectedDate: '2024-01-15',
-      selectedTime: '18:00',
-      name: 'Ana Martínez',
-      email: 'ana@example.com',
-      phone: '+54 9 11 3456-7890',
-      status: 'pending',
+      lastLogin: null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     },
     {
-      id: 'free-2',
-      selectedClass: 'Clase Gratuita de Pole Dance',
-      selectedDate: '2024-01-16',
-      selectedTime: '19:00',
-      name: 'Laura Fernández',
-      email: 'laura@example.com',
-      phone: '+54 9 11 4567-8901',
-      status: 'confirmed',
+      id: 'student-1',
+      name: 'Ana Martínez',
+      email: 'ana@example.com',
+      password: 'Ana2024!',
+      phone: '5491112345681',
+      role: 'client',
+      isActive: true,
+      lastLogin: null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     }
   ]
-  
-  localStorage.setItem('freeBookings', JSON.stringify(demoFreeBookings))
-  
-  console.log('Datos de demo inicializados con seguridad mejorada:', users)
-  console.log('Reservas gratuitas de demo:', demoFreeBookings)
+
+  localStorage.setItem('users', JSON.stringify(demoUsers))
+  console.log('Usuarios de demo inicializados:', demoUsers)
+
+  // Inicializar datos de cursos
+  initializeCourseDemoData()
 } 
