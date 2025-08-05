@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import Login from '../components/Login'
 import Register from '../components/Register'
+import Notification from '../components/Notification'
 
 const Auth = ({ onLogin }) => {
   const [isLoading, setIsLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState('login') // 'login' o 'register'
+  const [notification, setNotification] = useState(null)
   
   useEffect(() => {
     // Simular carga inicial
@@ -15,6 +18,22 @@ const Auth = ({ onLogin }) => {
   }, [])
   
   console.log('Auth component rendering')
+  
+  const handleLogin = (user) => {
+    console.log('Login successful:', user)
+    onLogin(user)
+  }
+  
+  const handleRegister = (user) => {
+    console.log('Register successful:', user)
+    // Después del registro exitoso, cambiar a login
+    setActiveTab('login')
+    // Mostrar notificación de éxito
+    setNotification({
+      message: '¡Cuenta creada exitosamente! Ahora puedes iniciar sesión.',
+      type: 'success'
+    })
+  }
   
   if (isLoading) {
     return (
@@ -30,38 +49,66 @@ const Auth = ({ onLogin }) => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div className="bg-white py-8 px-6 shadow-lg rounded-lg">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Test Auth Page
-            </h1>
-            <p className="text-gray-600 mb-8">
-              Esta es una página de prueba
-            </p>
+        {/* Header con tabs */}
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="flex">
+            <button
+              onClick={() => setActiveTab('login')}
+              className={`flex-1 py-4 px-6 text-center font-medium transition-colors ${
+                activeTab === 'login'
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Iniciar Sesión
+            </button>
+            <button
+              onClick={() => setActiveTab('register')}
+              className={`flex-1 py-4 px-6 text-center font-medium transition-colors ${
+                activeTab === 'register'
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Registrarse
+            </button>
           </div>
           
-          <div className="space-y-4">
-            <button 
-              onClick={() => {
-                console.log('Button clicked')
-                alert('Botón funcionando correctamente')
-              }}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-md transition duration-200"
-            >
-              Botón de Prueba
-            </button>
-            
-            <div className="text-center">
-              <p className="text-sm text-gray-500">
-                Componente Auth cargado correctamente
-              </p>
-              <p className="text-xs text-gray-400 mt-2">
-                Ruta: /auth
-              </p>
-            </div>
+          {/* Contenido de los tabs */}
+          <div className="p-8">
+            {activeTab === 'login' ? (
+              <Login 
+                onLogin={handleLogin}
+                onSwitchToRegister={() => setActiveTab('register')}
+              />
+            ) : (
+              <Register 
+                onRegister={handleRegister}
+                onSwitchToLogin={() => setActiveTab('login')}
+              />
+            )}
           </div>
         </div>
+        
+        {/* Información adicional */}
+        <div className="text-center">
+          <p className="text-sm text-gray-500">
+            Sistema de autenticación funcional
+          </p>
+          <p className="text-xs text-gray-400 mt-1">
+            Ruta: /auth | Tab activo: {activeTab}
+          </p>
+        </div>
       </div>
+      
+      {/* Notificación */}
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </div>
   )
 }

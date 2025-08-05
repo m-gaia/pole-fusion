@@ -12,6 +12,7 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const handleChange = (e) => {
     setFormData({
@@ -83,8 +84,10 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
       }
 
       const newUser = auth.register(userData)
+      console.log('Register successful:', newUser)
       onRegister(newUser)
     } catch (err) {
+      console.error('Register error:', err)
       setError(err.message)
     } finally {
       setIsLoading(false)
@@ -114,9 +117,9 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
   const passwordStrength = getPasswordStrength(formData.password)
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Crear Cuenta</h2>
+    <div className="w-full">
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">Crear Cuenta</h2>
         <p className="text-gray-600">Regístrate para acceder</p>
       </div>
 
@@ -126,7 +129,7 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Nombre Completo
@@ -219,14 +222,23 @@ const Register = ({ onRegister, onSwitchToLogin }) => {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Confirmar Contraseña
           </label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            required
-          />
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent pr-10"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            >
+              {showConfirmPassword ? "Ocultar" : "Mostrar"}
+            </button>
+          </div>
         </div>
 
         <button

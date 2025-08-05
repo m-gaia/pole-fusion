@@ -43,6 +43,8 @@ function App() {
 
   const handleLogin = (user) => {
     setCurrentUser(user)
+    console.log('User logged in:', user)
+    
     // Redirigir según el rol usando React Router
     if (user.role === 'admin') {
       window.location.href = '/admin'
