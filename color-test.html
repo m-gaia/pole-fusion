@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Colores - Pole Fusion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#e8e7f5',
+                            100: '#d1cfea',
+                            200: '#a39fd5',
+                            300: '#756fc0',
+                            400: '#473fab',
+                            500: '#1f1b79',
+                            600: '#1a1666',
+                            700: '#151253',
+                            800: '#100e40',
+                            900: '#0b0a2d',
+                        },
+                        secondary: {
+                            50: '#f0eef8',
+                            100: '#e1ddf1',
+                            200: '#c3bbe3',
+                            300: '#a599d5',
+                            400: '#8777c7',
+                            500: '#4a3d8a',
+                            600: '#3e3373',
+                            700: '#32295c',
+                            800: '#261f45',
+                            900: '#1a152e',
+                        },
+                        accent: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#d63d9e',
+                            600: '#b83285',
+                            700: '#9a276c',
+                            800: '#7c1c53',
+                            900: '#5e113a',
+                        },
+                        coral: {
+                            50: '#fff5f5',
+                            100: '#ffe3e3',
+                            200: '#ffc9c9',
+                            300: '#ffa8a8',
+                            400: '#ff8787',
+                            500: '#ff6e61',
+                            600: '#ff5252',
+                            700: '#ff3838',
+                            800: '#ff1e1e',
+                            900: '#ff0404',
+                        },
+                        lavender: {
+                            50: '#f8f4fb',
+                            100: '#f1e9f7',
+                            200: '#e3d3ef',
+                            300: '#d5bde7',
+                            400: '#c7a7df',
+                            500: '#995fb4',
+                            600: '#7d4f93',
+                            700: '#613f72',
+                            800: '#452f51',
+                            900: '#291f30',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Test de Paleta de Colores - Pole Fusion</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Primary Colors -->
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <h2 class="text-xl font-bold mb-4 text-primary-500">Primary (Deep Blue)</h2>
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-primary-500 rounded"></div>
+                        <span class="text-sm">Primary 500: #1f1b79</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-primary-400 rounded"></div>
+                        <span class="text-sm">Primary 400: #473fab</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-primary-600 rounded"></div>
+                        <span class="text-sm">Primary 600: #1a1666</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Secondary Colors -->
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <h2 class="text-xl font-bold mb-4 text-secondary-500">Secondary (Purple Blue)</h2>
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-secondary-500 rounded"></div>
+                        <span class="text-sm">Secondary 500: #4a3d8a</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-secondary-400 rounded"></div>
+                        <span class="text-sm">Secondary 400: #8777c7</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-secondary-600 rounded"></div>
+                        <span class="text-sm">Secondary 600: #3e3373</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accent Colors -->
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <h2 class="text-xl font-bold mb-4 text-accent-500">Accent (Magenta)</h2>
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-accent-500 rounded"></div>
+                        <span class="text-sm">Accent 500: #d63d9e</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-accent-400 rounded"></div>
+                        <span class="text-sm">Accent 400: #f472b6</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-accent-600 rounded"></div>
+                        <span class="text-sm">Accent 600: #b83285</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coral Colors -->
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <h2 class="text-xl font-bold mb-4 text-coral-500">Coral</h2>
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-coral-500 rounded"></div>
+                        <span class="text-sm">Coral 500: #ff6e61</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-coral-400 rounded"></div>
+                        <span class="text-sm">Coral 400: #ff8787</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-coral-600 rounded"></div>
+                        <span class="text-sm">Coral 600: #ff5252</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lavender Colors -->
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <h2 class="text-xl font-bold mb-4 text-lavender-500">Lavender</h2>
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-lavender-500 rounded"></div>
+                        <span class="text-sm">Lavender 500: #995fb4</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-lavender-400 rounded"></div>
+                        <span class="text-sm">Lavender 400: #c7a7df</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 bg-lavender-600 rounded"></div>
+                        <span class="text-sm">Lavender 600: #7d4f93</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gradients -->
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <h2 class="text-xl font-bold mb-4 text-gray-800">Gradientes</h2>
+                <div class="space-y-4">
+                    <div class="h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded"></div>
+                    <div class="h-12 bg-gradient-to-r from-accent-500 to-coral-500 rounded"></div>
+                    <div class="h-12 bg-gradient-to-r from-lavender-500 to-accent-500 rounded"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons Test -->
+        <div class="mt-12 bg-white rounded-lg p-6 shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">Botones de Prueba</h2>
+            <div class="flex flex-wrap gap-4">
+                <button class="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                    Botón Primary
+                </button>
+                <button class="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                    Botón Secondary
+                </button>
+                <button class="bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                    Botón Accent
+                </button>
+                <button class="bg-coral-500 hover:bg-coral-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                    Botón Coral
+                </button>
+                <button class="bg-lavender-500 hover:bg-lavender-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                    Botón Lavender
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

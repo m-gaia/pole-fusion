@@ -10,7 +10,7 @@ const Classes = () => {
       duration: '60 min',
       level: 'Principiante',
       features: ['Técnicas básicas', 'Seguridad', 'Flexibilidad inicial', 'Confianza'],
-      color: 'from-blue-500 to-cyan-500',
+      color: 'from-primary-500 to-secondary-500',
       icon: '🌟'
     },
     {
@@ -20,7 +20,7 @@ const Classes = () => {
       duration: '75 min',
       level: 'Intermedio',
       features: ['Técnicas avanzadas', 'Coreografías', 'Fuerza muscular', 'Expresión artística'],
-      color: 'from-primary-500 to-pink-500',
+      color: 'from-accent-500 to-coral-500',
       icon: '💪'
     },
     {
@@ -30,7 +30,7 @@ const Classes = () => {
       duration: '90 min',
       level: 'Avanzado',
       features: ['Acrobacias', 'Rutinas complejas', 'Competencia', 'Performance'],
-      color: 'from-secondary-500 to-yellow-500',
+      color: 'from-lavender-500 to-accent-500',
       icon: '⭐'
     }
   ]
