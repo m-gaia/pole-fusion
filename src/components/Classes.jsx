@@ -10,7 +10,7 @@ const Classes = () => {
       duration: '60 min',
       level: 'Principiante',
       features: ['Técnicas básicas', 'Seguridad', 'Flexibilidad inicial', 'Confianza'],
-      color: 'from-lavender-500 to-secondary-500',
+      color: 'from-primary-500 to-secondary-500',
       icon: '🌟'
     },
     {
@@ -20,7 +20,7 @@ const Classes = () => {
       duration: '75 min',
       level: 'Intermedio',
       features: ['Técnicas avanzadas', 'Coreografías', 'Fuerza muscular', 'Expresión artística'],
-      color: 'from-accent-500 to-coral-500',
+      color: 'from-primary-500 to-pink-500',
       icon: '💪'
     },
     {
@@ -119,7 +119,7 @@ const Classes = () => {
                 <div className="space-y-3 mb-6">
                   {classType.features.map((feature, index) => (
                     <div key={index} className="flex items-center space-x-3">
-                                             <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
+                                             <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
                       <span className="text-gray-700 text-sm">{feature}</span>
                     </div>
                   ))}
@@ -153,22 +153,22 @@ const Classes = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
-                                 <div className="w-12 h-12 bg-accent-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                   <Star className="text-accent-500" size={24} />
+                                 <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                   <Star className="text-primary-500" size={24} />
                  </div>
                 <h4 className="font-semibold mb-2">Instructores Certificados</h4>
                 <p className="text-gray-600 text-sm">Profesionales con años de experiencia y certificaciones internacionales.</p>
               </div>
               <div className="text-center">
-                                 <div className="w-12 h-12 bg-coral-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                   <Users className="text-coral-500" size={24} />
+                                 <div className="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                   <Users className="text-secondary-500" size={24} />
                  </div>
                 <h4 className="font-semibold mb-2">Grupos Reducidos</h4>
                 <p className="text-gray-600 text-sm">Máximo 8 alumnas por clase para atención personalizada.</p>
               </div>
               <div className="text-center">
-                                 <div className="w-12 h-12 bg-lavender-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                   <Clock className="text-lavender-500" size={24} />
+                                 <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                   <Clock className="text-primary-500" size={24} />
                  </div>
                 <h4 className="font-semibold mb-2">Horarios Flexibles</h4>
                 <p className="text-gray-600 text-sm">Clases de lunes a domingo, desde las 9:00 hasta las 22:00.</p>

@@ -17,7 +17,7 @@ import Courses from './pages/Courses'
 import StudentArea from './pages/StudentArea'
 import Auth from './pages/Auth'
 import Debug from './pages/Debug'
-import ColorTest from './components/ColorTest'
+
 import { auth } from './utils/auth'
 import './utils/initDemo' // Importar para inicialización automática de datos
 
@@ -145,17 +145,7 @@ function App() {
               </motion.div>
             } />
 
-            {/* Ruta de prueba de colores */}
-            <Route path="/color-test" element={
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-              >
-                <ColorTest />
-              </motion.div>
-            } />
+
 
             {/* Ruta de cursos educativos */}
             <Route path="/cursos" element={
