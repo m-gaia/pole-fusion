@@ -20,7 +20,7 @@ const Classes = () => {
       duration: '75 min',
       level: 'Intermedio',
       features: ['Técnicas avanzadas', 'Coreografías', 'Fuerza muscular', 'Expresión artística'],
-      color: 'from-primary-500 to-pink-500',
+      color: 'from-primary-500 to-accent-500',
       icon: '💪'
     },
     {

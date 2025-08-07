@@ -12,7 +12,7 @@ const Classes = () => {
       maxStudents: 8,
       price: '$8.000',
       features: ['Técnicas básicas', 'Seguridad', 'Flexibilidad inicial', 'Confianza'],
-      color: 'from-blue-500 to-cyan-500',
+      color: 'from-primary-500 to-secondary-500',
       icon: '🌟',
       schedule: [
         { day: 'Lunes', time: '18:00 - 19:00' },
@@ -29,7 +29,7 @@ const Classes = () => {
       maxStudents: 6,
       price: '$10.000',
       features: ['Técnicas avanzadas', 'Coreografías', 'Fuerza muscular', 'Expresión artística'],
-      color: 'from-primary-500 to-pink-500',
+      color: 'from-primary-500 to-accent-500',
       icon: '💪',
       schedule: [
         { day: 'Martes', time: '19:00 - 20:15' },
@@ -46,7 +46,7 @@ const Classes = () => {
       maxStudents: 4,
       price: '$12.000',
       features: ['Acrobacias', 'Rutinas complejas', 'Competencia', 'Performance'],
-      color: 'from-secondary-500 to-yellow-500',
+      color: 'from-secondary-500 to-accent-500',
       icon: '⭐',
       schedule: [
         { day: 'Lunes', time: '20:00 - 21:30' },
