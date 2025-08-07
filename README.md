@@ -87,9 +87,11 @@ business: {
 ### Cambiar Colores
 ```javascript
 colors: {
-  primary: "#8B5CF6",    // Color principal
-  secondary: "#F59E0B",  // Color secundario
-  accent: "#EC4899"      // Color acento
+  primary: "#1f1b79",    // Deep Blue - Color principal
+  secondary: "#4a3d8a",  // Purple Blue - Color secundario
+  accent: "#d63d9e",     // Magenta - Color acento
+  coral: "#ff6e61",      // Coral - Color destacado
+  lavender: "#995fb4"    // Lavender - Color complementario
 }
 ```
 
