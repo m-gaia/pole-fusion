@@ -21,15 +21,15 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+    @apply bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
   }
   
   .btn-secondary {
-    @apply bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+    @apply bg-coral-500 hover:bg-coral-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
   }
   
   .btn-outline {
-    @apply border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105;
+    @apply border-2 border-accent-500 text-accent-500 hover:bg-accent-500 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105;
   }
   
   .section-padding {
@@ -41,11 +41,11 @@
   }
   
   .gradient-bg {
-    background: linear-gradient(135deg, #e8e7f5 0%, #f0eef8 100%);
+    background: linear-gradient(135deg, #f8f4fb 0%, #f0eef8 100%);
   }
   
   .text-gradient {
-    background: linear-gradient(135deg, #1f1b79 0%, #4a3d8a 100%);
+    background: linear-gradient(135deg, #d63d9e 0%, #ff6e61 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

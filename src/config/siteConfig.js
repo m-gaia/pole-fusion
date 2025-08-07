@@ -14,11 +14,12 @@ export const siteConfig = {
 
   // Colores del tema (fácil de cambiar)
   colors: {
-    primary: "#1f1b79", // Deep Blue
-    secondary: "#4a3d8a", // Purple Blue
-    accent: "#d63d9e", // Magenta
-    coral: "#ff6e61", // Coral
-    lavender: "#995fb4", // Lavender
+    // Estrategia de colores por rol
+    accent: "#d63d9e", // Magenta - Color principal para CTAs, botones importantes
+    coral: "#ff6e61", // Coral - Color de énfasis, hover effects, mensajes destacados
+    lavender: "#995fb4", // Lavender - Fondos suaves, tarjetas, íconos secundarios
+    secondary: "#4a3d8a", // Purple Blue - Títulos, navegación secundaria, estructura
+    primary: "#1f1b79", // Deep Blue - Toques mínimos, bordes, contraste
     dark: "#1F2937",
     light: "#F9FAFB"
   },

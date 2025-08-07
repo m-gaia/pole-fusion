@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-900/20 via-secondary-800/30 to-accent-900/20">
+      <div className="absolute inset-0 bg-gradient-to-br from-secondary-900/20 via-lavender-800/30 to-accent-900/20">
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
       
@@ -21,7 +21,7 @@ const Hero = () => {
             repeat: Infinity,
             ease: "linear"
           }}
-          className="absolute top-20 left-20 w-32 h-32 bg-primary-500/10 rounded-full blur-xl"
+          className="absolute top-20 left-20 w-32 h-32 bg-accent-500/10 rounded-full blur-xl"
         />
         <motion.div
           animate={{
@@ -33,7 +33,7 @@ const Hero = () => {
             repeat: Infinity,
             ease: "linear"
           }}
-          className="absolute bottom-20 right-20 w-40 h-40 bg-secondary-500/10 rounded-full blur-xl"
+          className="absolute bottom-20 right-20 w-40 h-40 bg-coral-500/10 rounded-full blur-xl"
         />
       </div>
 
@@ -52,7 +52,7 @@ const Hero = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6"
           >
-            <Star size={16} className="text-secondary-400" />
+            <Star size={16} className="text-coral-400" />
             <span className="text-sm font-medium">Academia #1 en Buenos Aires</span>
           </motion.div>
 

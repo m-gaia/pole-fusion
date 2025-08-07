@@ -29,7 +29,7 @@ const Header = ({ currentUser, onLogout }) => {
           <Link to="/" className="flex items-center space-x-2">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
+              className="w-10 h-10 bg-gradient-to-br from-accent-500 to-coral-500 rounded-full flex items-center justify-center"
             >
               <span className="text-white font-bold text-lg">PF</span>
             </motion.div>

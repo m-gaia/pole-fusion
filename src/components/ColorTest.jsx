@@ -4,52 +4,55 @@ const ColorTest = () => {
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
-          Test de Paleta de Colores - Pole Fusion
-        </h1>
+                 <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+           Test de Paleta de Colores - Pole Fusion
+         </h1>
+         <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+           Nueva jerarquía de colores implementada según roles específicos
+         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Primary Colors */}
-          <div className="bg-white rounded-lg p-6 shadow-lg">
-            <h2 className="text-xl font-bold mb-4 text-primary-500">Primary (Deep Blue)</h2>
+                     {/* Accent Colors */}
+           <div className="bg-white rounded-lg p-6 shadow-lg">
+             <h2 className="text-xl font-bold mb-4 text-accent-500">Accent (Magenta) - CTAs</h2>
             <div className="space-y-2">
               <div className="flex items-center space-x-4">
-                <div className="w-8 h-8 bg-primary-500 rounded"></div>
-                <span className="text-sm">Primary 500: #1f1b79</span>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="w-8 h-8 bg-primary-400 rounded"></div>
-                <span className="text-sm">Primary 400: #473fab</span>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="w-8 h-8 bg-primary-600 rounded"></div>
-                <span className="text-sm">Primary 600: #1a1666</span>
+                                 <div className="w-8 h-8 bg-primary-500 rounded"></div>
+                 <span className="text-sm">Primary 500: #1f1b79</span>
+               </div>
+               <div className="flex items-center space-x-4">
+                 <div className="w-8 h-8 bg-primary-400 rounded"></div>
+                 <span className="text-sm">Primary 400: #473fab</span>
+               </div>
+               <div className="flex items-center space-x-4">
+                 <div className="w-8 h-8 bg-primary-600 rounded"></div>
+                 <span className="text-sm">Primary 600: #1a1666</span>
               </div>
             </div>
           </div>
 
-          {/* Secondary Colors */}
-          <div className="bg-white rounded-lg p-6 shadow-lg">
-            <h2 className="text-xl font-bold mb-4 text-secondary-500">Secondary (Purple Blue)</h2>
+                     {/* Coral Colors */}
+           <div className="bg-white rounded-lg p-6 shadow-lg">
+             <h2 className="text-xl font-bold mb-4 text-coral-500">Coral - Énfasis</h2>
             <div className="space-y-2">
               <div className="flex items-center space-x-4">
-                <div className="w-8 h-8 bg-secondary-500 rounded"></div>
-                <span className="text-sm">Secondary 500: #4a3d8a</span>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="w-8 h-8 bg-secondary-400 rounded"></div>
-                <span className="text-sm">Secondary 400: #8777c7</span>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="w-8 h-8 bg-secondary-600 rounded"></div>
-                <span className="text-sm">Secondary 600: #3e3373</span>
+                                 <div className="w-8 h-8 bg-secondary-500 rounded"></div>
+                 <span className="text-sm">Secondary 500: #4a3d8a</span>
+               </div>
+               <div className="flex items-center space-x-4">
+                 <div className="w-8 h-8 bg-secondary-400 rounded"></div>
+                 <span className="text-sm">Secondary 400: #8777c7</span>
+               </div>
+               <div className="flex items-center space-x-4">
+                 <div className="w-8 h-8 bg-secondary-600 rounded"></div>
+                 <span className="text-sm">Secondary 600: #3e3373</span>
               </div>
             </div>
           </div>
 
-          {/* Accent Colors */}
-          <div className="bg-white rounded-lg p-6 shadow-lg">
-            <h2 className="text-xl font-bold mb-4 text-accent-500">Accent (Magenta)</h2>
+                     {/* Lavender Colors */}
+           <div className="bg-white rounded-lg p-6 shadow-lg">
+             <h2 className="text-xl font-bold mb-4 text-lavender-500">Lavender - Fondos</h2>
             <div className="space-y-2">
               <div className="flex items-center space-x-4">
                 <div className="w-8 h-8 bg-accent-500 rounded"></div>
@@ -66,9 +69,9 @@ const ColorTest = () => {
             </div>
           </div>
 
-          {/* Coral Colors */}
-          <div className="bg-white rounded-lg p-6 shadow-lg">
-            <h2 className="text-xl font-bold mb-4 text-coral-500">Coral</h2>
+                     {/* Secondary Colors */}
+           <div className="bg-white rounded-lg p-6 shadow-lg">
+             <h2 className="text-xl font-bold mb-4 text-secondary-500">Secondary (Purple Blue) - Títulos</h2>
             <div className="space-y-2">
               <div className="flex items-center space-x-4">
                 <div className="w-8 h-8 bg-coral-500 rounded"></div>
@@ -85,9 +88,9 @@ const ColorTest = () => {
             </div>
           </div>
 
-          {/* Lavender Colors */}
-          <div className="bg-white rounded-lg p-6 shadow-lg">
-            <h2 className="text-xl font-bold mb-4 text-lavender-500">Lavender</h2>
+                     {/* Primary Colors */}
+           <div className="bg-white rounded-lg p-6 shadow-lg">
+             <h2 className="text-xl font-bold mb-4 text-primary-500">Primary (Deep Blue) - Contraste</h2>
             <div className="space-y-2">
               <div className="flex items-center space-x-4">
                 <div className="w-8 h-8 bg-lavender-500 rounded"></div>
@@ -119,21 +122,21 @@ const ColorTest = () => {
         <div className="mt-12 bg-white rounded-lg p-6 shadow-lg">
           <h2 className="text-xl font-bold mb-4 text-gray-800">Botones de Prueba</h2>
           <div className="flex flex-wrap gap-4">
-            <button className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
-              Botón Primary
-            </button>
-            <button className="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
-              Botón Secondary
-            </button>
-            <button className="bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
-              Botón Accent
-            </button>
-            <button className="bg-coral-500 hover:bg-coral-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
-              Botón Coral
-            </button>
-            <button className="bg-lavender-500 hover:bg-lavender-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
-              Botón Lavender
-            </button>
+                         <button className="bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+               CTA Principal (Accent)
+             </button>
+             <button className="bg-coral-500 hover:bg-coral-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+               Botón Énfasis (Coral)
+             </button>
+             <button className="bg-lavender-500 hover:bg-lavender-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+               Botón Secundario (Lavender)
+             </button>
+             <button className="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+               Botón Estructura (Secondary)
+             </button>
+             <button className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+               Botón Contraste (Primary)
+             </button>
           </div>
         </div>
       </div>
