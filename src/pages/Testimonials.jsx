@@ -10,7 +10,7 @@ const Testimonials = () => {
     {
       id: 1,
       name: 'María González',
-      city: 'Buenos Aires',
+      city: 'Mendoza',
       age: 28,
       level: 'Intermedio',
       time: '2 años',
@@ -294,7 +294,7 @@ const Testimonials = () => {
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Los números hablan por sí solos. Descubre por qué Pole Fusion es la academia 
-              más elegida por las mujeres de Buenos Aires.
+              más elegida por las mujeres de Mendoza.
             </p>
           </motion.div>
 

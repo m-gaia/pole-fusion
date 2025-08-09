@@ -9,7 +9,7 @@ const Testimonials = () => {
     {
       id: 1,
       name: 'María González',
-      city: 'Buenos Aires',
+      city: 'Mendoza',
       age: 28,
       level: 'Intermedio',
       time: '2 años',

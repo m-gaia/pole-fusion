@@ -247,7 +247,7 @@ const Classes = () => {
             </h2>
             <p className="text-white/90 mb-8 max-w-2xl mx-auto">
               Reserva tu clase gratuita y descubre por qué Pole Fusion es la academia 
-              más elegida por las mujeres de Buenos Aires.
+              más elegida por las mujeres de Mendoza.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}

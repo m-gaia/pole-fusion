@@ -33,9 +33,9 @@ const Contact = () => {
     {
       icon: Phone,
       title: 'Teléfono',
-      info: '+54 11 1234-5678',
+      info: '+54 261 1234-5678',
       description: 'Llamanos de lunes a domingo',
-      action: 'tel:+541112345678'
+      action: 'tel:+542611234567'
     },
     {
       icon: Mail,
@@ -47,8 +47,8 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Dirección',
-      info: 'Av. Corrientes 1234, CABA',
-      description: 'Barrio de Palermo',
+      info: 'Calle Videla Correa 1234, Ciudad Mendoza',
+      description: 'Ciudad Mendoza, Argentina',
       action: 'https://maps.google.com'
     },
     {
@@ -198,7 +198,7 @@ const Contact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
-                        placeholder="+54 11 1234-5678"
+                        placeholder="+54 261 1234-5678"
                       />
                     </div>
                     <div>
@@ -327,10 +327,10 @@ const Contact = () => {
                   <div className="text-center">
                     <MapPin className="text-primary-500 mx-auto mb-2" size={32} />
                     <p className="text-gray-600 text-sm">
-                      Av. Corrientes 1234, CABA
+                      Calle Videla Correa 1234, Ciudad Mendoza
                     </p>
                     <p className="text-gray-500 text-xs">
-                      Barrio de Palermo
+                      Ciudad Mendoza, Argentina
                     </p>
                   </div>
                 </div>
@@ -350,14 +350,14 @@ const Contact = () => {
                 </p>
                 <div className="space-y-2">
                   <a
-                    href="tel:+541112345678"
+                    href="tel:+542611234567"
                     className="flex items-center space-x-2 text-white hover:text-white/80 transition-colors"
                   >
                     <Phone size={16} />
-                    <span>+54 11 1234-5678</span>
+                    <span>+54 261 1234-5678</span>
                   </a>
                   <a
-                    href="https://wa.me/5491112345678"
+                    href="https://wa.me/5492611234567"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center space-x-2 text-white hover:text-white/80 transition-colors"
@@ -427,7 +427,7 @@ const Contact = () => {
             </h2>
             <p className="text-white/90 mb-8 max-w-2xl mx-auto">
               Reserva tu clase gratuita y descubre por qué Pole Fusion es la academia 
-              más elegida por las mujeres de Buenos Aires.
+              más elegida por las mujeres de Mendoza.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <motion.button

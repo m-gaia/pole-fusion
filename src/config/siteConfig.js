@@ -4,12 +4,12 @@ export const siteConfig = {
   business: {
     name: "Pole Fusion",
     tagline: "Academia de Pole Dance",
-    description: "Academia de pole dance en Buenos Aires. Clases para todos los niveles. Fuerza, arte y libertad.",
-    location: "Buenos Aires, Argentina",
-    phone: "+54 11 1234-5678",
+    description: "Academia de pole dance en Ciudad Mendoza. Clases para todos los niveles. Fuerza, arte y libertad.",
+    location: "Ciudad Mendoza, Argentina",
+    phone: "+54 261 1234-5678",
     email: "info@polefusion.com",
-    address: "Av. Corrientes 1234, Buenos Aires",
-    whatsapp: "+54 9 11 1234-5678"
+    address: "Calle Videla Correa 1234, Ciudad Mendoza",
+    whatsapp: "+54 9 261 1234-5678"
   },
 
   // Colores del tema (fácil de cambiar)
@@ -153,9 +153,9 @@ export const siteConfig = {
 
   // SEO y metadatos
   seo: {
-    title: "Pole Fusion - Academia de Pole Dance en Buenos Aires",
-    description: "Academia de pole dance en Buenos Aires. Clases para todos los niveles. Fuerza, arte y libertad.",
-    keywords: "pole dance, academia, buenos aires, clases, fitness, acrobacias",
+    title: "Pole Fusion - Academia de Pole Dance en Ciudad Mendoza",
+    description: "Academia de pole dance en Ciudad Mendoza. Clases para todos los niveles. Fuerza, arte y libertad.",
+    keywords: "pole dance, academia, mendoza, clases, fitness, acrobacias",
     ogImage: "/images/og-image.jpg"
   }
 }

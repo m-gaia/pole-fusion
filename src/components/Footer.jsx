@@ -21,9 +21,9 @@ const Footer = () => {
   }
 
   const contactInfo = [
-    { icon: Phone, text: '+54 11 1234-5678' },
+    { icon: Phone, text: '+54 261 1234-5678' },
     { icon: Mail, text: 'info@polefusion.com' },
-    { icon: MapPin, text: 'Av. Corrientes 1234, CABA' },
+    { icon: MapPin, text: 'Calle Videla Correa 1234, Ciudad Mendoza' },
   ]
 
   const socialLinks = [
@@ -50,7 +50,7 @@ const Footer = () => {
                 </div>
               </div>
               <p className="text-gray-300 text-sm leading-relaxed mb-6">
-                Academia de pole dance en Buenos Aires. Ofrecemos clases para todos los niveles, 
+                Academia de pole dance en Ciudad Mendoza. Ofrecemos clases para todos los niveles, 
                 desde principiantes hasta avanzados. Descubre tu fuerza interior.
               </p>
               
@@ -125,7 +125,7 @@ const Footer = () => {
               <div className="flex items-center space-x-1 mt-2 sm:mt-0">
                 <span className="text-gray-400 text-sm">Hecho con</span>
                 <Heart size={14} className="text-primary-400" />
-                <span className="text-gray-400 text-sm">en Buenos Aires</span>
+                <span className="text-gray-400 text-sm">por DevMGaia en Ciudad Mendoza</span>
               </div>
             </div>
           </div>
