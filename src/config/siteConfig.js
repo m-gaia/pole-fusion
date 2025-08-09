@@ -14,8 +14,8 @@ export const siteConfig = {
 
   // Colores del tema (fácil de cambiar)
   colors: {
-    primary: "#8B5CF6", // Violeta
-    secondary: "#F59E0B", // Dorado
+    primary: "#EC4899", // Fucsia principal
+    secondary: "#EAB308", // Dorado
     accent: "#EC4899", // Rosa
     dark: "#1F2937",
     light: "#F9FAFB"
