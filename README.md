@@ -1,33 +1,43 @@
-# 🎯 Sitio Web Profesional - Academia de Pole Dance
+# 💃 Pole Fusion – Sitio Web Profesional para Academias de Pole Dance
 
-## ✨ Características Principales
+> **Transforma tu academia en una marca online profesional**  
+> Pole Fusion es una solución web moderna, rápida y personalizable para academias de pole dance y estudios de danza.  
+> Ideal para atraer más alumnos, mostrar tus clases y gestionar tu presencia online sin complicaciones.
 
-- **🎨 Diseño Moderno y Responsive**
-- **⚙️ Panel de Administración Integrado**
-- **🚀 Deploy Automático**
-- **📱 Compatible con Todos los Dispositivos**
-- **⚡ Velocidad de Carga Optimizada**
-- **🔍 SEO Optimizado**
+---
+
+## ✨ Beneficios para tu negocio
+
+- 📱 **100% Responsive** – Tu sitio se adapta a cualquier dispositivo.
+- 🚀 **Carga ultrarrápida** – Menos de 2 segundos en cualquier red.
+- 🔍 **Visibilidad en Google** – SEO optimizado para atraer nuevos clientes.
+- 🎨 **Diseño atractivo** – Colores, imágenes y tipografía adaptadas a tu estilo.
+- ⚙️ **Panel de administración** – Actualiza precios, fotos y horarios sin tocar código.
+- 💬 **Comunicación directa** – Integración con WhatsApp y redes sociales.
+
+---
 
 ## 🏗️ Tecnologías Utilizadas
 
-- **React 18** - Framework moderno
-- **Vite** - Build tool ultra rápido
-- **Tailwind CSS** - Estilos profesionales
-- **Framer Motion** - Animaciones suaves
-- **React Router** - Navegación fluida
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-4-646CFF?logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3-38B2AC?logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-EF476F)
+![React Router](https://img.shields.io/badge/React_Router-6-CA4245)
 
-## 📋 Secciones Incluidas
+---
 
-### 🏠 Página de Inicio
-- Hero section impactante
-- Información del negocio
-- Llamadas a la acción
+## 📋 Estructura del Sitio
 
-### 🎓 Clases/Servicios
+### 🏠 Inicio
+- Hero impactante con llamada a la acción
+- Presentación del negocio
+- Botones de contacto rápido
+
+### 🎓 Clases / Servicios
 - Lista de clases con precios
-- Descripciones detalladas
-- Niveles de dificultad
+- Descripción y nivel de dificultad
+- Fotos representativas
 
 ### 👥 Instructores
 - Perfiles profesionales
@@ -35,57 +45,60 @@
 - Redes sociales
 
 ### 📸 Galería
-- Galería de imágenes
-- Filtros por categoría
-- Modal para vista ampliada
+- Imágenes por categoría
+- Vista ampliada con modal
 
 ### 💬 Testimonios
-- Opiniones de clientes
+- Opiniones de alumnas
 - Sistema de calificación
-- Fotos de clientes
+- Fotos reales
 
 ### 📞 Contacto
-- Formulario de contacto
-- Información de ubicación
-- Integración con WhatsApp
+- Formulario directo
+- Mapa de ubicación
+- Botón de WhatsApp
 
-## 🚀 Deploy Automático
+---
 
-### Vercel (Recomendado)
-```bash
-# Solo necesitas conectar tu GitHub
-# Vercel hace todo automáticamente
-```
+## 🎯 Casos de Uso
 
-### Netlify
-```bash
-# Conecta tu repositorio
-# Deploy automático en minutos
-```
+✅ Academias de pole dance  
+✅ Estudios de danza  
+✅ Gimnasios especializados  
+✅ Escuelas de arte y fitness  
 
-### GitHub Pages
-```bash
-# Ya configurado con GitHub Actions
-# Deploy automático en cada push
-```
+🔄 Adaptable a cualquier negocio de servicios:
+- Tiendas online
+- Clínicas
+- Instituciones educativas
 
-## 🎨 Personalización Fácil
+---
 
-### Cambiar Información del Negocio
-Edita `src/config/siteConfig.js`:
+## 💰 Planes y Precios Sugeridos
+
+| Plan | Precio (USD) | Incluye |
+|------|-------------|---------|
+| **Básico** | $500-800 | Sitio completo + Deploy + 1 mes soporte |
+| **Profesional** | $800-1200 | Todo lo anterior + Dominio + Email + SEO básico |
+| **Premium** | $1200-2000 | Todo lo anterior + Panel avanzado + Redes sociales + Analytics + 6 meses soporte |
+
+> 💡 *Precios ajustables según requerimientos.*
+
+---
+
+## ⚙️ Personalización
+
+En `src/config/siteConfig.js` puedes editar:
 
 ```javascript
 business: {
   name: "Tu Academia",
-  tagline: "Tu Tagline",
+  tagline: "Tu lema aquí",
   phone: "+54 11 1234-5678",
   email: "info@tuacademia.com",
-  address: "Tu dirección"
+  address: "Dirección de tu academia"
 }
-```
 
-### Cambiar Colores
-```javascript
 colors: {
   primary: "#8B5CF6",    // Color principal
   secondary: "#F59E0B",  // Color secundario
@@ -93,52 +106,9 @@ colors: {
 }
 ```
 
-### Panel de Administración
-- Botón "⚙️ Admin" en la esquina inferior derecha
-- Cambios en tiempo real
-- Guardado automático
+---
 
-## 📱 Características Técnicas
-
-### Performance
-- ⚡ Lighthouse Score: 95+
-- 📱 Mobile First Design
-- 🎯 Core Web Vitals Optimizados
-
-### SEO
-- 📝 Meta tags optimizados
-- 🏷️ Open Graph tags
-- 🔍 Schema markup
-- 📊 Google Analytics ready
-
-### Seguridad
-- 🔒 HTTPS automático
-- 🛡️ CSP headers
-- 🚫 XSS protection
-
-## 💰 Precios Sugeridos
-
-### Paquete Básico - $500-800
-- ✅ Sitio web completo
-- ✅ Deploy en Vercel
-- ✅ 1 mes de soporte
-- ✅ Documentación completa
-
-### Paquete Profesional - $800-1200
-- ✅ Todo lo anterior
-- ✅ Dominio personalizado
-- ✅ Email profesional
-- ✅ 3 meses de soporte
-- ✅ SEO básico
-
-### Paquete Premium - $1200-2000
-- ✅ Todo lo anterior
-- ✅ Panel de administración avanzado
-- ✅ Integración con redes sociales
-- ✅ Analytics completo
-- ✅ 6 meses de soporte
-
-## 🛠️ Instalación Local
+## 🚀 Instalación y Deploy
 
 ```bash
 # Clonar repositorio
@@ -147,65 +117,38 @@ git clone https://github.com/tu-usuario/pole-fusion.git
 # Instalar dependencias
 npm install
 
-# Ejecutar en desarrollo
+# Modo desarrollo
 npm run dev
 
-# Build para producción
+# Build producción
 npm run build
 ```
 
-## 📞 Soporte Técnico
-
-### Incluido en todos los paquetes:
-- 🔧 Configuración inicial
-- 🎨 Personalización básica
-- 🚀 Deploy en producción
-- 📚 Documentación completa
-
-### Soporte adicional:
-- 📝 Cambios de contenido: $50/hora
-- 🆕 Nuevas funcionalidades: $100/hora
-- 🔄 Mantenimiento mensual: $100/mes
-
-## 🎯 Casos de Uso
-
-### Perfecto para:
-- 🏋️ Academias de pole dance
-- 💃 Estudios de danza
-- 🧘 Gimnasios especializados
-- 🎭 Escuelas de arte
-- 🏃 Centros de fitness
-
-### Personalizable para:
-- 🏢 Cualquier negocio de servicios
-- 🏪 Tiendas online
-- 🏥 Clínicas médicas
-- 🏫 Instituciones educativas
-
-## 📊 Métricas de Rendimiento
-
-- **Tiempo de carga:** < 2 segundos
-- **Puntuación SEO:** 95/100
-- **Puntuación Performance:** 95/100
-- **Puntuación Accessibility:** 95/100
-- **Puntuación Best Practices:** 95/100
-
-## 🔄 Actualizaciones
-
-- ✅ Actualizaciones automáticas de seguridad
-- ✅ Nuevas funcionalidades
-- ✅ Mejoras de performance
-- ✅ Soporte técnico continuo
-
-## 📞 Contacto
-
-**¿Interesado en este producto?**
-
-- 📧 Email: tu-email@ejemplo.com
-- 📱 WhatsApp: +54 9 11 1234-5678
-- 🌐 Sitio web: https://tu-sitio.com
-- 💼 LinkedIn: https://linkedin.com/in/tu-perfil
+**Hosting recomendado:**
+- [Vercel](https://vercel.com) – Deploy automático desde GitHub.
+- [Netlify](https://www.netlify.com) – Rápido y fácil.
+- GitHub Pages – Integrado con GitHub Actions.
 
 ---
 
-**¡Transforma tu negocio con un sitio web profesional!** 🚀 
+## 📊 Métricas de Rendimiento
+
+- **Tiempo de carga:** < 2s  
+- **SEO:** 95/100  
+- **Performance:** 95/100  
+- **Accesibilidad:** 95/100  
+- **Buenas prácticas:** 95/100  
+
+---
+
+## 📞 Contacto
+
+**¿Interesado en este producto?**  
+📧 Email: tu-email@ejemplo.com  
+📱 WhatsApp: +54 9 11 1234-5678  
+🌐 Web: https://tu-sitio.com  
+💼 LinkedIn: https://linkedin.com/in/tu-perfil  
+
+---
+
+> **Pole Fusion – Eleva tu academia al siguiente nivel** 🚀 
