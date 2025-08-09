@@ -1,7 +1,8 @@
-Sistema de autenticación completo restaurado
-- Componentes Login y Register simplificados y robustos
-- Manejo de errores mejorado
-- Tabs funcionales (Login/Register)
-- Datos de demo incluidos
-- Sistema de autenticación completamente funcional
-Timestamp: $(date) 
+Actualización de dirección a Ciudad Mendoza y atribución DevMGaia
+- Cambio de ubicación: Buenos Aires → Ciudad Mendoza
+- Actualización de códigos telefónicos: +54 11 → +54 261
+- Eliminación de referencias a "Barrio de Palermo"
+- Agregado "Hecho por DevMGaia" en footer
+- Meta descripción actualizada
+- Configuración del sitio actualizada
+Timestamp: 2024-01-20 15:30:00 
