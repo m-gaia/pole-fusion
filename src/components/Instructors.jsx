@@ -195,6 +195,7 @@ const Instructors = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white text-primary-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors"
+              onClick={() => window.location.href = '/reservas'}
             >
               Reservar tu primera clase
             </motion.button>

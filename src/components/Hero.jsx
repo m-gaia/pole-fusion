@@ -90,6 +90,7 @@ const Hero = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-primary text-lg px-8 py-4 flex items-center space-x-2"
+              onClick={() => window.location.href = '/reservas'}
             >
               <span>Reservá tu clase gratuita</span>
               <ArrowRight size={20} />

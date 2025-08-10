@@ -130,6 +130,7 @@ const Classes = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="w-full btn-primary flex items-center justify-center space-x-2"
+                  onClick={() => window.location.href = '/reservas'}
                 >
                   <span>Reservar clase</span>
                   <ArrowRight size={16} />

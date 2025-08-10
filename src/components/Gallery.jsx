@@ -201,6 +201,7 @@ const Gallery = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-primary"
+              onClick={() => window.location.href = '/reservas'}
             >
               Reservar mi primera clase
             </motion.button>

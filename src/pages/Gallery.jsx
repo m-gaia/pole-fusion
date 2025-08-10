@@ -312,6 +312,7 @@ const Gallery = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white text-primary-600 font-semibold py-4 px-8 rounded-lg hover:bg-gray-100 transition-colors text-lg"
+              onClick={() => window.location.href = '/reservas'}
             >
               Reservar mi primera clase
             </motion.button>
