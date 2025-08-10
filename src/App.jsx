@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Header from './components/Header'
@@ -19,6 +19,22 @@ import Auth from './pages/Auth'
 import Debug from './pages/Debug'
 import { auth } from './utils/auth'
 import './utils/initDemo' // Importar para inicialización automática de datos
+
+// Component to handle scroll restoration
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  
+  useEffect(() => {
+    // Smooth scroll to top when route changes
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }, [pathname])
+  
+  return null
+}
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
@@ -66,6 +82,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen bg-white">
         <Header currentUser={currentUser} onLogout={handleLogout} />
         <AnimatePresence mode="wait">

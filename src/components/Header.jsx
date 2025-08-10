@@ -26,7 +26,20 @@ const Header = ({ currentUser, onLogout }) => {
       <div className="container-custom">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link 
+            to="/" 
+            className="flex items-center space-x-2"
+            onClick={() => {
+              // Ensure smooth scroll to top when clicking logo
+              setTimeout(() => {
+                window.scrollTo({
+                  top: 0,
+                  left: 0,
+                  behavior: 'smooth'
+                })
+              }, 100)
+            }}
+          >
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center"
@@ -52,6 +65,16 @@ const Header = ({ currentUser, onLogout }) => {
                     ? 'text-primary-500'
                     : 'text-gray-700 hover:text-primary-500'
                 }`}
+                onClick={() => {
+                  // Ensure smooth scroll to top when clicking header navigation
+                  setTimeout(() => {
+                    window.scrollTo({
+                      top: 0,
+                      left: 0,
+                      behavior: 'smooth'
+                    })
+                  }, 100)
+                }}
               >
                 {item.name}
                 {isActive(item.path) && (
@@ -171,7 +194,17 @@ const Header = ({ currentUser, onLogout }) => {
               <Link
                 key={item.name}
                 to={item.path}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsMenuOpen(false)
+                  // Ensure smooth scroll to top when clicking mobile navigation
+                  setTimeout(() => {
+                    window.scrollTo({
+                      top: 0,
+                      left: 0,
+                      behavior: 'smooth'
+                    })
+                  }, 100)
+                }}
                 className={`block px-4 py-2 font-medium transition-colors ${
                   isActive(item.path)
                     ? 'text-primary-500 bg-primary-50'

@@ -39,15 +39,26 @@ const Footer = () => {
             {/* Logo y descripción */}
             <div className="lg:col-span-1">
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">PF</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-display font-bold text-gradient">
-                    Pole Fusion
-                  </h3>
-                  <p className="text-sm text-gray-300">Fuerza, arte y libertad</p>
-                </div>
+                <Link to="/" onClick={() => {
+                  // Ensure smooth scroll to top when clicking footer logo
+                  setTimeout(() => {
+                    window.scrollTo({
+                      top: 0,
+                      left: 0,
+                      behavior: 'smooth'
+                    })
+                  }, 100)
+                }}>
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">PF</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-display font-bold text-gradient">
+                      Pole Fusion
+                    </h3>
+                    <p className="text-sm text-gray-300">Fuerza, arte y libertad</p>
+                  </div>
+                </Link>
               </div>
               <p className="text-gray-300 text-sm leading-relaxed mb-6">
                 Academia de pole dance en Ciudad Mendoza. Ofrecemos clases para todos los niveles, 
@@ -81,6 +92,16 @@ const Footer = () => {
                       <Link
                         to={link.path}
                         className="text-gray-300 hover:text-primary-400 transition-colors duration-200 text-sm"
+                        onClick={() => {
+                          // Ensure smooth scroll to top when clicking footer links
+                          setTimeout(() => {
+                            window.scrollTo({
+                              top: 0,
+                              left: 0,
+                              behavior: 'smooth'
+                            })
+                          }, 100)
+                        }}
                       >
                         {link.name}
                       </Link>
