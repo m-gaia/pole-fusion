@@ -73,7 +73,7 @@ const Testimonials = () => {
     },
     {
       id: 5,
-      name: 'Valentina Morales',
+      name: 'Lucia Morales',
       city: 'La Plata',
       age: 27,
       level: 'Grupo Competencia',

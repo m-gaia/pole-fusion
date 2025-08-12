@@ -5,37 +5,37 @@ const Instructors = () => {
   const instructors = [
     {
       id: 1,
-      name: 'Valentina Rodríguez',
-      role: 'Instructora Principal',
+      name: 'Lucia Bazalli',
+      role: 'Instructora de Pole Sport',
       experience: '8 años',
       specialties: ['Pole Dance', 'Flexibilidad', 'Coreografías'],
-      bio: 'Valentina es nuestra instructora principal con más de 8 años de experiencia en pole dance. Especializada en técnicas avanzadas y coreografías artísticas.',
+      bio: 'Lucia es nuestra Instructora de Pole Sport con más de 8 años de experiencia en pole dance. Especializada en técnicas avanzadas y coreografías artísticas.',
       image: '/images/instructor-1.jpg',
-      instagram: '@valentina_pole',
+      instagram: '@Lucia_pole',
       certifications: ['Pole Fitness Academy', 'International Pole Championship'],
       students: '200+'
     },
     {
       id: 2,
-      name: 'Camila Fernández',
+      name: 'Juli Prada',
       role: 'Instructora de Pole Sport',
       experience: '5 años',
       specialties: ['Principiantes', 'Fuerza', 'Confianza'],
-      bio: 'Camila se especializa en trabajar con principiantes, ayudándolas a desarrollar confianza y técnica desde el primer día.',
+      bio: 'Juli se especializa en trabajar con principiantes, ayudándolas a desarrollar confianza y técnica desde el primer día.',
       image: '/images/instructor-2.jpg',
-      instagram: '@camila_polefusion',
+      instagram: '@Juli_polefusion',
       certifications: ['Pole Dance Academy', 'Fitness Instructor'],
       students: '150+'
     },
     {
       id: 3,
-      name: 'Sofía Martínez',
-      role: 'Instructora de Grupo Competencia',
+      name: 'Nanu Fernandez',
+      role: 'Instructora de Exotic',
       experience: '10 años',
       specialties: ['Acrobacias', 'Competencia', 'Performance'],
-      bio: 'Sofía es nuestra instructora de nivel avanzado, especializada en acrobacias y preparación para competencias.',
+      bio: 'Nanu es nuestra instructora de nivel avanzado, especializada en acrobacias y preparación para competencias.',
       image: '/images/instructor-3.jpg',
-      instagram: '@sofia_poleart',
+      instagram: '@Nanu_poleart',
       certifications: ['International Pole Championship', 'Acrobatic Arts'],
       students: '100+'
     }

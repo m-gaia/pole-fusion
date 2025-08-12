@@ -326,7 +326,7 @@ export const initializeCourseDemoData = () => {
         'Práctica con alumnas reales',
         'Certificación internacional'
       ],
-      instructor: 'Valentina Rodríguez',
+      instructor: 'Lucia Bazalli',
       maxStudents: 8,
       startDate: '2024-03-01',
       schedule: 'Martes y Jueves 20:00-22:00'
@@ -348,7 +348,7 @@ export const initializeCourseDemoData = () => {
         'Práctica con alumnas reales',
         'Certificación internacional'
       ],
-      instructor: 'Sofía Martínez',
+      instructor: 'Nanu Fernandez',
       maxStudents: 6,
       startDate: '2024-04-01',
       schedule: 'Lunes y Viernes 19:00-21:00'

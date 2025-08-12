@@ -56,7 +56,7 @@ export const siteConfig = {
       description: "Clases técnicas enfocadas en la fuerza, resistencia y movimientos acrobáticos del pole dance deportivo.",
       duration: "75 min",
       level: "Todos los niveles",
-      instructor: "Camila Fernández",
+      instructor: "Juli Prada",
       price: "$8.000",
       schedule: ["Lunes 18:00", "Miércoles 19:00", "Sábado 10:00"]
     },
@@ -66,7 +66,7 @@ export const siteConfig = {
       description: "Desarrolla tu sensualidad y expresión artística con movimientos fluidos y coreografías elegantes.",
       duration: "75 min",
       level: "Intermedio-Avanzado",
-      instructor: "Valentina Rodríguez",
+      instructor: "Lucia Bazalli",
       price: "$10.000",
       schedule: ["Martes 19:00", "Jueves 18:00", "Sábado 11:00"]
     }
@@ -118,7 +118,7 @@ export const siteConfig = {
     },
     {
       id: 3,
-      name: "Sofía López",
+      name: "Nanu López",
       text: "Llevo 2 años entrenando aquí y cada día aprendo algo nuevo.",
       rating: 5,
       image: "/images/testimonial-3.jpg"
