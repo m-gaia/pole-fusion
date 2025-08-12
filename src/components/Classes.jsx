@@ -42,7 +42,7 @@ const Classes = () => {
       features: ['Estiramientos', 'Elasticidad', 'Postura', 'Movilidad articular'],
       color: 'from-green-500 to-emerald-500',
       icon: '🧘‍♀️'
-    },
+    }/*,
     {
       id: 5,
       name: 'Grupo Competencia',
@@ -52,7 +52,7 @@ const Classes = () => {
       features: ['Técnicas de competencia', 'Rutinas de exhibición', 'Preparación física', 'Mentalidad competitiva'],
       color: 'from-purple-500 to-indigo-500',
       icon: '🏆'
-    }
+    }*/
   ]
 
   const containerVariants = {

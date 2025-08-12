@@ -31,9 +31,9 @@ const Gallery = () => {
     {
       id: 4,
       src: '/images/gallery-4.jpg',
-      alt: 'Acrobacias aéreas',
-      category: 'Grupo Competencia',
-      description: 'Acrobacias y movimientos complejos'
+      alt: 'Pole Sport',
+      category: 'Pole Sport',
+      description: 'Técnicas deportivas de pole dance'
     },
     {
       id: 5,
@@ -52,20 +52,21 @@ const Gallery = () => {
     {
       id: 7,
       src: '/images/gallery-7.jpg',
-      alt: 'Entrenamiento grupal',
-      category: 'Todos los niveles',
-      description: 'Clases grupales dinámicas'
+      alt: 'Pole Sport',
+      category: 'Pole Sport',
+      description: 'Técnicas deportivas de pole dance'
     },
     {
       id: 8,
       src: '/images/gallery-8.jpg',
-      alt: 'Competencia',
-      category: 'Grupo Competencia',
-      description: 'Preparación para competencias'
+      alt: 'Pole Sport',
+      category: 'Pole Sport',
+      description: 'Técnicas deportivas de pole dance'
     }
   ]
 
-  const categories = ['Todos', 'Pole Sport', 'Exótico', 'Coreográfico', 'Flexibilidad', 'Grupo Competencia', 'Todos los niveles']
+//  const categories = ['Todos', 'Pole Sport', 'Exótico', 'Coreográfico', 'Flexibilidad', 'Grupo Competencia', 'Todos los niveles']
+  const categories = ['Todos', 'Pole Sport', 'Exótico', 'Coreográfico', 'Flexibilidad']
 
   const filteredImages = activeCategory === 'Todos' 
     ? galleryImages 
