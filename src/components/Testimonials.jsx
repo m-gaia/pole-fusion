@@ -21,10 +21,10 @@ const Testimonials = () => {
       id: 2,
       name: 'Ana Rodríguez',
       image: '/images/testimonial-2.jpg',
-      level: 'Exótico',
+      level: 'Exotic',
       before: 'Timidez y falta de confianza',
       after: 'Bailarina segura y expresiva',
-      testimonial: 'Nunca pensé que podría expresarme así. Las clases de exótico me ayudaron a encontrar mi sensualidad y confianza. Ahora me siento empoderada.',
+      testimonial: 'Nunca pensé que podría expresarme así. Las clases de Exotic me ayudaron a encontrar mi sensualidad y confianza. Ahora me siento empoderada.',
       rating: 5,
       date: '2024-01-10'
     },

@@ -26,7 +26,7 @@ const BookingSystem = () => {
   const classes = [
     { id: 1, name: "Pole Dance Básico", duration: "1 hora", instructor: "Mariana Gaia" },
     { id: 2, name: "Pole Sport", duration: "1.25 horas", instructor: "Juli Prada" },
-    { id: 3, name: "Exótico", duration: "1.25 horas", instructor: "Nanu Fernandez" },
+    { id: 3, name: "Exotic", duration: "1.25 horas", instructor: "Nanu Fernandez" },
     { id: 4, name: "Pole Fitness", duration: "1 hora", instructor: "Lucia Bazalli" }
   ]
 

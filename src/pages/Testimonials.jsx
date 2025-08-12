@@ -28,7 +28,7 @@ const Testimonials = () => {
       name: 'Ana Rodríguez',
       city: 'Córdoba',
       age: 32,
-      level: 'Exótico',
+      level: 'Exotic',
       time: '6 meses',
       content: 'Nunca pensé que podría hacer pole dance. Empecé desde cero y ahora puedo hacer movimientos que nunca creí posibles. El ambiente es súper motivador y las clases son muy divertidas. ¡Altamente recomendado!',
       rating: 5,

@@ -62,7 +62,7 @@ export const siteConfig = {
     },
     {
       id: 3,
-      name: "Exótico",
+      name: "Exotic",
       description: "Desarrolla tu sensualidad y expresión artística con movimientos fluidos y coreografías elegantes.",
       duration: "75 min",
       level: "Intermedio-Avanzado",

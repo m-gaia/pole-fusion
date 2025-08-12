@@ -16,8 +16,8 @@ const Gallery = () => {
     {
       id: 2,
       src: '/images/gallery-2.jpg',
-      alt: 'Clase de Exótico',
-      category: 'Exótico',
+      alt: 'Clase de Exotic',
+      category: 'Exotic',
       description: 'Expresión sensual y artística'
     },
     {
@@ -64,8 +64,8 @@ const Gallery = () => {
     }
   ]
 
-//  const categories = ['Todos', 'Pole Sport', 'Exótico', 'Coreográfico', 'Flexibilidad', 'Grupo Competencia', 'Todos los niveles']  
-  const categories = ['Todos', 'Pole Sport', 'Exótico', 'Coreográfico', 'Flexibilidad']
+//  const categories = ['Todos', 'Pole Sport', 'Exotic', 'Coreográfico', 'Flexibilidad', 'Grupo Competencia', 'Todos los niveles']  
+  const categories = ['Todos', 'Pole Sport', 'Exotic', 'Coreográfico', 'Flexibilidad']
   const [activeCategory, setActiveCategory] = useState('Todos')
 
   const filteredImages = activeCategory === 'Todos' 

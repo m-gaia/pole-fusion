@@ -311,8 +311,8 @@ export const initializeCourseDemoData = () => {
     },
     {
       id: 2,
-      title: 'Instructorado Exótico',
-      description: 'Formación especializada en pole dance exótico y sensual',
+      title: 'Instructorado Exotic',
+      description: 'Formación especializada en pole dance Exotic y sensual',
       duration: '6 meses',
       level: 'Intermedio-Avanzado',
       price: '$150.000',
