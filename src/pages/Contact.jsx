@@ -62,7 +62,7 @@ const Contact = () => {
 
   const classTypes = [
     { value: 'pole-sport', label: 'Pole Sport' },
-    { value: 'exotico', label: 'Exotic' },
+    { value: 'exotic', label: 'Exotic' },
     { value: 'coreografico', label: 'Coreográfico' },
     { value: 'flexibilidad', label: 'Flexibilidad' },
     { value: 'grupo-competencia', label: 'Grupo Competencia' },
