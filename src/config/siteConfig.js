@@ -76,26 +76,26 @@ export const siteConfig = {
   instructors: [
     {
       id: 1,
-      name: "María González",
+      name: "Lucia Bazalli",
       specialty: "Pole Dance & Acrobacias",
       experience: "8 años",
       bio: "Instructora certificada con experiencia en competencias internacionales",
       image: "/images/instructor-1.jpg",
       social: {
-        instagram: "https://instagram.com/mariagonzalez",
-        facebook: "https://facebook.com/mariagonzalez"
+        instagram: "https://instagram.com/luciabazalli",
+        facebook: "https://facebook.com/luciabazalli"
       }
     },
     {
       id: 2,
-      name: "Carlos Rodríguez",
+      name: "Juli Prada",
       specialty: "Pole Fitness & Entrenamiento",
       experience: "5 años",
       bio: "Especialista en entrenamiento funcional y pole fitness",
       image: "/images/instructor-2.jpg",
       social: {
-        instagram: "https://instagram.com/carlosrodriguez",
-        facebook: "https://facebook.com/carlosrodriguez"
+        instagram: "https://instagram.com/julipradapole",
+        facebook: "https://facebook.com/julipradapole"
       }
     }
   ],

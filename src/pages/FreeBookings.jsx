@@ -14,8 +14,8 @@ const FreeBookings = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const classes = [
-    { id: 1, name: "Clase Gratuita de Introducción", duration: "1 hora", instructor: "María González" },
-    { id: 2, name: "Clase Gratuita de Pole Dance", duration: "1 hora", instructor: "Carlos Rodríguez" }
+    { id: 1, name: "Clase Gratuita de Introducción", duration: "1 hora", instructor: "Mariana Gaia" },
+    { id: 2, name: "Clase Gratuita de Pole Sport", duration: "1 hora", instructor: "Lucia Bazalli" }
   ]
 
   const timeSlots = [
