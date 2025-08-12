@@ -70,7 +70,7 @@ const Classes = () => {
         { day: 'Jueves', time: '17:00 - 18:00' },
         { day: 'Sábado', time: '09:00 - 10:00' }
       ]
-    },
+    }/*,
     {
       id: 5,
       name: 'Grupo Competencia',
@@ -87,7 +87,7 @@ const Classes = () => {
         { day: 'Viernes', time: '20:30 - 22:30' },
         { day: 'Domingo', time: '15:30 - 17:30' }
       ]
-    }
+    }*/
   ]
 
   const benefits = [
