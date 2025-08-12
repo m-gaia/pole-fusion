@@ -141,7 +141,7 @@ const Classes = () => {
       {/* Class Types */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-8">
             {classTypes.map((classType, index) => (
               <motion.div
                 key={classType.id}
