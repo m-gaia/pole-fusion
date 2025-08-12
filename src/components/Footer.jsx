@@ -62,7 +62,7 @@ const Footer = () => {
               </div>
               <p className="text-gray-300 text-sm leading-relaxed mb-6">
                 Academia de pole dance en Ciudad Mendoza. Ofrecemos clases para todos los niveles, 
-                desde principiantes hasta avanzados. Descubre tu fuerza interior.
+                desde Pole Sport hasta Grupo Competencia. Descubre tu fuerza interior.
               </p>
               
               {/* Redes sociales */}

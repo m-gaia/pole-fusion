@@ -9,43 +9,43 @@ const Gallery = () => {
     {
       id: 1,
       src: '/images/gallery-1.jpg',
-      alt: 'Pole dance avanzado',
-      category: 'Avanzado',
-      description: 'Técnicas avanzadas de pole dance'
+      alt: 'Pole Sport',
+      category: 'Pole Sport',
+      description: 'Técnicas deportivas de pole dance'
     },
     {
       id: 2,
       src: '/images/gallery-2.jpg',
-      alt: 'Clase de iniciación',
-      category: 'Principiante',
-      description: 'Primeros pasos en pole dance'
+      alt: 'Clase de Exótico',
+      category: 'Exótico',
+      description: 'Expresión sensual y artística'
     },
     {
       id: 3,
       src: '/images/gallery-3.jpg',
       alt: 'Coreografía artística',
-      category: 'Intermedio',
+      category: 'Coreográfico',
       description: 'Expresión artística en el pole'
     },
     {
       id: 4,
       src: '/images/gallery-4.jpg',
       alt: 'Acrobacias aéreas',
-      category: 'Avanzado',
+      category: 'Grupo Competencia',
       description: 'Acrobacias y movimientos complejos'
     },
     {
       id: 5,
       src: '/images/gallery-5.jpg',
       alt: 'Flexibilidad y fuerza',
-      category: 'Intermedio',
+      category: 'Flexibilidad',
       description: 'Desarrollo de flexibilidad'
     },
     {
       id: 6,
       src: '/images/gallery-6.jpg',
       alt: 'Performance en vivo',
-      category: 'Avanzado',
+      category: 'Coreográfico',
       description: 'Shows y performances'
     },
     {
@@ -59,12 +59,12 @@ const Gallery = () => {
       id: 8,
       src: '/images/gallery-8.jpg',
       alt: 'Competencia',
-      category: 'Competencia',
+      category: 'Grupo Competencia',
       description: 'Preparación para competencias'
     }
   ]
 
-  const categories = ['Todos', 'Principiante', 'Intermedio', 'Avanzado', 'Competencia']
+  const categories = ['Todos', 'Pole Sport', 'Exótico', 'Coreográfico', 'Flexibilidad', 'Grupo Competencia', 'Todos los niveles']
   const [activeCategory, setActiveCategory] = useState('Todos')
 
   const filteredImages = activeCategory === 'Todos' 

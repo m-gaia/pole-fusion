@@ -5,33 +5,53 @@ const Classes = () => {
   const classTypes = [
     {
       id: 1,
-      name: 'Iniciación',
-      description: 'Perfecta para principiantes. Aprende las técnicas básicas y fundamentos del pole dance.',
-      duration: '60 min',
-      level: 'Principiante',
-      features: ['Técnicas básicas', 'Seguridad', 'Flexibilidad inicial', 'Confianza'],
-      color: 'from-blue-500 to-cyan-500',
-      icon: '🌟'
-    },
-    {
-      id: 2,
-      name: 'Intermedio',
-      description: 'Desarrolla tu fuerza y técnica con movimientos más complejos y coreografías.',
+      name: 'Pole Sport',
+      description: 'Clases técnicas enfocadas en la fuerza, resistencia y movimientos acrobáticos del pole dance deportivo.',
       duration: '75 min',
-      level: 'Intermedio',
-      features: ['Técnicas avanzadas', 'Coreografías', 'Fuerza muscular', 'Expresión artística'],
-      color: 'from-primary-500 to-pink-500',
+      level: 'Todos los niveles',
+      features: ['Técnicas deportivas', 'Fuerza muscular', 'Resistencia', 'Preparación física'],
+      color: 'from-blue-500 to-cyan-500',
       icon: '💪'
     },
     {
+      id: 2,
+      name: 'Exótico',
+      description: 'Desarrolla tu sensualidad y expresión artística con movimientos fluidos y coreografías elegantes.',
+      duration: '75 min',
+      level: 'Intermedio-Avanzado',
+      features: ['Expresión sensual', 'Coreografías fluidas', 'Confianza', 'Arte escénico'],
+      color: 'from-primary-500 to-pink-500',
+      icon: '✨'
+    },
+    {
       id: 3,
-      name: 'Avanzado',
-      description: 'Para bailarinas experimentadas. Movimientos acrobáticos y rutinas profesionales.',
+      name: 'Coreográfico',
+      description: 'Crea rutinas artísticas completas combinando técnica, música y expresión corporal.',
       duration: '90 min',
-      level: 'Avanzado',
-      features: ['Acrobacias', 'Rutinas complejas', 'Competencia', 'Performance'],
+      level: 'Intermedio-Avanzado',
+      features: ['Coreografías completas', 'Interpretación musical', 'Expresión artística', 'Performance'],
       color: 'from-secondary-500 to-yellow-500',
-      icon: '⭐'
+      icon: '🎭'
+    },
+    {
+      id: 4,
+      name: 'Flexibilidad',
+      description: 'Mejora tu rango de movimiento, elasticidad y postura con ejercicios específicos.',
+      duration: '60 min',
+      level: 'Todos los niveles',
+      features: ['Estiramientos', 'Elasticidad', 'Postura', 'Movilidad articular'],
+      color: 'from-green-500 to-emerald-500',
+      icon: '🧘‍♀️'
+    },
+    {
+      id: 5,
+      name: 'Grupo Competencia',
+      description: 'Entrenamiento especializado para competencias y exhibiciones de alto nivel.',
+      duration: '120 min',
+      level: 'Avanzado',
+      features: ['Técnicas de competencia', 'Rutinas de exhibición', 'Preparación física', 'Mentalidad competitiva'],
+      color: 'from-purple-500 to-indigo-500',
+      icon: '🏆'
     }
   ]
 
@@ -71,7 +91,7 @@ const Classes = () => {
             Nuestras Clases
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Ofrecemos clases para todos los niveles, desde principiantes hasta avanzados. 
+            Ofrecemos clases para todos los niveles, desde Pole Sport hasta Grupo Competencia. 
             Cada clase está diseñada para desarrollar tu fuerza, flexibilidad y confianza.
           </p>
         </motion.div>
@@ -82,7 +102,7 @@ const Classes = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8"
         >
           {classTypes.map((classType) => (
             <motion.div

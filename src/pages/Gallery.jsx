@@ -10,114 +10,62 @@ const Gallery = () => {
     {
       id: 1,
       src: '/images/gallery-1.jpg',
-      alt: 'Pole dance avanzado',
-      category: 'Avanzado',
-      description: 'Técnicas avanzadas de pole dance',
-      likes: 245,
-      date: '2024-01-15'
+      alt: 'Pole Sport',
+      category: 'Pole Sport',
+      description: 'Técnicas deportivas de pole dance'
     },
     {
       id: 2,
       src: '/images/gallery-2.jpg',
-      alt: 'Clase de iniciación',
-      category: 'Principiante',
-      description: 'Primeros pasos en pole dance',
-      likes: 189,
-      date: '2024-01-10'
+      alt: 'Clase de Exótico',
+      category: 'Exótico',
+      description: 'Expresión sensual y artística'
     },
     {
       id: 3,
       src: '/images/gallery-3.jpg',
       alt: 'Coreografía artística',
-      category: 'Intermedio',
-      description: 'Expresión artística en el pole',
-      likes: 312,
-      date: '2024-01-08'
+      category: 'Coreográfico',
+      description: 'Expresión artística en el pole'
     },
     {
       id: 4,
       src: '/images/gallery-4.jpg',
       alt: 'Acrobacias aéreas',
-      category: 'Avanzado',
-      description: 'Acrobacias y movimientos complejos',
-      likes: 278,
-      date: '2024-01-05'
+      category: 'Grupo Competencia',
+      description: 'Acrobacias y movimientos complejos'
     },
     {
       id: 5,
       src: '/images/gallery-5.jpg',
       alt: 'Flexibilidad y fuerza',
-      category: 'Intermedio',
-      description: 'Desarrollo de flexibilidad',
-      likes: 156,
-      date: '2024-01-03'
+      category: 'Flexibilidad',
+      description: 'Desarrollo de flexibilidad'
     },
     {
       id: 6,
       src: '/images/gallery-6.jpg',
       alt: 'Performance en vivo',
-      category: 'Avanzado',
-      description: 'Shows y performances',
-      likes: 423,
-      date: '2024-01-01'
+      category: 'Coreográfico',
+      description: 'Shows y performances'
     },
     {
       id: 7,
       src: '/images/gallery-7.jpg',
       alt: 'Entrenamiento grupal',
       category: 'Todos los niveles',
-      description: 'Clases grupales dinámicas',
-      likes: 198,
-      date: '2023-12-28'
+      description: 'Clases grupales dinámicas'
     },
     {
       id: 8,
       src: '/images/gallery-8.jpg',
       alt: 'Competencia',
-      category: 'Competencia',
-      description: 'Preparación para competencias',
-      likes: 356,
-      date: '2023-12-25'
-    },
-    {
-      id: 9,
-      src: '/images/gallery-9.jpg',
-      alt: 'Técnicas de flexibilidad',
-      category: 'Intermedio',
-      description: 'Mejora de flexibilidad',
-      likes: 234,
-      date: '2023-12-20'
-    },
-    {
-      id: 10,
-      src: '/images/gallery-10.jpg',
-      alt: 'Coreografía grupal',
-      category: 'Todos los niveles',
-      description: 'Coreografías en grupo',
-      likes: 267,
-      date: '2023-12-18'
-    },
-    {
-      id: 11,
-      src: '/images/gallery-11.jpg',
-      alt: 'Acrobacias avanzadas',
-      category: 'Avanzado',
-      description: 'Técnicas acrobáticas complejas',
-      likes: 445,
-      date: '2023-12-15'
-    },
-    {
-      id: 12,
-      src: '/images/gallery-12.jpg',
-      alt: 'Entrenamiento de fuerza',
-      category: 'Intermedio',
-      description: 'Desarrollo de fuerza muscular',
-      likes: 189,
-      date: '2023-12-12'
+      category: 'Grupo Competencia',
+      description: 'Preparación para competencias'
     }
   ]
 
-  const categories = ['Todos', 'Principiante', 'Intermedio', 'Avanzado', 'Competencia', 'Todos los niveles']
+  const categories = ['Todos', 'Pole Sport', 'Exótico', 'Coreográfico', 'Flexibilidad', 'Grupo Competencia', 'Todos los niveles']
 
   const filteredImages = activeCategory === 'Todos' 
     ? galleryImages 

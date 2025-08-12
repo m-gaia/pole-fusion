@@ -8,7 +8,7 @@ const Contact = () => {
     email: '',
     phone: '',
     message: '',
-    classType: 'iniciacion'
+    classType: 'pole-sport'
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -17,7 +17,7 @@ const Contact = () => {
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitted(true)
-      setFormData({ name: '', email: '', phone: '', message: '', classType: 'iniciacion' })
+      setFormData({ name: '', email: '', phone: '', message: '', classType: 'pole-sport' })
     }, 1000)
   }
 
@@ -56,9 +56,11 @@ const Contact = () => {
   ]
 
   const classTypes = [
-    { value: 'iniciacion', label: 'Iniciación' },
-    { value: 'intermedio', label: 'Intermedio' },
-    { value: 'avanzado', label: 'Avanzado' },
+    { value: 'pole-sport', label: 'Pole Sport' },
+    { value: 'exotico', label: 'Exótico' },
+    { value: 'coreografico', label: 'Coreográfico' },
+    { value: 'flexibilidad', label: 'Flexibilidad' },
+    { value: 'grupo-competencia', label: 'Grupo Competencia' },
     { value: 'consulta', label: 'Consulta general' }
   ]
 

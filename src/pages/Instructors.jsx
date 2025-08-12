@@ -23,24 +23,24 @@ const Instructors = () => {
     {
       id: 2,
       name: 'Camila Fernández',
-      role: 'Instructora de Iniciación',
+      role: 'Instructora de Pole Sport',
       experience: '5 años',
       specialties: ['Principiantes', 'Fuerza', 'Confianza'],
-      bio: 'Camila se especializa en trabajar con principiantes, ayudándolas a desarrollar confianza y técnica desde el primer día. Su paciencia y método progresivo han ayudado a cientos de mujeres a descubrir su potencial.',
+      bio: 'Camila se especializa en trabajar con principiantes, ayudándolas a desarrollar confianza y técnica desde el primer día.',
       image: '/images/instructor-2.jpg',
       instagram: '@camila_polefusion',
       email: 'camila@polefusion.com',
       phone: '+54 261 1234-5679',
-      certifications: ['Pole Dance Academy', 'Fitness Instructor', 'First Aid'],
+      certifications: ['Pole Dance Academy', 'Fitness Instructor'],
       students: '150+',
       achievements: ['Mejor Instructora Principiantes 2023', 'Certificación en Seguridad'],
       teachingStyle: 'Método progresivo y motivador',
-      classes: ['Iniciación', 'Fuerza Básica', 'Confianza']
+      classes: ['Pole Sport', 'Fuerza Básica', 'Confianza']
     },
     {
       id: 3,
       name: 'Sofía Martínez',
-      role: 'Instructora Avanzada',
+      role: 'Instructora de Grupo Competencia',
       experience: '10 años',
       specialties: ['Acrobacias', 'Competencia', 'Performance'],
       bio: 'Sofía es nuestra instructora de nivel avanzado, especializada en acrobacias y preparación para competencias. Con una sólida formación en gimnasia artística, combina técnica y creatividad en sus clases.',
@@ -48,11 +48,11 @@ const Instructors = () => {
       instagram: '@sofia_poleart',
       email: 'sofia@polefusion.com',
       phone: '+54 261 1234-5680',
-      certifications: ['International Pole Championship', 'Acrobatic Arts', 'Gimnasia Artística'],
+      certifications: ['International Pole Championship', 'Acrobatic Arts'],
       students: '100+',
       achievements: ['Campeona Internacional 2021', 'Instructora Elite', 'Juez Internacional'],
       teachingStyle: 'Técnica avanzada y preparación competitiva',
-      classes: ['Avanzado', 'Acrobacias', 'Competencia']
+      classes: ['Grupo Competencia', 'Acrobacias', 'Competencia']
     }
   ]
 

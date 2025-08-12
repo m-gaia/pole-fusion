@@ -76,7 +76,7 @@ const Hero = () => {
             className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed"
           >
             Descubre tu poder interior a través del pole dance. Clases para todos los niveles, 
-            desde principiantes hasta avanzados. Únete a nuestra comunidad de mujeres fuertes y empoderadas.
+            desde Pole Sport hasta Grupo Competencia. Únete a nuestra comunidad de mujeres fuertes y empoderadas.
           </motion.p>
 
           {/* CTA Buttons */}

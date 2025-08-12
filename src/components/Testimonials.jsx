@@ -9,57 +9,35 @@ const Testimonials = () => {
     {
       id: 1,
       name: 'María González',
-      city: 'Mendoza',
-      age: 28,
-      level: 'Intermedio',
-      time: '2 años',
-      content: 'Pole Fusion cambió mi vida completamente. No solo mejoré mi fuerza física, sino que también gané mucha confianza en mí misma. Las instructoras son increíbles y la comunidad es muy acogedora.',
+      image: '/images/testimonial-1.jpg',
+      level: 'Pole Sport',
+      before: 'Principiante total sin experiencia',
+      after: 'Nivel intermedio con confianza total',
+      testimonial: 'Pole Fusion cambió mi vida completamente. Empecé sin saber nada y ahora me siento fuerte y segura. Las instructoras son increíbles y la comunidad es muy acogedora.',
       rating: 5,
-      image: '/images/testimonial-1.jpg'
+      date: '2024-01-15'
     },
     {
       id: 2,
       name: 'Ana Rodríguez',
-      city: 'Córdoba',
-      age: 32,
-      level: 'Principiante',
-      time: '6 meses',
-      content: 'Nunca pensé que podría hacer pole dance. Empecé desde cero y ahora puedo hacer movimientos que nunca creí posibles. El ambiente es súper motivador y las clases son muy divertidas.',
+      image: '/images/testimonial-2.jpg',
+      level: 'Exótico',
+      before: 'Timidez y falta de confianza',
+      after: 'Bailarina segura y expresiva',
+      testimonial: 'Nunca pensé que podría expresarme así. Las clases de exótico me ayudaron a encontrar mi sensualidad y confianza. Ahora me siento empoderada.',
       rating: 5,
-      image: '/images/testimonial-2.jpg'
+      date: '2024-01-10'
     },
     {
       id: 3,
-      name: 'Lucía Fernández',
-      city: 'Rosario',
-      age: 25,
-      level: 'Avanzado',
-      time: '3 años',
-      content: 'Llevo 3 años en Pole Fusion y cada día aprendo algo nuevo. Las instructoras son profesionales de verdad y siempre están ahí para apoyarte. He participado en competencias y me siento muy orgullosa de mis logros.',
+      name: 'Laura Martínez',
+      image: '/images/testimonial-3.jpg',
+      level: 'Coreográfico',
+      before: 'Nivel intermedio con confianza total',
+      after: 'Bailarina expresiva y artística',
+      testimonial: 'Las clases de coreografía son mágicas. Aprendí a interpretar la música y expresar mis emociones a través del movimiento. Es una experiencia transformadora.',
       rating: 5,
-      image: '/images/testimonial-3.jpg'
-    },
-    {
-      id: 4,
-      name: 'Carolina Silva',
-      city: 'Mendoza',
-      age: 30,
-      level: 'Intermedio',
-      time: '1 año',
-      content: 'Después de tener mi bebé, necesitaba algo que me ayudara a recuperar mi fuerza y confianza. Pole Fusion fue la respuesta perfecta. Ahora me siento más fuerte que nunca.',
-      rating: 5,
-      image: '/images/testimonial-4.jpg'
-    },
-    {
-      id: 5,
-      name: 'Valentina Morales',
-      city: 'La Plata',
-      age: 27,
-      level: 'Principiante',
-      time: '3 meses',
-      content: 'Siempre tuve miedo de probar pole dance, pero desde el primer día me sentí bienvenida. Las clases son progresivas y nunca te sientes presionada. ¡Altamente recomendado!',
-      rating: 5,
-      image: '/images/testimonial-5.jpg'
+      date: '2024-01-05'
     }
   ]
 
@@ -114,7 +92,7 @@ const Testimonials = () => {
 
                 {/* Testimonial Content */}
                 <blockquote className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed italic">
-                  "{testimonials[currentIndex].content}"
+                  "{testimonials[currentIndex].testimonial}"
                 </blockquote>
 
                 {/* Author Info */}
@@ -129,16 +107,16 @@ const Testimonials = () => {
                     {testimonials[currentIndex].name}
                   </h4>
                   <p className="text-gray-600 mb-3">
-                    {testimonials[currentIndex].city}
+                    {testimonials[currentIndex].level}
                   </p>
 
                   {/* Stats */}
                   <div className="flex items-center space-x-6 text-sm text-gray-500 mb-4">
-                    <span>{testimonials[currentIndex].age} años</span>
+                    <span>Antes: {testimonials[currentIndex].before}</span>
                     <span>•</span>
-                    <span>Nivel {testimonials[currentIndex].level}</span>
+                    <span>Después: {testimonials[currentIndex].after}</span>
                     <span>•</span>
-                    <span>{testimonials[currentIndex].time} en Pole Fusion</span>
+                    <span>Fecha: {testimonials[currentIndex].date}</span>
                   </div>
 
                   {/* Rating */}

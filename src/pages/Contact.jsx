@@ -8,7 +8,7 @@ const Contact = () => {
     email: '',
     phone: '',
     message: '',
-    classType: 'iniciacion',
+    classType: 'pole-sport',
     preferredTime: 'mañana'
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -18,7 +18,7 @@ const Contact = () => {
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitted(true)
-      setFormData({ name: '', email: '', phone: '', message: '', classType: 'iniciacion', preferredTime: 'mañana' })
+      setFormData({ name: '', email: '', phone: '', message: '', classType: 'pole-sport', preferredTime: 'mañana' })
     }, 1000)
   }
 
@@ -61,9 +61,11 @@ const Contact = () => {
   ]
 
   const classTypes = [
-    { value: 'iniciacion', label: 'Iniciación' },
-    { value: 'intermedio', label: 'Intermedio' },
-    { value: 'avanzado', label: 'Avanzado' },
+    { value: 'pole-sport', label: 'Pole Sport' },
+    { value: 'exotico', label: 'Exótico' },
+    { value: 'coreografico', label: 'Coreográfico' },
+    { value: 'flexibilidad', label: 'Flexibilidad' },
+    { value: 'grupo-competencia', label: 'Grupo Competencia' },
     { value: 'consulta', label: 'Consulta general' }
   ]
 
@@ -77,7 +79,7 @@ const Contact = () => {
   const faqs = [
     {
       question: '¿Necesito experiencia previa para empezar?',
-      answer: 'No, nuestras clases de iniciación están diseñadas para principiantes. Te guiaremos paso a paso desde el primer día.'
+              answer: 'No, nuestras clases de Pole Sport están diseñadas para todos los niveles. Te guiaremos paso a paso desde el primer día.'
     },
     {
       question: '¿Qué debo llevar a mi primera clase?',

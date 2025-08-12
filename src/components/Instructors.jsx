@@ -18,7 +18,7 @@ const Instructors = () => {
     {
       id: 2,
       name: 'Camila Fernández',
-      role: 'Instructora de Iniciación',
+      role: 'Instructora de Pole Sport',
       experience: '5 años',
       specialties: ['Principiantes', 'Fuerza', 'Confianza'],
       bio: 'Camila se especializa en trabajar con principiantes, ayudándolas a desarrollar confianza y técnica desde el primer día.',
@@ -30,7 +30,7 @@ const Instructors = () => {
     {
       id: 3,
       name: 'Sofía Martínez',
-      role: 'Instructora Avanzada',
+      role: 'Instructora de Grupo Competencia',
       experience: '10 años',
       specialties: ['Acrobacias', 'Competencia', 'Performance'],
       bio: 'Sofía es nuestra instructora de nivel avanzado, especializada en acrobacias y preparación para competencias.',

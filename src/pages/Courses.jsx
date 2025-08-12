@@ -26,11 +26,12 @@ const Courses = () => {
     setCourses(courseManager.getAllCourses())
   }, [])
 
-  const getLevelColor = (level) => {
+  const getLevelBadgeColor = (level) => {
     switch (level) {
-      case 'Básico': return 'bg-green-100 text-green-800'
-      case 'Intermedio': return 'bg-yellow-100 text-yellow-800'
+      case 'Principiante': return 'bg-blue-100 text-blue-800'
+      case 'Intermedio-Avanzado': return 'bg-yellow-100 text-yellow-800'
       case 'Avanzado': return 'bg-purple-100 text-purple-800'
+      case 'Todos los niveles': return 'bg-green-100 text-green-800'
       default: return 'bg-gray-100 text-gray-800'
     }
   }
@@ -102,7 +103,7 @@ Información del curso:
               <div className="relative h-48 bg-gradient-to-br from-purple-500 to-pink-500">
                 <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                 <div className="absolute top-4 left-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${getLevelColor(course.level)}`}>
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${getLevelBadgeColor(course.level)}`}>
                     {course.level}
                   </span>
                 </div>

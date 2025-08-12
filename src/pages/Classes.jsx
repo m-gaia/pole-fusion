@@ -5,32 +5,32 @@ const Classes = () => {
   const classTypes = [
     {
       id: 1,
-      name: 'Iniciación',
-      description: 'Perfecta para principiantes. Aprende las técnicas básicas y fundamentos del pole dance.',
-      duration: '60 min',
-      level: 'Principiante',
+      name: 'Pole Sport',
+      description: 'Clases técnicas enfocadas en la fuerza, resistencia y movimientos acrobáticos del pole dance deportivo.',
+      duration: '75 min',
+      level: 'Todos los niveles',
       maxStudents: 8,
       price: '$8.000',
-      features: ['Técnicas básicas', 'Seguridad', 'Flexibilidad inicial', 'Confianza'],
+      features: ['Técnicas deportivas', 'Fuerza muscular', 'Resistencia', 'Preparación física'],
       color: 'from-blue-500 to-cyan-500',
-      icon: '🌟',
+      icon: '💪',
       schedule: [
-        { day: 'Lunes', time: '18:00 - 19:00' },
-        { day: 'Miércoles', time: '19:00 - 20:00' },
-        { day: 'Sábado', time: '10:00 - 11:00' }
+        { day: 'Lunes', time: '18:00 - 19:15' },
+        { day: 'Miércoles', time: '19:00 - 20:15' },
+        { day: 'Sábado', time: '10:00 - 11:15' }
       ]
     },
     {
       id: 2,
-      name: 'Intermedio',
-      description: 'Desarrolla tu fuerza y técnica con movimientos más complejos y coreografías.',
+      name: 'Exótico',
+      description: 'Desarrolla tu sensualidad y expresión artística con movimientos fluidos y coreografías elegantes.',
       duration: '75 min',
-      level: 'Intermedio',
+      level: 'Intermedio-Avanzado',
       maxStudents: 6,
       price: '$10.000',
-      features: ['Técnicas avanzadas', 'Coreografías', 'Fuerza muscular', 'Expresión artística'],
+      features: ['Expresión sensual', 'Coreografías fluidas', 'Confianza', 'Arte escénico'],
       color: 'from-primary-500 to-pink-500',
-      icon: '💪',
+      icon: '✨',
       schedule: [
         { day: 'Martes', time: '19:00 - 20:15' },
         { day: 'Jueves', time: '18:00 - 19:15' },
@@ -39,19 +39,53 @@ const Classes = () => {
     },
     {
       id: 3,
-      name: 'Avanzado',
-      description: 'Para bailarinas experimentadas. Movimientos acrobáticos y rutinas profesionales.',
+      name: 'Coreográfico',
+      description: 'Crea rutinas artísticas completas combinando técnica, música y expresión corporal.',
       duration: '90 min',
-      level: 'Avanzado',
-      maxStudents: 4,
+      level: 'Intermedio-Avanzado',
+      maxStudents: 6,
       price: '$12.000',
-      features: ['Acrobacias', 'Rutinas complejas', 'Competencia', 'Performance'],
+      features: ['Coreografías completas', 'Interpretación musical', 'Expresión artística', 'Performance'],
       color: 'from-secondary-500 to-yellow-500',
-      icon: '⭐',
+      icon: '🎭',
       schedule: [
         { day: 'Lunes', time: '20:00 - 21:30' },
         { day: 'Viernes', time: '19:00 - 20:30' },
         { day: 'Domingo', time: '14:00 - 15:30' }
+      ]
+    },
+    {
+      id: 4,
+      name: 'Flexibilidad',
+      description: 'Mejora tu rango de movimiento, elasticidad y postura con ejercicios específicos.',
+      duration: '60 min',
+      level: 'Todos los niveles',
+      maxStudents: 10,
+      price: '$6.000',
+      features: ['Estiramientos', 'Elasticidad', 'Postura', 'Movilidad articular'],
+      color: 'from-green-500 to-emerald-500',
+      icon: '🧘‍♀️',
+      schedule: [
+        { day: 'Martes', time: '17:00 - 18:00' },
+        { day: 'Jueves', time: '17:00 - 18:00' },
+        { day: 'Sábado', time: '09:00 - 10:00' }
+      ]
+    },
+    {
+      id: 5,
+      name: 'Grupo Competencia',
+      description: 'Entrenamiento especializado para competencias y exhibiciones de alto nivel.',
+      duration: '120 min',
+      level: 'Avanzado',
+      maxStudents: 4,
+      price: '$15.000',
+      features: ['Técnicas de competencia', 'Rutinas de exhibición', 'Preparación física', 'Mentalidad competitiva'],
+      color: 'from-purple-500 to-indigo-500',
+      icon: '🏆',
+      schedule: [
+        { day: 'Lunes', time: '21:30 - 23:30' },
+        { day: 'Viernes', time: '20:30 - 22:30' },
+        { day: 'Domingo', time: '15:30 - 17:30' }
       ]
     }
   ]
@@ -99,7 +133,7 @@ const Classes = () => {
             className="text-xl text-white/90 max-w-3xl mx-auto"
           >
             Descubre el poder transformador del pole dance. Clases para todos los niveles, 
-            desde principiantes hasta avanzados.
+            desde Pole Sport hasta Grupo Competencia.
           </motion.p>
         </div>
       </section>
@@ -107,7 +141,7 @@ const Classes = () => {
       {/* Class Types */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-8">
             {classTypes.map((classType, index) => (
               <motion.div
                 key={classType.id}

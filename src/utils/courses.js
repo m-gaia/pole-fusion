@@ -310,64 +310,48 @@ export const initializeCourseDemoData = () => {
       updatedAt: new Date().toISOString()
     },
     {
-      id: 'course-2',
-      title: 'Instructorado Intermedio',
-      subtitle: 'Especialización en técnicas avanzadas',
-      description: 'Profundiza en técnicas avanzadas de pole dance y desarrolla habilidades especializadas para instructores con experiencia.',
-      image: '/images/course-intermediate.jpg',
-      duration: '12 semanas',
-      level: 'Intermedio',
-      price: 'Gratuito',
-      program: [
-        'Técnicas Avanzadas de Pole',
-        'Coreografía Compleja',
-        'Entrenamiento de Fuerza',
-        'Flexibilidad y Movilidad',
-        'Estilos Especializados',
-        'Gestión de Estudios',
-        'Marketing para Instructores',
-        'Desarrollo de Marca Personal'
-      ],
+      id: 2,
+      title: 'Instructorado Exótico',
+      description: 'Formación especializada en pole dance exótico y sensual',
+      duration: '6 meses',
+      level: 'Intermedio-Avanzado',
+      price: '$150.000',
       features: [
-        '12 clases virtuales',
-        'Material teórico avanzado',
-        'Certificado especializado',
-        'Mentoría personalizada',
-        'Comunidad de instructores'
+        'Técnicas de expresión sensual',
+        'Coreografías fluidas',
+        'Arte escénico',
+        'Psicología del movimiento',
+        'Preparación para shows',
+        'Material teórico especializado',
+        'Práctica con alumnas reales',
+        'Certificación internacional'
       ],
-      isActive: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      instructor: 'Valentina Rodríguez',
+      maxStudents: 8,
+      startDate: '2024-03-01',
+      schedule: 'Martes y Jueves 20:00-22:00'
     },
     {
-      id: 'course-3',
-      title: 'Instructorado Avanzado',
-      subtitle: 'Maestría en pole dance y gestión',
-      description: 'Alcanza el nivel de maestría en pole dance con técnicas expertas y habilidades de gestión empresarial.',
-      image: '/images/course-advanced.jpg',
-      duration: '16 semanas',
+      id: 3,
+      title: 'Instructorado Coreográfico',
+      description: 'Formación en coreografía y expresión artística',
+      duration: '8 meses',
       level: 'Avanzado',
-      price: 'Gratuito',
-      program: [
-        'Técnicas de Maestría',
-        'Coreografía Profesional',
-        'Entrenamiento de Alto Rendimiento',
-        'Especialización en Estilos',
-        'Gestión Empresarial',
-        'Desarrollo de Programas',
-        'Liderazgo en la Industria',
-        'Innovación y Tendencias'
-      ],
+      price: '$180.000',
       features: [
-        '16 clases virtuales',
-        'Material de maestría',
-        'Certificado de maestría',
-        'Mentoría exclusiva',
-        'Red de profesionales'
+        'Composición coreográfica',
+        'Interpretación musical',
+        'Expresión artística',
+        'Dirección escénica',
+        'Preparación para competencias',
+        'Material teórico avanzado',
+        'Práctica con alumnas reales',
+        'Certificación internacional'
       ],
-      isActive: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      instructor: 'Sofía Martínez',
+      maxStudents: 6,
+      startDate: '2024-04-01',
+      schedule: 'Lunes y Viernes 19:00-21:00'
     }
   ]
 

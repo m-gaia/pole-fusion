@@ -25,21 +25,21 @@ const MembershipSystem = () => {
       popular: false
     },
     {
-      id: 'intermediate',
-      name: 'Intermedio',
+      id: 2,
+      name: 'Pole Sport',
       icon: <Star className="w-6 h-6" />,
-      price: '$25.000',
+      price: '$15.000',
       period: 'por mes',
       description: 'Para alumnos con experiencia',
       features: [
-        '8 clases por mes',
-        'Acceso a todas las clases',
-        'Material de apoyo',
-        'WhatsApp de consultas',
-        'Evaluación mensual',
-        'Descuento en workshops'
+        'Acceso a todas las clases de Pole Sport',
+        'Clases de Flexibilidad incluidas',
+        'Acceso al gimnasio',
+        'Soporte por WhatsApp',
+        'Evaluación mensual'
       ],
-      popular: true
+      popular: true,
+      color: 'from-primary-500 to-secondary-500'
     },
     {
       id: 'premium',

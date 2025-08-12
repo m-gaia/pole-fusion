@@ -52,27 +52,23 @@ export const siteConfig = {
     },
     {
       id: 2,
-      name: "Pole Dance Intermedio",
-      description: "Técnicas avanzadas y acrobacias",
-      duration: "1 hora",
-      level: "Intermedio",
-      image: "/images/class-intermediate.jpg"
+      name: "Pole Sport",
+      description: "Clases técnicas enfocadas en la fuerza, resistencia y movimientos acrobáticos del pole dance deportivo.",
+      duration: "75 min",
+      level: "Todos los niveles",
+      instructor: "Camila Fernández",
+      price: "$8.000",
+      schedule: ["Lunes 18:00", "Miércoles 19:00", "Sábado 10:00"]
     },
     {
       id: 3,
-      name: "Pole Dance Avanzado",
-      description: "Técnicas profesionales y coreografías",
-      duration: "1.5 horas",
-      level: "Avanzado",
-      image: "/images/class-advanced.jpg"
-    },
-    {
-      id: 4,
-      name: "Pole Fitness",
-      description: "Entrenamiento de fuerza y resistencia",
-      duration: "1 hora",
-      level: "Todos los niveles",
-      image: "/images/class-fitness.jpg"
+      name: "Exótico",
+      description: "Desarrolla tu sensualidad y expresión artística con movimientos fluidos y coreografías elegantes.",
+      duration: "75 min",
+      level: "Intermedio-Avanzado",
+      instructor: "Valentina Rodríguez",
+      price: "$10.000",
+      schedule: ["Martes 19:00", "Jueves 18:00", "Sábado 11:00"]
     }
   ],
 
